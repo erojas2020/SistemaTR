@@ -1,0 +1,306 @@
+<form id="formularioNivel2" name="formularioNivel2" class="row g-3 needs-validation viewsApp sesionApp" onsubmit="validarFormClienteNivel2(this)" novalidate hidden >
+          
+    <!-- Encabezado -->
+    <div class="text-center">
+      <h4>Nuevo Cliente Nivel 2</h4>
+    </div>
+  
+    <!-- Usuario -->
+    <input type='text' class='form-control' id='usuarioNivel2' placeholder= 'Nombre completo' name="usuarioNivel2" hidden>
+  
+    <!-- ALERT ERROR  -->
+    <div id="alertError" class="alert alert-danger" role="alert" hidden></div> 
+  
+    <!-- Campo: Nombre nivel 1 -->
+    <div class='col-md-6' id='promoverNivel1'hidden>
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon1'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-person-fill' viewBox='0 0 16 16'>
+            <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/>";
+          </svg>
+        </span>
+  
+        <select class='form-select' id='listNombreNivel2' name="pais" id="paisClienteN2" required>
+          <option selected disabled value='' >Cliente Nivel 1</option>
+          <option value="Cliente1">Cliente2</option>
+          <option value="Cliente2">Cliente2</option>
+          <option value="Cliente3">Cliente3</option>
+        </select>
+  
+        <div class='valid-feedback'>Muy bien!</div>
+        <div class='invalid-feedback'>Por favor seleccionar su país de Residencia</div>
+      </div>
+  
+    </div>
+  
+    <!-- Campo: Nombre nuevo-->
+    <div class='col-md-6' id='nombreNuevo'>
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon1'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-person-fill' viewBox='0 0 16 16'>
+            <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/>";
+          </svg>
+        </span>
+        <input type='text' class='form-control' id='nombreNivel2' placeholder= 'Nombre completo' name="nombre" required>
+      <div class='valid-feedback'>Muy bien!</div>
+      <div class='invalid-feedback'>Por favor colocar su nombre completo</div>
+      </div>
+  
+    </div>
+  
+    <!-- Campo: Codigo de Area -->
+    <div class='col-sm-4 col-md-2 enviarCliente registrarCliente'>
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon1'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-phone-flip' viewBox='0 0 16 16'>
+            <path fill-rule='evenodd' d='M11 1H5a1 1 0 0 0-1 1v6a.5.5 0 0 1-1 0V2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6a.5.5 0 0 1-1 0V2a1 1 0 0 0-1-1Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a.5.5 0 0 0-1 0v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2a.5.5 0 0 0-1 0v2ZM1.713 7.954a.5.5 0 1 0-.419-.908c-.347.16-.654.348-.882.57C.184 7.842 0 8.139 0 8.5c0 .546.408.94.823 1.201.44.278 1.043.51 1.745.696C3.978 10.773 5.898 11 8 11c.099 0 .197 0 .294-.002l-1.148 1.148a.5.5 0 0 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2a.5.5 0 1 0-.708.708l1.145 1.144L8 10c-2.04 0-3.87-.221-5.174-.569-.656-.175-1.151-.374-1.47-.575C1.012 8.639 1 8.506 1 8.5c0-.003 0-.059.112-.17.115-.112.31-.242.6-.376Zm12.993-.908a.5.5 0 0 0-.419.908c.292.134.486.264.6.377.113.11.113.166.113.169 0 .003 0 .065-.13.187-.132.122-.352.26-.677.4-.645.28-1.596.523-2.763.687a.5.5 0 0 0 .14.99c1.212-.17 2.26-.43 3.02-.758.38-.164.713-.357.96-.587.246-.229.45-.537.45-.919 0-.362-.184-.66-.412-.883-.228-.223-.535-.411-.882-.571ZM7.5 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1Z'/>
+          </svg>
+        </span>
+        <select class='form-select' id='areaNivel2' name="area" required>
+          <option selected disabled value='' >Área....</option>
+          <option value="+54">+54</option>
+          <option value="+55">+55</option>
+          <option value="+56">+56</option>
+        </select>
+  
+        <div class='valid-feedback'>Muy bien!</div>
+        <div class='invalid-feedback'>Por favor seleccionar el código de área de su país</div>
+      </div>
+  
+    </div>
+  
+    <!-- Campo: Numero de telefono -->
+    <div class='col-sm-8 col-md-4 enviarCliente registrarCliente'>
+      <input type='number' class='form-control' id='telefonoNivel2' placeholder='Numero de telefono' name="telefono" required>
+      <div class='valid-feedback'>Muy bien!</div>
+      <div class='invalid-feedback'>Por favor colocar un número de teléfono válido</div>
+    </div>
+  
+    <!-- Campo: Email -->
+    <div class='col-md-5 registrarCliente'>
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon1'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-envelope' viewBox='0 0 16 16'>
+            <path d='M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z'/>
+          </svg>
+        </span>
+        <input type='email' class='form-control' id='emailNivel2' placeholder='Email' name="email" required>
+        <div class='valid-feedback'>Muy bien!</div>
+        <div class='invalid-feedback'>Por favor colocar un email válido</div>
+      </div>
+  
+    </div>
+  
+    <!-- Campo: Tipo de documento -->
+    <div class='col-sm-4 col-md-3 enviarCliente registrarCliente'>
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon1'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-postcard" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2ZM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4Zm7.5.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7ZM2 5.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5Zm0 2a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5Zm0 2a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1H2.5a.5.5 0 0 1-.5-.5ZM10.5 5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3ZM13 8h-2V6h2v2Z"/>
+          </svg>
+        </span>
+        <select class='form-select' id='tipoDoc' name="tipoDoc" required>
+          <option selected disabled value='' >Tipo de documento....</option>
+          <option value="CC">Documento de identidad</option>
+          <option value="Rut">Pasaporte</option>
+          <option value="V">Licencia de conducir</option>
+        </select>
+  
+        <div class='valid-feedback'>Muy bien!</div>
+        <div class='invalid-feedback'>Por favor seleccionar el tipo de documento</div>
+      </div>
+  
+    </div>
+  
+    <!-- Campo: documento -->
+    <div class='col-sm-8 col-md-4 enviarCliente registrarCliente'>
+      <input type='number' class='form-control' id='documentoNivel2' placeholder='Numero de documento' name="documento" required>
+      <div class='valid-feedback'>Muy bien!</div>
+      <div class='invalid-feedback'>Por favor colocar un número de documento válido</div>
+    </div>
+  
+    <!-- Campo: Pais de residencia -->
+    <div class='col-md-6 enviarCliente registrarCliente'>
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon1'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-map' viewBox='0 0 16 16'>
+            <path fill-rule='evenodd' d='M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z'/>";
+          </svg>
+        </span>
+  
+        <select class='form-select'  name="pais" id="paisClienteN2" required>
+          <option selected disabled value='' >País de residencia</option>
+          <option value="Argentina">Argentina</option>
+          <option value="Brasil">Brasil</option>
+          <option value="Costa Rica">Costa Rica</option>
+        </select>
+  
+        <div class='valid-feedback'>Muy bien!</div>
+        <div class='invalid-feedback'>Por favor seleccionar su país de Residencia</div>
+      </div>
+  
+    </div>
+  
+    <!-- Campo: Ciudad -->
+    <div class='col-md-6 enviarCliente registrarCliente'>
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon1'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/>
+            <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
+          </svg>
+        </span>
+        <input type="text" class='form-control' id='validationCustom03' name="ciudad" placeholder="Ciudad" required>
+        <div class='valid-feedback'>Muy bien!</div>
+        <div class='invalid-feedback'>Por favor indicar una ciudad</div>
+      </div>
+    </div>
+  
+    <!-- Campo: Dirección -->
+    <div class='col-md-12 enviarCliente registrarCliente'>
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon1'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+          </svg>
+        </span>
+        <input type="text" class='form-control' id='direccionNivel2' name="direccion" placeholder="Direccion" required>
+        <div class='valid-feedback'>Muy bien!</div>
+        <div class='invalid-feedback'>Por favor indicar una direccion</div>
+      </div>
+    </div>
+  
+    <!-- Campo: Adjuntar documento -->
+    <div class='col-12 col-md-5 border mx-auto enviarCliente registrarCliente'>
+      <label class="mb-3">Foto del documento de identidad</label> </br>
+      <button type="button" class="btn btn-warning mb-2 float-end">Adjuntar</button>
+  
+      <div class='valid-feedback'>Muy bien!</div>
+      <div class='invalid-feedback'>Por favor adjuntar foto de documento</div>        
+    </div>
+  
+    <!-- Campo: Adjuntar imagen -->
+    <div class='col-12 col-md-5 border mx-auto enviarCliente registrarCliente'>
+      <label class="mb-3">Foto frontal con el documento y nota</label> </br>
+      <button type="button" class="btn btn-warning mb-2 float-end">Adjuntar</button> 
+  
+      <div class='valid-feedback'>Muy bien!</div>
+      <div class='invalid-feedback'>Por favor adjuntar foto de perfil</div>       
+    </div>
+  
+    <!-- Pregunta: Testigo de Jehova -->
+    <div class='col-sm-4'>
+      <label for='validationCustom06' class='form-label'>¿Es Testigo de Jehová?</label><br>
+  
+      <div class='form-check'>
+        <input type='radio' class='form-check-input' id='radioTjNivel2Si' name='radioTj'value="si" required>
+        <label class='form-check-label' for='radioTjNivel2Si' >Si</label>
+      </div>
+  
+      <div class='form-check'>
+        <input type='radio' class='form-check-input' id='radioTjNivel2No' name='radioTj' value="no" required>
+        <label class='form-check-label' for='radioTjNivel2No' >No</label>
+      </div>
+  
+      <div class='invalid-feedback'>Por favor indique si es Testigo de Jehová</div>
+    </div>
+  
+    <!-- Pregunta: Familiar -->
+    <div class='col-sm-4'>
+  
+      <label  class='form-label'>¿Es familiar?</label><br>
+  
+      <div class='form-check'>
+        <input type='radio' class='form-check-input' id='radioFamiliarNivel2Si' name='radioFamiliar' value="si" required>
+        <label class='form-check-label' for='radioFamiliarNivel2Si'>Si</label>
+      </div>
+  
+      <div class='form-check'>
+        <input type='radio' class='form-check-input' id='radioFamiliarNivel2No' name='radioFamiliar' value="no" required>
+        <label class='form-check-label' for='radioFamiliarNivel2No'>No</label>
+      </div>
+  
+      <div class='invalid-feedback'>
+        Por favor indique si es un familiar
+      </div>
+    </div> 
+  
+    <!-- Pregunta: Confiable -->
+    <div class='col-sm-4'>
+  
+      <label  class='form-label'>¿Lo conoce personalmente?</label><br>
+  
+      <div class='form-check'>
+        <input type='radio' class='form-check-input' id='radioConfiableNivel2Si' name='radioConfiable' value="si" required>
+        <label class='form-check-label' for='radioConfiableNivel2Si'>Si</label>
+      </div>
+  
+      <div class='form-check'>
+        <input type='radio' class='form-check-input' id='radioConfiableNivel2No' name='radioConfiable' value="no" required>
+        <label class='form-check-label' for='radioConfiableNivel2No'>No</label>
+      </div>
+  
+      <div class='invalid-feedback'>Por favor indique si es confiable</div>
+    </div>
+  
+    <!-- Terminos y condiciones -->
+    <div class='form-check ms-3 mb-3 enviarCliente registrarCliente'>
+      <input class='form-check-input' onclick="aceptarTerminos" type='checkbox'  id='Check2' name="terminos" value="acepta" required>
+      <a href=# class='text-decoration-none form-check-label' for='invalidCheck' data-bs-toggle='modal' data-bs-target='#Modal2'>
+        Acepto Terminos y Condiciones
+      </a>
+      <div class='invalid-feedback'>
+        Debe aceptar los terminos y condiciones.
+      </div>
+    </div>
+  
+    <!-- Pregunta: Via de envío a cliente -->
+    <div class="text-center" id="compartirFormulario" >
+      <label  class='form-label col-sm-12'>Desea enviar el formulario a su cliente por:</label><br>
+  
+      <div class='col-sm-12 d-flex justify-content-center mx-auto' hidden>
+        <div class='form-check ms-4'>
+          <input type='radio' class='form-check-input' id='radioEnviarWT' name='radioConfiable' value="Whatsapp" required>
+          <label class='form-check-label' for='radioEnviarWT'>Whatsapp</label>
+        </div>
+  
+        <div class='form-check ms-4'>
+          <input type='radio' class='form-check-input' id='radioEnviarTL' name='radioConfiable' value="Telegram" required>
+          <label class='form-check-label' for='radioEnviarTL'>Telegram</label>
+        </div>
+  
+        <div class='invalid-feedback'>Por favor indique una via para enviar el formulario</div>
+      </div>
+    </div>
+  
+    <!-- Modal: Terminos y condiciones -->
+    <div class='modal fade' id='Modal2' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+      <div class='modal-dialog modal-dialog-scrollable'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h5 class='modal-title' id='exampleModalLabel'>Terminos y Condiciones</h5>
+              <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button> 
+          </div>
+          <div class='modal-body'>
+            Terminos y condiciones nivel 2
+            is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+          </div>
+          <div class="modal-footer d-flex justify-content-evenly justify-content-md-end">
+            <button type="button" class="btn btn-outline-secondary" onclick="rechazarTerminos('Check2')" data-bs-dismiss="modal" aria-label='Close'>No Acepto</button>
+            <button type="button" class="btn btn-warning px-4" onclick="aceptarTerminos('Check2')" data-bs-dismiss="modal" aria-label='Close'>Acepto</button>
+          </div>
+        </div>
+      </div>
+    </div>  
+  
+    <!-- Botones -->
+    <div class=' d-grid gap-2 d-sm-flex justify-content-sm-end mb-3 '>
+      <button type='button' class='btn btn-secondary px-5' onclick='advertenciaSalida("formN2")'>Atras</button>
+      <button type='submit' id='enviarForm2' class='btn btn-warning px-5'>
+        <span class="spinner-border spinner-border-sm" id='spinerCarga' role="status" aria-hidden="true" hidden></span>
+        Enviar
+      </button>
+    </div> 
+    
+  </form>
+  

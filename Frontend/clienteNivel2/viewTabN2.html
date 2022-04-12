@@ -1,0 +1,51 @@
+<div class='row p-3 viewsApp viewNivel2 sesionApp' hidden>
+    <div class='col-md-12 mb-2'>
+      <h3>Clientes Nivel 2</h3>
+      <h4>Limites: </h4>
+      <p>Diario: 250$ <br/> Semanal: 750$ <p>
+    </div>
+  </div>
+  
+  <div class='row p-3 viewsApp viewNivel2' hidden>
+    <div class='col-md-12'>
+      <a id='nuevoCliente2' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#modalNivel2' >Nuevo Cliente</a>
+    </div>
+  </div>
+  
+  
+  <!------------------------------------------------------------------------------------>
+                                    <!----Modal: Consulta si es nivel 1---->
+  <!------------------------------------------------------------------------------------>
+  <div class="modal fade" id="modalNivel2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <!-- Pregunta: Cliente nuevo -->
+          <div id="modalAlertError" class="alert alert-danger mt-2 viewsApp" role="alert" hidden></div>
+          <div class= "d-flex justify-content-center mx-auto">
+            <label for='validationCustom06' class='form-label'>¿Es un cliente nivel 1?</label><br>
+  
+            <div class='form-check ms-4'>
+              <input type='radio' class='form-check-input' id='radioClienteNuevoSi' name='radioTj'value="si" required>
+              <label class='form-check-label' for='radioTjNivel2Si' >Si</label>
+            </div>
+  
+            <div class='form-check ms-4'>
+              <input type='radio' class='form-check-input' id='radioClienteNuevoNo' name='radioTj' value="no" required>
+              <label class='form-check-label' for='radioTjNivel2No' >No</label>
+            </div>
+          </div>
+          <p class= "row" id="ConsultaNivel2">Si desea enviar el formulario registro al cliente al cliente presione "Enviar" (Recomendado), sino presione "Registrar"</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary px-4 mx-auto" onclick="validarModal('registrar')">Registrar</button>
+          <button type="button" class="btn btn-warning px-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta" onclick="validarModal('enviar')">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
