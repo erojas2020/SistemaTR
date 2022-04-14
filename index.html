@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-     <?!= include('CSS'); ?>
+     <?!= include('CCS/CSS'); ?>
      
    
   </head>
   <body >
 
-    <?!= include('viewNav'); ?>
+    <?!= include('Nav/viewNav'); ?>
     <div class="row bg-light shadow-lg mb-3 sesionApp" id="nombreUsuario" hidden>
       <div class="col ms-4 ps-4 mt-4 py-0 text-uppercase " id="user">
       </div>
@@ -30,12 +30,12 @@
         <!------------------------------------------------------------------------------------>
                                   <!----Formulario login---->
         <!------------------------------------------------------------------------------------>
-        <?!= include('viewLogin'); ?>
+        <?!= include('Login/viewLogin'); ?>
 
         <!------------------------------------------------------------------------------------>
                               <!-- Formulario: Contraseña nueva -->
         <!------------------------------------------------------------------------------------>
-         <?!= include('viewClaveNueva'); ?>
+         <?!= include('Clave nueva/viewClaveNueva'); ?>
 
         <!------------------------------------------------------------------------------------>
                                   <!-- Contenido principal -->
@@ -50,8 +50,8 @@
             <!------------------------------------------------------------------------------------>
                                       <!-- Encabezado de tablas -->
             <!------------------------------------------------------------------------------------>
-            <?!= include('viewTabN1'); ?>
-            <?!= include('viewTabN2'); ?>
+            <?!= include('Cliente nivel 1/viewTabN1'); ?>
+            <?!= include('Cliente nivel 2/viewTabN2'); ?>
             
             <!----Tabla---->
             <div id="tabla" class="row table-responsive viewsApp sesionApp">
@@ -61,17 +61,17 @@
           <!------------------------------------------------------------------------------------>
                                     <!----Formulario nivel 1---->
           <!------------------------------------------------------------------------------------>
-          <?!= include('viewFormN1'); ?>
+          <?!= include('Cliente nivel 1/viewFormN1'); ?>
 
           <!------------------------------------------------------------------------------------>
                                     <!----Formulario nivel 2---->
           <!------------------------------------------------------------------------------------>
-          <?!= include('viewFormN2'); ?>
+          <?!= include('Cliente nivel 2/viewFormN2'); ?>
 
           <!------------------------------------------------------------------------------------>
                                 <!-- Formulario: Olvide o Cambio contraseña -->
           <!------------------------------------------------------------------------------------>
-          <?!= include('viewCambioClave'); ?> 
+          <?!= include('Cambio clave/viewCambioClave'); ?> 
           <!------------------------------------------------------------------------------------>
                                     <!----Modal: respuesta del Backend---->
           <!------------------------------------------------------------------------------------>  
@@ -114,13 +114,13 @@
         </div>
 
         <?!= include('controllerIndex'); ?>
-        <?!= include('controllerNav'); ?>
-        <?!= include('controllerLogin'); ?>
-        <?!= include('controllerFormN1'); ?>
-        <?!= include('controllerTabN2'); ?>
-        <?!= include('controllerFormN2'); ?>      
-        <?!= include('controllerClaveNueva'); ?>
-        <?!= include('ControllerCambioClave'); ?>
+        <?!= include('Nav/controllerNav'); ?>
+        <?!= include('Login/controllerLogin'); ?>
+        <?!= include('Cliente nivel 1/controllerFormN1'); ?>
+        <?!= include('Cliente nivel 2/controllerTabN2'); ?>
+        <?!= include('Cliente nivel 2/controllerFormN2'); ?>      
+        <?!= include('Clave nueva/controllerClaveNueva'); ?>
+        <?!= include('Cambio clave/ControllerCambioClave'); ?>
       </div>
   </body>
 </html>
