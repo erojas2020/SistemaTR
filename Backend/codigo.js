@@ -15,7 +15,7 @@ function doGet(e){
   var template = HtmlService.createTemplateFromFile('index');
   var html = template.evaluate()
     .setTitle('Transferencias Rojas') // Set Title 
-    .setFaviconUrl('https://www.gstatic.com/images/icons/material/product/2x/apps_script_64dp.png')
+    .setFaviconUrl('https://cdn-icons-png.flaticon.com/512/61/61108.png')
     .setSandboxMode(HtmlService.SandboxMode.IFRAME) //This method now has no effect — previously it set the sandbox mode used for client-side scripts
     .addMetaTag('viewport', 'width=device-width, initial-scale=1') // It is very important tag for Responsive 
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL) // Sets the state of the page's X-Frame-Options header, which controls clickjacking prevention.
@@ -26,3 +26,8 @@ function doGet(e){
 function include ( fileName ){
   return HtmlService.createHtmlOutputFromFile( fileName ).getContent();
 }
+
+
+
+
+ 
