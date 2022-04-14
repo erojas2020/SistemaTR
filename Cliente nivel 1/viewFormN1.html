@@ -1,0 +1,186 @@
+<form id="formularioNivel1" name="formularioNivel1" class="row g-3 ms-2 needs-validation viewsApp sesionApp" onsubmit="validarFormClienteNivel1(this)" novalidate hidden >
+
+  <!-- Encabezado-->
+  <div class='col-md-12 p3 mb-3'>
+    <h4>Nuevo Cliente Nivel 1</h4>
+  </div>
+
+  <!-- Usuario -->
+  <input type='text' class='form-control' id='usuarioNivel1' placeholder= 'Nombre completo' name="usuarioNivel1" hidden>
+
+    <!-- NombreUsuario -->
+  <input type='text' class='form-control' id='nombreUserNivel1' placeholder= 'Nombre completo' name="nombreUserNivel1" hidden>
+
+  <!-- Campo: Nombre -->
+  <div class='col-md-6'>
+    <div class='input-group'>
+      <span class='input-group-text' id='basic-addon1'>
+        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-person-fill' viewBox='0 0 16 16'>
+          <path d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/>";
+        </svg>
+      </span>
+      <input type='text' class='form-control' id='nombreNivel1' placeholder= 'Nombre completo' name="nombre" required>
+    <div class='valid-feedback'>Muy bien!</div>
+    <div class='invalid-feedback'>Por favor colocar su nombre completo</div>
+    </div>
+
+  </div>
+
+  <!-- Campo: Pais de residencia -->
+  <div class='col-md-6'>
+    <div class='input-group'>
+      <span class='input-group-text' id='basic-addon1'>
+        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-map' viewBox='0 0 16 16'>
+          <path fill-rule='evenodd' d='M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z'/>";
+        </svg>
+      </span>
+      <select class='form-select icon-menu' name="pais" id="pais" required>
+        <option selected disabled value='' >País de residencia</option>
+      </select>
+      <div class='valid-feedback'>Muy bien!</div>
+      <div class='invalid-feedback'>Por favor seleccionar su país de Residencia</div>
+    </div>
+
+  </div>
+
+  <!-- Campo: Codigo de Area -->
+  <div class='col-sm-4 col-md-3'>
+    <div class='input-group'>
+      <span class='input-group-text' id='basic-addon1'>
+        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-phone-flip' viewBox='0 0 16 16'>
+          <path fill-rule='evenodd' d='M11 1H5a1 1 0 0 0-1 1v6a.5.5 0 0 1-1 0V2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6a.5.5 0 0 1-1 0V2a1 1 0 0 0-1-1Zm1 13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a.5.5 0 0 0-1 0v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2a.5.5 0 0 0-1 0v2ZM1.713 7.954a.5.5 0 1 0-.419-.908c-.347.16-.654.348-.882.57C.184 7.842 0 8.139 0 8.5c0 .546.408.94.823 1.201.44.278 1.043.51 1.745.696C3.978 10.773 5.898 11 8 11c.099 0 .197 0 .294-.002l-1.148 1.148a.5.5 0 0 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2a.5.5 0 1 0-.708.708l1.145 1.144L8 10c-2.04 0-3.87-.221-5.174-.569-.656-.175-1.151-.374-1.47-.575C1.012 8.639 1 8.506 1 8.5c0-.003 0-.059.112-.17.115-.112.31-.242.6-.376Zm12.993-.908a.5.5 0 0 0-.419.908c.292.134.486.264.6.377.113.11.113.166.113.169 0 .003 0 .065-.13.187-.132.122-.352.26-.677.4-.645.28-1.596.523-2.763.687a.5.5 0 0 0 .14.99c1.212-.17 2.26-.43 3.02-.758.38-.164.713-.357.96-.587.246-.229.45-.537.45-.919 0-.362-.184-.66-.412-.883-.228-.223-.535-.411-.882-.571ZM7.5 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1Z'/>
+        </svg>
+      </span>
+      <select class='form-select' name="area" id="areaNivel1"required>
+        <option selected disabled value='' >Área....</option>
+      </select>
+
+      <div class='valid-feedback'>Muy bien!</div>
+      <div class='invalid-feedback'>Por favor seleccionar el código de área de su país</div>
+    </div>
+
+  </div>
+
+  <!-- Campo: Numero de telefono -->
+  <div class='col-sm-8 col-md-4'>
+    <input type='number' class='form-control' id='telefonoNivel1' placeholder='Numero de telefono' name="telefono" required>
+    <div class='valid-feedback'>Muy bien!</div>
+    <div class='invalid-feedback'>Por favor colocar un número de teléfono válido</div>
+  </div>
+
+  <!-- Campo: Email -->
+  <div class='col-md-5'>
+    <div class='input-group'>
+      <span class='input-group-text' id='basic-addon1'>
+        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-envelope' viewBox='0 0 16 16'>
+          <path d='M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z'/>
+        </svg>
+      </span>
+      <input type='email' class='form-control' id='emailNivel1' placeholder='Email' name="email" required>
+      <div class='valid-feedback'>Muy bien!</div>
+      <div class='invalid-feedback'>Por favor colocar un email válido</div>
+    </div>
+  </div>
+
+  <!-- Pregunta: Testigo de Jehova -->
+  <div class='col-sm-4'>
+    <label for='validationCustom06' class='form-label'>¿Es Testigo de Jehová?</label><br>
+
+    <div class='form-check'>
+      <input type='radio' class='form-check-input' id="TJSiNivel1" name='radioTj'value="si" required>
+      <label class='form-check-label' for='validationFormCheck2' >Si</label>
+    </div>
+
+    <div class='form-check'>
+      <input type='radio' class='form-check-input' id='TJNoNivel1' name='radioTj' value="no" required>
+      <label class='form-check-label' for='validationFormCheck3' >No</label>
+    </div>
+
+    <div class='invalid-feedback'>Por favor indique si es Testigo de Jehová</div>
+  </div>
+
+  <!-- Pregunta: Familiar -->
+  <div class='col-sm-4'>
+
+    <label for='validationCustom06' class='form-label'>¿Es familiar?</label><br>
+
+    <div class='form-check'>
+      <input type='radio' class='form-check-input' id='familiarSiNivel1' name='radioFamiliar' value="si" required>
+      <label class='form-check-label' for='validationFormCheck4'>Si</label>
+    </div>
+
+    <div class='form-check'>
+      <input type='radio' class='form-check-input' id='familiarNoNivel1' name='radioFamiliar' value="no" required>
+      <label class='form-check-label' for='validationFormCheck5'>No</label>
+    </div>
+
+    <div class='invalid-feedback'>Por favor indique si es un familiar</div>
+  </div> 
+
+  <!-- Pregunta: Confiable -->
+  <div class='col-sm-4'>
+
+    <label for='validationCustom06' class='form-label'>¿Lo conoce personalmente?</label><br>
+
+    <div class='form-check'>
+      <input type='radio' class='form-check-input' id='confiableSiNivel1' name='radioConfiable' value="si" required>
+      <label class='form-check-label' for='validationFormCheck5'>Si</label>
+    </div>
+
+    <div class='form-check'>
+      <input type='radio' class='form-check-input' id='radioConfiableNivel1No' name='radioConfiable' value="no" required>
+      <label class='form-check-label' for='radioConfiableNivel1No'>No</label>
+    </div>
+
+    <div class='invalid-feedback'>Por favor indique si es confiable</div>
+  </div>
+
+  <!-- Terminos y condiciones -->
+  <div class='form-check ms-3 mb-3'>
+    <input class='form-check-input' onclick="aceptarTerminos" type='checkbox'  id='terminosNivel1' name="terminos" value="acepta" required>
+    <a href=# class='text-decoration-none form-check-label' for='invalidCheck' data-bs-toggle='modal' data-bs-target='#Modal1'>
+      Acepto Terminos y Condiciones
+    </a>
+    <div class='invalid-feedback'>
+      Debe aceptar los terminos y condiciones.
+    </div>
+  </div>
+
+  <!-- Modal: Terminos y condiciones -->
+  <div class='modal fade' id='Modal1' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+    <div class='modal-dialog modal-dialog-scrollable'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h5 class='modal-title' id='exampleModalLabel'>Terminos y Condiciones</h5>
+            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button> 
+        </div>
+        <div class='modal-body'>
+          <p class=""><span class="fw-bold">I. Datos: </span>  Declaración confirmando que los datos proporcionados son reales y brindando la seguridad que corresponden con el cliente registrado.</p>
+          <p class=""><span class="fw-bold">II. Uso del servicio: </span>  El promotor se hace responsable por el uso que éste le dé al servicio de remesas. Al registrarlo como <span class="fw-bold"> Recomendado Nivel 1</span> declara: Se trata de un cliente en el cual confía y tiene la seguridad de que le dará un uso honesto a dicho servicio.</p>
+          <p class=""> 	El cliente solo puede realizar envíos desde su país de residencia actual. Sólo debe transferir desde una cuenta a su nombre, siendo él mismo el titular, en caso de no poseer cuenta a su nombre y realice un depósito en efectivo, en el voucher o comprobante de depósito debe llevar la descripción correspondiente:</p>
+          <p class=""> Envío de remesa: </br>
+De: (Nombre del cliente recomendado)*</br>
+Para: (Nombre de la persona que recibe en el país destino)*</br>
+<span class="fw-bold">*Lo descrito en paréntesis debe incluir los nombres que correspondan</span></p>
+          <p class=""> En caso contrario, Transferencias Rojas se reserva el derecho de rechazar dicha solicitud de no apegarse a las normativas descritas y en un lapso de cuatro (4) horas máximo, sería devuelta a la cuenta origen.</p>
+          <p class=""><span class="fw-bold">III. Límites:</span> Lo establecido para un cliente <span class="fw-bold">Recomendado Nivel 1</span>, es de 60$ USD diario y 100$ USD semanal, o el equivalente en moneda nacional.</p>
+          <p class=""><span class="fw-bold">IV. Tiempo:</span> Las transferencias se realizarán en el menor tiempo posible. Sin embargo, tome en cuenta los posibles lapsos que pueden variar entre:</p>
+          <p class="">Condiciones óptimas: menos de 1 hora.</br>
+Condiciones normales: 1:30 horas.</br>
+Condiciones atípicas: Más de 2 horas.</br></p>
+          <p class=""> Las condiciones pueden variar por factores de retrasos que escapen de nuestro control como fallas de plataforma en los bancos o del servicio de internet. Sin embargo, aclaramos que no es lo típico, habitualmente las condiciones suelen ser favorables en la mayoría de las veces.<p>
+        </div>
+        <div class="modal-footer d-flex justify-content-evenly justify-content-md-end" id="modalFooter">
+          <button type="button" class="btn btn-outline-secondary px-4" onclick="rechazarTerminos('terminosNivel1')" data-bs-dismiss="modal" aria-label='Close'>No Acepto</button>
+          <button type="button" class="btn btn-warning px-5" onclick="aceptarTerminos('terminosNivel1')" data-bs-dismiss="modal" aria-label='Close'>Acepto</button>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+  <!-- Botones -->
+  <div class=' d-grid gap-2 d-sm-flex justify-content-sm-end mb-3 '>
+    <button type='button' class='btn btn-secondary px-5' onclick='advertenciaSalida("formN1")'>Atras</button>
+    <button type='submit' id='enviarForm1' class='btn btn-warning px-5'> Enviar </button>
+  </div>           
+</form>

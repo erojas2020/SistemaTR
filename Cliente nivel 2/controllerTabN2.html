@@ -1,0 +1,42 @@
+<script>
+  var clienteNivel1Si = document.getElementById("radioClienteNuevoSi")
+  var clienteNivel1No = document.getElementById("radioClienteNuevoNo")
+  var alerta = document.getElementById("modalAlertError")
+
+  /*Valida que se responda la pregunta si es nivel 1
+    Si no a sido respondida se envia alerta
+    Al ser resopndida cierra el modal
+    muestra el campo nombre que corresponde segun la elección*/
+  function validarModal(tipoForm){
+    
+    if ((clienteNivel1Si.checked == false)&&(clienteNivel1No.checked == false)){
+      ocultarElemento("false", "modalAlertError" );
+      alerta.innerHTML = "Indique si es un cliente Nivel 1"
+    }else {
+      alerta = ""
+      ocultarElemento("true", "modalAlertError" );
+      activarModal("false", "#modalNivel2");
+      mostrarContenido('formN2', 'false')
+
+      //Si es un cliente nuevo, muestra el campo que corresponde
+      if (clienteNivel1Si.checked== true){
+        ocultarElemento("true", "nombreNuevo")
+        ocultarElemento("false","promoverNivel1")
+
+      }else if (clienteNivel1No.checked == true){
+        ocultarElemento("false", "nombreNuevo")
+        ocultarElemento("true","promoverNivel1")  
+      }
+
+      if (tipoForm == "registrar"){
+        ocultarElementos("false", ".registrarCliente")  
+        ocultarElemento("true", "compartirFormulario")
+
+      } else if (tipoForm == "enviar") {
+        ocultarElementos("true", ".enviarCliente")
+        ocultarElemento("false", "compartirFormulario")
+
+      }
+    }  
+  }
+</script>
