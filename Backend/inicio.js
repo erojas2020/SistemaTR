@@ -133,6 +133,20 @@ function validarLogin(email, contrasena){
  return false
  }
 
+/*
+  Valida Email del usuario su existe requiere Email
+
+  retorna True o False
+*/
+ function validarEmail(email){
+  var resultado = Bakendtr.validarEmail(email);  
+
+  return resultado;
+ }
+
+
+
+   
 
 
 

@@ -1,0 +1,32 @@
+<script>
+function indexModelOlvidoClave (email){
+  
+   verificarEmailExiste(email);
+}
+
+/*
+Recibe paramentro Email
+verifica con Bakend si el email existe si la respuesta es true 
+
+*/
+async function verificarEmailExiste(email){
+  var resultado = await google.script.run
+    .withSuccessHandler( respuestaBackendTrueOlvidoClave )
+    .withFailureHandler( respuestaBackendFalseOlvidoClave )
+    .validarEmail(email)
+ 
+}
+
+function respuestaBackendTrueOlvidoClave(user){
+  activarSpiner("false");
+  activarModal("false", "#respuestaBackend");
+  console.log("Datos usuario "+user);
+  mostrarContenido("olvideClave");
+
+}
+
+function respuestaBackendFalseOlvidoClave(){
+  alert("Respuesta False de Bakend")
+}
+
+</script>

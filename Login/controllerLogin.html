@@ -7,8 +7,10 @@
     
     llamadoDesde= "olvideClave" //Indica desde donde es llamado el form de cambiarClave
     
-    asegurarEmail();
-  })
+    let email = formularioInicio.email.value;
+    indexControllerOlvidoClave(email);
+    
+  });
 
   function enfoInicialLogin(){
     enfocarCampo("imputInicioEmail");
@@ -86,7 +88,7 @@ async function validarUsuarioBakend(email, contrasena){
   /*Aqui codigo que valide si el usuario existe
     1. Simulación con un array y un bucle
     nota: borrar el array y bucle al conectar con Backend*/
-    var emails = ["efrainrojas19@gmail.com", "jwrojas77@gmail.com", "transferenciasrojas@gmail.com", "leduar41@gmail.com"]
+   /* var emails = ["efrainrojas19@gmail.com", "jwrojas77@gmail.com", "transferenciasrojas@gmail.com", "leduar41@gmail.com"]
     emails.forEach(function(i) {
       switch (i){
         case email:
@@ -94,7 +96,7 @@ async function validarUsuarioBakend(email, contrasena){
       }
       
     });
-
+*/
   var resultado =  
   await google.script.run.
   withSuccessHandler(validarRespuestaBakendTrue).
@@ -113,12 +115,12 @@ async function validarUsuarioBakend(email, contrasena){
 function validarRespuestaBakendTrue(datos){
   activarSpiner("false", "login")
   
-  if(existe==false){
+  /*if(existe==false){
       activarSpiner("false");
       ocultarElementos("false", ".respuestaNegativa");
       document.getElementById("msjBackend").innerHTML = "Su Email aun no a sido autorizado, comuniquese con Atención TR";
 
-  }else if(datos.newUser==true){
+  }else*/ if(datos.newUser==true){
     llamadoDesde = "claveNueva"
     activarModal("false", "#respuestaBackend")
     mostrarContenido("claveNueva", "false");

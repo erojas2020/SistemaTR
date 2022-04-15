@@ -1,0 +1,21 @@
+
+<script>
+function indexControllerOlvidoClave(email){
+  if(email==""){
+    /*activarSpiner("false")
+    ocultarElementos("false", ".respuestaNegativa");
+    document.getElementById("msjBackend").innerHTML = "Debe indicar un correo"
+    activarModal('true', "#respuestaBackend")*/
+    alertaError("true","Debe indicar un correo");
+  }else{
+      alertaError("false", "");
+      activarSpiner("true", "default");
+    indexModelOlvidoClave(email);
+  }
+  
+
+}
+
+
+
+</script>
