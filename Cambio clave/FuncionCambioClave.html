@@ -1,0 +1,44 @@
+<script>
+//Validacion de longitud de clave
+  function cambioClaveLongitud(){
+    
+    if ((inputClaveAnterior.value.length < 8) && (inputClaveAnterior.value != "")){      
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres")
+      inputClaveAnterior.classList.add("border-danger");
+      enfocarCampo("ClaveNuevaAnterior");
+    }else if ((inputCambioClave.value.length < 8) && (inputCambioClave.value != "")){      
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres")
+      inputCambioClave.classList.add("border-danger");
+      enfocarCampo("ClaveNuevaContrasena");
+    }else if ((inputConfiCambioClave.value.length < 8) && (inputConfiCambioClave.value != "")){      
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres")
+      inputConfiCambioClave.classList.add("border-danger");
+      enfocarCampo("ClaveNuevaConfirmar");
+    }else if ((inputCambioClave.value != "") && (inputConfiCambioClave.value != "")){
+      if (inputCambioClave.value != inputConfiCambioClave.value){
+        alertaError ("true", "Su contraseña no coincide con la confirmación");
+        inputCambioClave.classList.add("border-danger");
+        enfocarCampo("ClaveNuevaConfirmar"); 
+      }else{
+        alertaError ("false", "");
+        inputCambioClave.classList.remove('border-danger');
+        inputConfiCambioClave.classList.remove('border-danger');
+        inputClaveAnterior.classList.remove('border-danger');
+      }
+    }else {
+      inputCambioClave.classList.remove('border-danger');
+      inputConfiCambioClave.classList.remove('border-danger');
+      inputClaveAnterior.classList.remove('border-danger');
+    }
+  }
+
+  function claveNuevaInsertarPreguntas(preguntas){    
+    let htmlPregunta1 = document.getElementById("CambioClavePreguntaI")
+    let htmlPregunta2 = document.getElementById("CambioClavepreguntaII")
+
+    htmlPregunta1.innerHTML = preguntas.pregunta1;
+    htmlPregunta2.innerHTML = preguntas.pregunta2;
+    showControllerCambioClave();
+  }
+
+</script>  

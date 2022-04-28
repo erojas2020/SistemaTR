@@ -1,4 +1,4 @@
-<form class="row g-3 needs-validation viewsApp sesionApp" id="preguntasCambioClave" name="PreguntasCambioClave" onsubmit="validarCampos(this)" novalidate hidden>
+<form class="row g-3 needs-validation viewsApp sesionApp" id="preguntasCambioClave" name="PreguntasCambioClave" onsubmit="indexControllerCambioClave(this)" novalidate hidden>
 
   <!-- Encabezado del formulario -->
   <h4 class="text-center p-2" id="encabezadoPreguntas"></h4>
@@ -6,25 +6,25 @@
   <!------------------------------------------------------------------------------------->  
                         <!-- Primera parte: Preguntas -->
   <!------------------------------------------------------------------------------------->
-  <p> Responda las siguientes preguntas de seguridad para restablecer su clave</p>
+  <p> Responda las siguientes preguntas de seguridad para cambiar su clave</p>
   
   <!-- Pregunta de seguridad 1 -->
   <div class='mb-4 col-md-6' id="respuesta1">
-    <p class="fw-bold" id="preguntaI"> Preguna 1</p>
-    <input type='text' class='form-control borde' id='inputRespuesta1' placeholder='respuesta' name="inputRespuesta1" required>
+    <p class="fw-bold" id="CambioClavePreguntaI"> Preguna 1</p>
+    <input type='text' class='form-control borde' id='ClaveNuevaRespuesta1' placeholder='respuesta' name="inputRespuesta1" required>
     <div class='invalid-feedback'>Por favor colocar una respuesta válida</div>
   </div>
 
   <!-- Pregunta de seguridad 2 -->
   <div class='mb-4 col-md-6' id="respuesta2">
-    <p class="fw-bold" id="preguntaII">Pregunta 2</p>
-    <input type='text' class='form-control borde' id='inputRespuesta2' placeholder='respuesta' name="inputRespuesta2" required>
+    <p class="fw-bold" id="CambioClavepreguntaII">Pregunta 2</p>
+    <input type='text' class='form-control borde' id='ClaveNuevaRespuesta2' placeholder='respuesta' name="inputRespuesta2" required>
     <div class='invalid-feedback'>Por favor colocar una respuesta válida</div>
   </div>
 
   <!-- Bontones -->
   <div class="d-grid gap-2 d-sm-flex justify-content-sm-end mb-3">
-    <button type="button" class="btn btn-secondary px-5" onclick="advertenciaSalida('cambioClave')" id="btnPreguntasOlvide" >Cancelar</button>
+    <button type="button" class="btn btn-secondary px-5" onclick="activarModal('advertencia', '¿Esta seguro de salir sin cambiar su contraseña?')" id="btnPreguntasOlvide" >Cancelar</button>
 
     <button type="submit" class="btn btn-warning px-5" >
       <span class="spinner-border spinner-border-sm me-2" id='spinerCambioClave' role="status" aria-hidden="true" hidden></span>siguiente
@@ -35,15 +35,15 @@
 <!------------------------------------------------------------------------------------->    
                         <!-- Segunda parte: Cambio de clave -->
 <!------------------------------------------------------------------------------------->
-<form class="row g-3 needs-validation viewsApp sesionApp" id="formRestablecerClave" name="formRestablecerClave" onsubmit="valCampClaveNueva(this)" novalidate hidden>
+<form class="row g-3 needs-validation viewsApp sesionApp" id="formCambiarClave" name="formRestablecerClave" onsubmit="indexControllerCambioClave(this)" novalidate hidden>
 
     <!-- Encabezado del formulario -->
     <h4 class="text-center p-2" id="encabezadoClaves"></h4>
     
-    <p> A continuación crea una nueva clave para su cuenta</p>
+    <p> A continuación confirme su clave anterior y luego cree a nueva clave para su cuenta <span class="fw-bold"> de minimo 8 caracteres</span></p>
 
     <!-- Campo: Contraseña anterior -->
-    <div class='mb-3 col-md-6' id="claveAnterior" hidden>
+    <div class='mb-3 col-md-6' id="claveAnterior">
       <div class='input-group'>
         <span class='input-group-text' id='basic-addon1'>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
@@ -51,7 +51,7 @@
             <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
           </svg>
         </span>
-        <input type='password' class='form-control d-block password bordes' id='imputclaveAnterior' name="imputclaveAnterior" placeholder='Contraseña anterior' onblur="validarLongitudClave()" required>
+        <input type='password' class='form-control d-block password bordes' id='ClaveNuevaAnterior' name="imputclaveAnterior" placeholder='Contraseña anterior' onblur="cambioClaveLongitud()" required>
         <div class='invalid-feedback'>Por favor colocar una contraseña válida</div>
       </div>
     </div>
@@ -67,7 +67,7 @@
               <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
             </svg>
           </span>
-          <input type='password' class='form-control d-block password bordes' id='imputCambioContrasena' name="imputCambioContrasena" placeholder='Contraseña nueva' onblur="validarLongitudClave()" required>
+          <input type='password' class='form-control d-block password bordes' id='ClaveNuevaContrasena' name="imputCambioContrasena" placeholder='Contraseña nueva' onblur="cambioClaveLongitud()" required>
           <div class='invalid-feedback'>Por favor colocar una contraseña válida</div>
         </div>
       </div>
@@ -81,7 +81,7 @@
               <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
             </svg>
           </span>
-          <input type='password' class='form-control password bordes' id='imputConfirmarCambioContrasena' placeholder='Confirme contraseña' name="imputConfirmarCambioContrasena" onblur="validarLongitudClave()" required>
+          <input type='password' class='form-control password bordes' id='ClaveNuevaConfirmar' placeholder='Confirme contraseña' name="imputConfirmarCambioContrasena" onblur="cambioClaveLongitud()" required>
           <div class='invalid-feedback'>Por favor colocar una contraseña válida</div>
         </div>
       </div>
@@ -97,7 +97,7 @@
 
     <!-- Bontones -->
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-end mb-3">
-      <button type="button" class="btn btn-secondary px-5" onclick="advertenciaSalida('olvideClave')" id="btnOlvideClave" >Cancelar</button>
+      <button type="button" class="btn btn-secondary px-5" onclick="activarModal('advertencia', '¿Esta seguro de salir sin cambiar su contraseña?')" id="btnOlvideClave" >Cancelar</button>
 
       <button type="submit" class="btn btn-warning px-5">Aceptar</button>
     </div>

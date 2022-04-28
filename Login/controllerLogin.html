@@ -3,16 +3,12 @@
   var olvideContrasena = document.getElementById("olvideContraseña")
   olvideContrasena.addEventListener("click", 
   function(){
-    event.preventDefault();
+    event.preventDefault(); 
+    vistaActual= "login" //Indica la vista actual
+    let email = formularioInicio.email.value
+    indexControllerOlvidoClave(email);
     
-    llamadoDesde= "olvideClave" //Indica desde donde es llamado el form de cambiarClave
-    
-    asegurarEmail();
-  })
-
-  function enfoInicialLogin(){
-    enfocarCampo("imputInicioEmail");
-  }
+  });
 
   var user = "";
   var nombre = "";
@@ -27,8 +23,8 @@
         validarUsuarioBakend(email, contrasena);
     }
 
-      formularioNivel1.usuarioNivel1.value = datosUser.email.value;
-      formularioNivel2.usuarioNivel2.value = datosUser.email.value;
+    /*formularioNivel1.usuarioNivel1.value = datosUser.email.value;
+    formularioNivel2.usuarioNivel2.value = datosUser.email.value;*/
   
   }
 
@@ -75,31 +71,23 @@
     Cuando el usuario no es nuevo y los datos son incorrectos retorna FALSE
 
    */
-var existe = false //Variable de simulacion de respuesta del Backend
+
 async function validarUsuarioBakend(email, contrasena){
-  activarSpiner("true", "login")
+  activarModal("spiner", "Verificando usuario...")
   var datosUser = {
     email: email,
     contrasena: contrasena
   }
-
-  /*Aqui codigo que valide si el usuario existe
-    1. Simulación con un array y un bucle
-    nota: borrar el array y bucle al conectar con Backend*/
-    var emails = ["efrainrojas19@gmail.com", "jwrojas77@gmail.com", "transferenciasrojas@gmail.com", "leduar41@gmail.com"]
-    emails.forEach(function(i) {
-      switch (i){
-        case email:
-          existe = true;
-      }
-      
-    });
 
   var resultado =  
   await google.script.run.
   withSuccessHandler(validarRespuestaBakendTrue).
   withFailureHandler(validarRespuestaBakendFalse).
   controllerLoginBackend(datosUser);
+}
+
+function validarRespuestaBakendFalse(error){
+  activarModal("respuestaNegativa", error);
 }
 
 
@@ -111,65 +99,28 @@ async function validarUsuarioBakend(email, contrasena){
   3- Si los datos son correctos, lo direcciona a Home. 
 */
 function validarRespuestaBakendTrue(datos){
-  activarSpiner("false", "login")
-  
-  if(existe==false){
-      activarSpiner("false");
-      ocultarElementos("false", ".respuestaNegativa");
-      document.getElementById("msjBackend").innerHTML = "Su Email aun no a sido autorizado, comuniquese con Atención TR";
-
-  }else if(datos.newUser==true){
+  if(datos.newUser==true){
     llamadoDesde = "claveNueva"
-    activarModal("false", "#respuestaBackend")
+    activarModal("false")
     mostrarContenido("claveNueva", "false");
 
   }else if (datos==false){
-    ocultarElementos("false", ".respuestaNegativa");
-    document.getElementById("msjBackend").innerHTML = "Datos no validos"
-    activarModal("true", "#respuestaBackend");
+    activarModal("respuestaNegativa", "Datos no validos");
 
   }else if (datos){
-    nombre = datos.nombre;
-    user = datos.email;
-    console.log(datos.nombre, datos.perfil);
-    mostrarInicio(datos.nombre, datos.perfil);  
+    activarModal("false");
+    alertaError("false", "");
+    mostrarUsuario(datos.nombre);  
+    habilitarAcessos(datos.perfil);
+    mostrarContenido("home");
   }
-    /*Reinicio de la variable q simula respuesta del backend
-      Borrar al conectar con Backend*/
-    existe = false
-}
-
-
-function validarRespuestaBakendFalse(error){
-  ocultarElementos("false", ".respuestaNegativa");
-  document.getElementById("msjBackend").innerHTML = error
-  activarModal("true", "#respuestaBackend");
-}
-
-
-function mostrarInicio (nombre, perfil){
-    //console.log(usuario);
-   formularioNivel1.nombreUserNivel1.value = nombre;
-    ocultarElementoInicio();
-    mostrarBienvenida(nombre);  
-    habilitarAcessos(perfil);
-
-}
-
-
-function ocultarElementoInicio(){
-  activarModal("false", "#respuestaBackend");
-  ocultarElemento("false", "botonResponsi");
-  ocultarElemento("true", "formularioInicio");
-  alertaError("false", "");
+  
 }
 
     
-function mostrarBienvenida (usuario){
-  var title = "<h6><span class = 'fw-bold'>Usuario:</span> "+ usuario + "</h6></br>";
-  var cont = document.getElementById('user');
-  cont.innerHTML = title;
-  ocultarElemento("false", "nombreUsuario");
+function mostrarUsuario (usuario){
+  var htmlUser = document.getElementById('user');
+  htmlUser.innerHTML = usuario;
 
 }
 
@@ -183,19 +134,8 @@ function habilitarAcessos(perfil){
     ocultarElementos("false", ".viewPromotor");
 
   }else if (perfil == "representante"){
-    alert("mostrando elementos de representante")
     ocultarElementos("false", ".viewRepresentante");
-
   }
 }
-
- 
-function mostrarFormClaveNueva(){
-    limpiarForm("formClaveNueva")
-    ocultarElemento("true", "formularioInicio" );
-    ocultarElemento("false", "formClaveNueva" );
-
-}
-
 
 </script>

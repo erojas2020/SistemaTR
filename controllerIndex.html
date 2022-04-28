@@ -2,87 +2,91 @@
 /*---------------------------------------------------------------------------------------------------
                                   Controller Visual
 -----------------------------------------------------------------------------------------------------*/
+
+/* Cambios luis
 /*Gestor de Contenido
     1. Colapsa boton en modo responsi
     2. Oculta todas las vistas de la App
-    3. Muestra el elemento solicitado*/
+    3. Almacena la vista actual
+    4. Muestra el elemento solicitado*/
+  var vistaActual = "";   
   async function mostrarContenido(view, colapse){
     //Colapsa boton en modo responsi
-    if ((window.innerWidth <= '990') && (colapse == "true")){
+    if (colapse == "true"){
       clickBoton("botonResponsi");
     }
 
     //Oculta todas las vistas de la App
     ocultarElementos("true", ".viewsApp");
-    alertaError("false", "")
-    
+    vistaActual = view; //Indica la vista actual
+
     //Muestra el elemento solicitado
     //form clave nueva
-    if (view == "login"){
-      limpiarCampo("imputInicioContrasena");
-      ocultarElemento('false', 'formularioInicio' );
-      document.getElementById("imputInicioContrasena").type ="password"
-      enfocarCampo("imputInicioContrasena");
-
-    }else if (view == "home"){
-      alertaError("false", "");  
-
-    }else if (view == "claveNueva"){
-      limpiarForm("formClaveNueva");
-      ocultarElemento("false", "formClaveNueva" );
-      alertaError("false", "");  
-
-      //Clientes nivel 1
-    }else if (view == "olvideClave"){
-      limpiarForm("formRestablecerClave");
-      olvideClave("olvide", "preguntas");
-      document.getElementById("inputsClave").classList.add ("row")
-      document.getElementById("inputsClave").classList.remove("col-md-6")
-      document.getElementById("inputsClave").classList.add ("col-md-12")
-      document.getElementById("cambioContraseña").classList.remove("col-md-12")
-      document.getElementById("cambioContraseña").classList.add ("col-md-6")
-      document.getElementById("confirmarCambioContraseña").classList.remove("col-md-12")
-      document.getElementById("confirmarCambioContraseña").classList.add ("col-md-6")
-      document.getElementById("encabezadoPreguntas").innerHTML = "Olvide contraseña"
-      document.getElementById("encabezadoClaves").innerHTML = "Olvide contraseña" 
-
+    switch (view){
+      case "login":
+        limpiarForm("formularioInicio");
+        ocultarElementos("true", ".sesionApp");
+        ocultarElemento('false', 'formularioInicio' );
+        enfocarCampo("imputInicioEmail"); 
+        break;
+      case "home":
+        ocultarElementos("false", ".home");
+        break;    
+      case "claveNueva":
+        limpiarForm("formClaveNueva");
+        ocultarElemento("false", "formClaveNueva" );  
+        break
+      //Clientes form Olvide Contraseña preguntas
+      case "olvideClavePreguntas":
+        limpiarForm("olvidoClavePregunta");
+        ocultarElemento("false", "olvidoClavePregunta");
+        enfocarCampo('inputRespuesta1');
+        break
+      //form Olvide Contraseña Claves
+      case "olvideClaveContraseña":
+        limpiarForm("formRestablecerClave");
+        ocultarElemento("false", "formRestablecerClave");
+        enfocarCampo('imputCambioContrasena');
+        break;
       //form cambio clave
-    }else if (view == "cambioClave"){
-      olvideClave("cambiar", "preguntas"); 
-      document.getElementById("inputsClave").classList.remove ("row")
-      document.getElementById("inputsClave").classList.remove("col-md-12")
-      document.getElementById("inputsClave").classList.add ("col-md-6")
-      document.getElementById("cambioContraseña").classList.remove("col-md-6")
-      document.getElementById("cambioContraseña").classList.add ("col-md-12")
-      document.getElementById("confirmarCambioContraseña").classList.remove("col-md-6")
-      document.getElementById("confirmarCambioContraseña").classList.add ("col-md-12")
-      document.getElementById("encabezadoPreguntas").innerHTML = "Cambiar contraseña"
-      document.getElementById("encabezadoClaves").innerHTML = "Cambiar contraseña"  
-
-    }else if(view == "tabN1"){
-      activarSpiner("true", "tabClientes");
-      google.script.run.withSuccessHandler(showData).getData(user);
-
-    }else if(view == "tabN2"){
-      activarSpiner("true", "tabClientes");
-      google.script.run.withSuccessHandler(showData).getData(user);
-
-    }else if(view == "formN1"){  
-      ocultarElemento("false", "formularioNivel1");
-      limpiarForm("formularioNivel1");
-      enfocarCampo('nombreNivel1');
-      var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();
-    }else if(view == "formN2"){  
-      ocultarElemento("false", "formularioNivel2");
-      limpiarForm("formularioNivel2");
-      enfocarCampo('listNombreNivel2');
-      var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();  
-
+      case "cambioClavePreguntas":
+        limpiarForm("preguntasCambioClave");
+        ocultarElemento("false", "preguntasCambioClave");
+        enfocarCampo('ClaveNuevaRespuesta1'); 
+        break
+      case "cambioClaveContraseña":
+        limpiarForm("formCambiarClave");
+        ocultarElemento("false", "formCambiarClave");
+        enfocarCampo('ClaveNuevaAnterior'); 
+        break  
+      case "tabN1":
+        activarModal("spiner", "Cargando usuarios");
+        google.script.run.withSuccessHandler(showData).getData(document.getElementById("imputInicioEmail").value);
+        break
+      case "tabN2":
+        activarModal("spiner", "Cargando usuarios");
+        google.script.run.withSuccessHandler(showData).getData(user);
+        break
+      case "formN1":  
+        ocultarElemento("false", "formularioNivel1");
+        limpiarForm("formularioNivel1");
+        formularioNivel1.usuarioNivel1.value = document.getElementById("imputInicioEmail").value;
+        formularioNivel1.nombreUserNivel1.value = document.getElementById("user").innerText;
+        enfocarCampo('nombreNivel1');
+        var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();
+        break
+      case "formN2":  
+        ocultarElemento("false", "formularioNivel2");
+        limpiarForm("formularioNivel2");
+        formularioNivel1.usuarioNivel2.value = document.getElementById("imputInicioEmail").value;
+        formularioNivel1.nombreUserNivel2.value = document.getElementById("user").outerHTML;
+        enfocarCampo('listNombreNivel2');
+        var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();  
+        break
       //Clientes nivel 2
-    }else if (view == "cliente2"){
-      conte = indexCliente2();
-      //google.script.run.withSuccessHandler(showData).getData();
-      
+      case "cliente2":
+        conte = indexCliente2();
+        break
     }
  
   }
@@ -150,14 +154,16 @@
 
   //Hacer click a un boton por su ID
   function clickBoton(elementId){
-    var elemento = document.getElementById(elementId)
-    elemento.click();
+    if (window.innerWidth <= '990'){
+      var elemento = document.getElementById(elementId)
+      elemento.click();
+    }
   }
 
 
   //Reiniciar formulario
   function limpiarForm(formulario){
-    document.getElementById(formulario).reset()
+    document.getElementById(formulario).reset();
 
     let passwordType = document.getElementById(formulario).querySelectorAll(".password");
     passwordType.forEach(function(input) {
@@ -228,6 +234,7 @@
     2. Carga los datos en la tabla
     3. desactiva spiner de carga*/
   function showData(dataArray){
+    activartable("true");
     $(document).ready(function(){
     $('#data-table').DataTable({
           data: dataArray,
@@ -251,7 +258,7 @@
     //table.destroy();
     console.log("dataTable "+dataArray);
 
-    switch(llamadoDesde){
+    switch(vistaActual){
       case "tabN1": 
         ocultarElementos("false", ".viewNivel1");
         break;
@@ -260,9 +267,7 @@
         break;
     }
     
-    activartable("true");
-    activarSpiner("false");
-    activarModal("false","#respuestaBackend");
+    activarModal("false");
 
     });
 
@@ -283,118 +288,79 @@
                                   Controller Modal
 -----------------------------------------------------------------------------------------------------*/
 
-  //Muestra el modal por su ID
-  function activarModal(mostrar, elementId){
-    ocultarElementos("true", "modalElements")
-    if (mostrar == "true"){
-      $(elementId).modal('show');
-    }else if (mostrar == "false"){
-      $(elementId).modal('hide');
+  /**Gestion de modal
+   * indicar el tipo de modal a mostrar (spiner, respuestaPositiva, respuestaNegativa, advertencia)
+   * mensaje a mostrar
+   */
+  function activarModal(tipo, mensaje){
+    ocultarElementos("true", ".modalElements")
+
+    var respuestaBakckend = document.getElementById("msjBackend")
+    respuestaBakckend.innerHTML = mensaje
+
+    var advertencia = document.getElementById("alertaMensaje")
+    advertencia.innerHTML = mensaje
+
+    //Configuración del modal segun el tipo
+    switch (tipo) {
+      case "spiner":
+        ocultarElementos("false", ".viewCarga");
+        $("#respuestaBackend").modal('show');
+        break;
+      case "respuestaPositiva":
+        ocultarElementos("false", ".respuestaPositiva");
+        $("#respuestaBackend").modal('show');
+        break;
+      case "respuestaNegativa":
+        ocultarElementos("false", ".respuestaNegativa");
+        $("#respuestaBackend").modal('show');
+        break;
+      case "advertencia":
+        $("#modalAlertaSalida").modal('show');
+        break;
+      default:
+        $("#respuestaBackend").modal('hide');  
+        $("#modalAlertaSalida").modal('hide');  
     }
     
   }
 
-  /* Modal: gestiona el mensaje de actividad en Backend con el spiner*/
-  function activarSpiner(activar, llamado){
-    var spinnerMsj = document.getElementById("msjSpiner");
-    ocultarElementos("true", ".modalElements"); 
-    ocultarElementos("false", ".viewCarga");
-    activarModal("true","#respuestaBackend");
-
-    if ((activar == "true") && (llamado == "login")){
-      spinnerMsj.innerHTML = "Verificando usuario..."
-
-    }else if ((activar == "true") && (llamado == "cambioClaveRespuestas")){
-      spinnerMsj.innerHTML = "Verificando respuestas..."
-
-    }else if ((activar == "true") && (llamado == "cambioClave")){
-      spinnerMsj.innerHTML = "Actualizando clave..."
-
-    }else if ((activar == "true") && (llamado == "claveNueva")){
-      spinnerMsj.innerHTML = "Creando clave y preguntas de seguridad..."        
-
-    }else if ((activar == "true") && (llamado == "tabClientes")){
-      spinnerMsj.innerHTML = "Cargando clientes..."
-
-    }else if ((activar == "true") && (llamado == "formN1")){
-      spinnerMsj.innerHTML = "Guardando cliente..."
-
-    }else if (activar == "false"){
-      ocultarElementos("true", ".viewCarga");
-    } 
-  }
-
-  //Modal: Gestiona la salida del modal de respuesta del Backend
-  var llamadoDesde = ""
-  function respuestaBackendSalida (){
-    if (llamadoDesde == "claveNueva"){
-      mostrarContenido("login", "false")
-
-    }else if (llamadoDesde == "olvideClave"){
-      mostrarContenido("login", "false")
-
-    }else if (llamadoDesde == "cambiarClave"){
-      mostrarContenido("home", "false") 
+  /** Segun la vista actual
+   *   Gestiona la salida del modal
+   */ 
+  function salidaModal(){
     
-    }else if (llamadoDesde == "formN1"){
-      setTimeout(function(){cerrarFormN1()}, 500) 
+    switch (vistaActual) {
+      case "claveNueva":
+        mostrarContenido("login");
+        activarModal("false");
+        break;
+      case "sistematr":
+        mostrarContenido("login");
+        activarModal("false");
+        break;
+      case "olvideClavePreguntas":  
+      case "olvideClaveContraseña":
+        mostrarContenido("login");
+        activarModal("false");
+        break;
+      case "cambioClave":
+        mostrarContenido("home");
+        activarModal("false");
+        break;
+      case "cambioClavePreguntas":
+      case "cambioClaveContraseña":
+        mostrarContenido("home");
+        activarModal("false");
+        break;
+      case "formN1":
+        mostrarContenido("tabN1");
+        break;
+      case "formN2":
+        mostrarContenido("tabN2");
+        break;  
     }
-    
-  }
-  
-  //Modal: Gestiona el mensaje de advertencia al intentar salir.
-  var salida= "";
-  function advertenciaSalida(form){
-    //Mensaje: Segun de donde se quiera salir.
-    if (form == "claveNueva"){
-      salida= "claveNueva";
-      document.getElementById("alertaMensaje").innerHTML = "¿Esta seguro de salir sin crear una clave?";
-
-    }else if (form == "sistematr") {
-      salida="sistematr";
-      document.getElementById("alertaMensaje").innerHTML = "¿Esta seguro de cerrar sesión?";
-
-    }else if (form == "formN1"){
-      salida="formN1";
-      document.getElementById("alertaMensaje").innerHTML = "¿Esta seguro de salir sin completar el registro?";
-
-    }else if (form == "formN2"){
-      salida="formN2";
-      document.getElementById("alertaMensaje").innerHTML = "¿Esta seguro de salir sin completar el registro?";     
-
-    //Form "cambiarClave" es llamado desde dos partes, por ello tiene un indicador diferente.
-    }else if (llamadoDesde == "olvideClave"){
-      salida="olvideClave";
-      document.getElementById("alertaMensaje").innerHTML = "¿Esta seguro de salir sin restablecer su contraseña?";
-
-    }else if (llamadoDesde == "cambiarClave"){
-      salida="cambioClave";
-      document.getElementById("alertaMensaje").innerHTML = "¿Esta seguro de salir sin cambiar su contraseña?";
-
-    }
-    // llama modal
-    activarModal("true", "#modalAlertaSalida");
-
-  }
-
-  //Modal: Gestiona la salida del modal de advertencia
-  function salidaCondicionada(){
-    
-    if (salida == "claveNueva"){
-      cerrarNuevaContrasena("true")
-      limpiarForm("formularioInicio");
-      enfocarCampo("imputInicioEmail");
-    }else if (salida == "sistematr"){
-      cerrarSesion();
-    }else if (salida == "olvideClave"){
-      cerrarCambioClave();
-    }else if (salida == "cambioClave"){
-      cerrarCambioClave()
-    }else if (salida == "formN1"){
-      cerrarFormN1()
-    }else if (salida == "formN2"){
-      cerrarFormN2()
-    }    
+      
   }
 
 /*---------------------------------------------------------------------------------------------------

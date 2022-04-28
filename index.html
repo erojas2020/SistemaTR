@@ -1,6 +1,3 @@
-<!------------------------------------------------------------------------------------>
-                                  <!----prueba 2:43---->
-        <!------------------------------------------------------------------------------------>
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,116 +11,114 @@
      
    
   </head>
-  <body >
+  <body>
 
     <?!= include('Nav/viewNav'); ?>
-    <div class="row bg-light shadow-lg mb-3 sesionApp" id="nombreUsuario" hidden>
-      <div class="col ms-4 ps-4 mt-4 py-0 text-uppercase " id="user">
-      </div>
+    <div class="row bg-light shadow-lg mb-3 sesionApp home" id="nombreUsuario" hidden>
+      <h6 class="col container p-3 ms-4 text-uppercase">
+        <span class="fw-bold">Usuario:</span> <span id="user">Nombre</span>
+      </h6>
     </div>
 
-      <div class="container">
-  
-        <!------------------------------------------------------------------------------------>
-                                  <!----ALERT ERROR---->
-        <!------------------------------------------------------------------------------------>
-                  <!-- ALERT ERROR  -->
-        <div id="alertError" class="alert alert-danger mt-2 viewsApp" role="alert" hidden></div>
+    <div class="container">
+
+      <!------------------------------------------------------------------------------------>
+                                <!----ALERT ERROR---->
+      <!------------------------------------------------------------------------------------>
+                <!-- ALERT ERROR -->
+      <div id="alertError" class="row alert alert-danger mt-2 viewsApp" role="alert" hidden></div> 
+
+      <!------------------------------------------------------------------------------------>
+                                <!----Formulario login---->
+      <!------------------------------------------------------------------------------------>
+      <?!= include('Login/viewLogin'); ?>
+      <?!= include('Clave nueva/viewClaveNueva'); ?>
+      <?!= include('Olvido Clave/viewOlvidoClave'); ?>
+      
+
+      <!------------------------------------------------------------------------------------>
+                                <!-- Encabezado de tablas -->
+      <!------------------------------------------------------------------------------------>
+      <?!= include('Cliente nivel 1/viewTabN1'); ?>
+      <?!= include('Cliente nivel 2/viewTabN2'); ?>
+
+      <!----Tabla---->
+      <div id="tabla" class="row viewsApp sesionApp" hidden >
+        <div class="table-responsive justify-content-center">
+          <table id="data-table" class="table table-hover"></table>
+        </div>
+      </div> 
 
         <!------------------------------------------------------------------------------------>
-                                  <!----Formulario login---->
+                                  <!----Formulario nivel 1---->
         <!------------------------------------------------------------------------------------>
-        <?!= include('Login/viewLogin'); ?>
+        <?!= include('Cliente nivel 1/viewFormN1'); ?>
 
         <!------------------------------------------------------------------------------------>
-                              <!-- Formulario: Contraseña nueva -->
+                                  <!----Formulario nivel 2---->
         <!------------------------------------------------------------------------------------>
-         <?!= include('Clave nueva/viewClaveNueva'); ?>
+        <?!= include('Cliente nivel 2/viewFormN2'); ?>
 
         <!------------------------------------------------------------------------------------>
-                                  <!-- Contenido principal -->
+                              <!-- Formulario: Olvide o Cambio contraseña -->
         <!------------------------------------------------------------------------------------>
-          
-
-            <!----Nombre de usuario--
-            <div class="row p-2 viewsApp sesionApp bg-secondary" id="nombreUsuario" hidden>
-              <div class="col" id="user">
-              </div>
-            </div>-->
-            <!------------------------------------------------------------------------------------>
-                                      <!-- Encabezado de tablas -->
-            <!------------------------------------------------------------------------------------>
-            <?!= include('Cliente nivel 1/viewTabN1'); ?>
-            <?!= include('Cliente nivel 2/viewTabN2'); ?>
-            
-            <!----Tabla---->
-            <div id="tabla" class="row table-responsive viewsApp sesionApp">
-              <table id="data-table" class="table table-hover" ></table>
-            </div>          
-
-          <!------------------------------------------------------------------------------------>
-                                    <!----Formulario nivel 1---->
-          <!------------------------------------------------------------------------------------>
-          <?!= include('Cliente nivel 1/viewFormN1'); ?>
-
-          <!------------------------------------------------------------------------------------>
-                                    <!----Formulario nivel 2---->
-          <!------------------------------------------------------------------------------------>
-          <?!= include('Cliente nivel 2/viewFormN2'); ?>
-
-          <!------------------------------------------------------------------------------------>
-                                <!-- Formulario: Olvide o Cambio contraseña -->
-          <!------------------------------------------------------------------------------------>
-          <?!= include('Cambio clave/viewCambioClave'); ?> 
-          <!------------------------------------------------------------------------------------>
-                                    <!----Modal: respuesta del Backend---->
-          <!------------------------------------------------------------------------------------>  
-          <div class="modal fade" id="respuestaBackend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-body text-center d-block modalElements">
-                  <span class="spinner-border spinner-border-sm viewCarga modalElements" style="width: 3rem; height: 3rem;" id='modalSpinerCargaClave' role="status" aria-hidden="true"></span>
-                  <p id="msjSpiner" class="viewCarga modalElements">Actividad...</p>
-                  <img id="modalImgListoClave" class="respuestaPositiva modalElements" src="https://drive.google.com/uc?export=download&id=1WN1xNrT4p4GTk6hMI7Rtitn1RgwidP4u" alt="" width="90" height="90" class="mb-2" hidden>
-                  <img id="modalImgAdvertenciaClave" class="respuestaNegativa modalElements" src="https://drive.google.com/uc?export=download&id=1eKCqgbSpMcq6Bbi_fejBoo6O8YD4vYu-" alt="" width="100" height="100" class="mb-2" hidden>
-                  <p id="msjBackend" class="modalElements respuestaPositiva respuestaNegativa" hidden></p>
-                </div>
-                <div class="modal-footer modalElements respuestaPositiva respuestaNegativa" id="modalfooterClave" hidden>
-                  <button id="modalBotonCorrectoClave" type="button" class="btn btn-warning px-5 mx-auto respuestaPositiva modalElements" data-bs-dismiss="modal" onclick="respuestaBackendSalida()" hidden>Entendido</button>
-                  <button id="modalBotonErradoClave" type="button" class="btn btn-warning px-5 mx-auto respuestaNegativa modalElements" data-bs-dismiss="modal" hidden>Entendido</button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <?!= include('Cambio clave/viewCambioClave'); ?> 
         <!------------------------------------------------------------------------------------>
-                                  <!----Modal: Alerta de salida---->
-        <!------------------------------------------------------------------------------------>
-        <div class="modal fade" id="modalAlertaSalida" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <!----Modal: respuesta del Backend---->
+        <!------------------------------------------------------------------------------------>  
+        <div class="modal fade" id="respuestaBackend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="modal-body text-center d-block modalElements">
+                <span class="spinner-border spinner-border-sm viewCarga modalElements" style="width: 3rem; height: 3rem;" id='modalSpinerCargaClave' role="status" aria-hidden="true"></span>
+                <img id="modalImgListoClave" class="respuestaPositiva modalElements" src="https://drive.google.com/uc?export=download&id=1WN1xNrT4p4GTk6hMI7Rtitn1RgwidP4u" alt="" width="90" height="90" class="mb-2" hidden>
+                <img id="modalImgAdvertenciaClave" class="respuestaNegativa modalElements" src="https://drive.google.com/uc?export=download&id=1eKCqgbSpMcq6Bbi_fejBoo6O8YD4vYu-" alt="" width="100" height="100" class="mb-2" hidden>
+                <p id="msjBackend" class="modalElements respuestaPositiva respuestaNegativa viewCarga" hidden>Mensaje a mostrar</p>
               </div>
-              <div class="modal-body text-center">
-                <p id="alertaMensaje"></p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary px-4 mx-auto" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-warning px-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta" onclick="salidaCondicionada()">Salir</button>
+              <div class="modal-footer modalElements respuestaPositiva respuestaNegativa" id="modalfooterClave" hidden>
+                <button id="modalBotonCorrectoClave" type="button" class="btn btn-warning px-5 mx-auto respuestaPositiva modalElements" onclick="salidaModal()" hidden>Entendido</button>
+                <button id="modalBotonErradoClave" type="button" class="btn btn-warning px-5 mx-auto respuestaNegativa modalElements" data-bs-dismiss="modal" hidden>Entendido</button>
               </div>
             </div>
           </div>
         </div>
-
-        <?!= include('controllerIndex'); ?>
-        <?!= include('Nav/controllerNav'); ?>
-        <?!= include('Login/controllerLogin'); ?>
-        <?!= include('Cliente nivel 1/controllerFormN1'); ?>
-        <?!= include('Cliente nivel 2/controllerTabN2'); ?>
-        <?!= include('Cliente nivel 2/controllerFormN2'); ?>      
-        <?!= include('Clave nueva/controllerClaveNueva'); ?>
-        <?!= include('Cambio clave/ControllerCambioClave'); ?>
+      <!------------------------------------------------------------------------------------>
+                                <!----Modal: Alerta de salida---->
+      <!------------------------------------------------------------------------------------>
+      <div class="modal fade" id="modalAlertaSalida" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              <p id="alertaMensaje"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary px-4 mx-auto" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-warning px-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta" onclick="salidaModal()">Salir</button>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+    <?!= include('controllerIndex'); ?>
+    <?!= include('Nav/controllerNav'); ?>
+    <?!= include('Login/controllerLogin'); ?>
+    <?!= include('Olvido Clave/controllerOlvidoClave'); ?>
+    <?!= include('Olvido Clave/funcionesOlvidoClave'); ?>
+    <?!= include('Olvido Clave/modelOlvido'); ?>
+    <?!= include('Clave nueva/controllerClaveNueva'); ?>
+    <?!= include('Clave nueva/funcionClaveNueva'); ?>
+    <?!= include('Clave nueva/modeloClaveNueva'); ?>
+    <?!= include('Cliente nivel 1/controllerFormN1'); ?>
+    <?!= include('Cliente nivel 1/funcionFormN1'); ?>
+    <?!= include('Cliente nivel 1/modelFormN1'); ?>
+    <?!= include('Cliente nivel 2/controllerTabN2'); ?>
+    <?!= include('Cliente nivel 2/controllerFormN2'); ?>
+    <?!= include('Cambio clave/ControllerCambioClave'); ?>
+    <?!= include('Cambio clave/FuncionCambioClave'); ?>
+    <?!= include('Cambio clave/ModeloCambioClave'); ?>
   </body>
 </html>

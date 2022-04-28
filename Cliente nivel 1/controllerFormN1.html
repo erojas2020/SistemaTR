@@ -1,9 +1,7 @@
 <script>
   // Validar formulario: Nivel 1
- async function validarFormClienteNivel1(form){
-    //console.log(form)
-    
-       event.preventDefault();
+ function indexcontrollerFormN1(form){
+    event.preventDefault();
     //formularioNivel1.usuario.value= user;   
     var nombre = formularioNivel1.nombre.value;
     var pais = formularioNivel1.pais.value;
@@ -64,71 +62,10 @@
       alertaError("true", contenido);
 
     }else { 
-      llamadoDesde = "formN1"
-      alertaError("false", "");
-      activarSpiner("true", "formN1");
-      var resultado = await google.script.run
-    .withSuccessHandler( confirmacionRegistroNivel1 )
-    .withFailureHandler( mostrarError )
-    .registrarNuevoCliente1( form )
-
+      activarModal("spiner", "Agregando cliente nivel 1...")
+      indexmodelFormN1(form)
     }
 
-  }
-
-  //Confirmación de usuario nivel 1 registrado
-  function confirmacionRegistroNivel1(){
-    activarSpiner("false", "formN1")
-    ocultarElementos("false", ".respuestaPositiva");
-    document.getElementById("msjBackend").innerHTML = "Su cliente a sido registrado exitosamente"
-    activarModal("true", "#respuestaBackend");
-  }
-
-
-  //Mensaje de error
-  function mostrarError (error) {
-    llamadoDesde = ""
-    activarSpiner("false", "formN1")
-    ocultarElementos("false", ".respuestaNegativa");
-    document.getElementById("msjBackend").innerHTML = error
-    activarModal("true", "#respuestaBackend");
-  }
-
-
-  function aceptarTerminos(checkElement){
-    var checkterminos = document.getElementById(checkElement);
-    checkterminos.checked= true;
-  }
-
-
-  function rechazarTerminos(checkElement){
-    var checkterminos = document.getElementById(checkElement);
-    checkterminos.checked= false;
-  }
-
-
-  function cargarListaPaises(listaPaises){
-
-    var select = document.getElementById("pais");
-    var select2 = document.getElementById("areaNivel1");
-    // select.options.length = 0; 
-
-    listaPaises.forEach(element =>{
-    var option = document.createElement('option');
-    option.value = element[0];
-    option.innerHTML = element[1];
-    select.appendChild(option)})
-
-    listaPaises.forEach(element =>{
-    var option = document.createElement('option');
-    option.value = element[4];
-    option.innerHTML = element[4];
-    select2.appendChild(option)})
-      
-  }
-
-  function cerrarFormN1(){
-    mostrarContenido("tabN1", "false")
   }
 
 </script>

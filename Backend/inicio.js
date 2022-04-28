@@ -62,28 +62,26 @@ function validarLogin(email, contrasena){
     //throw('Datos no validos');
  }
 
-/*
-  -VALIDAR USUARIO NUEVO
-     Verifica si el usuario es nuevo, retorna TRUE O FALSE.
-*/
- function validarNewUser(email){
-   
-   var datosUser = buscarUsuario(0,email);
+  /** 
+  *VALIDAR USUARIO NUEVO
+  *Verifica si el usuario es nuevo, retorna TRUE O FALSE.
+  */
+  function validarNewUser(email){
+    
+    var datosUser = buscarUsuario(0,email);
 
-   if(datosUser.usuarioNuevo==true){
-      var  resultado = {
-     newUser: true,
-     login: false
-     
-   }
-   return resultado;
-   }else {
-     return false
-   }
+    if(datosUser.usuarioNuevo==true){
+        var  resultado = {
+      newUser: true,
+      login: false
+      
+    }
+    return resultado;
+    }else {
+      return false
+    }
 
-
-   
- }
+  }
 
 /*
  -BUSCA USUARIO
@@ -133,6 +131,20 @@ function validarLogin(email, contrasena){
  return false
  }
 
+/*
+  Valida Email del usuario su existe requiere Email
+
+  retorna True o False
+*/
+ function validarEmail(email){
+  var resultado = Bakendtr.validarEmail(email);  
+
+  return resultado;
+ }
+
+
+
+   
 
 
 

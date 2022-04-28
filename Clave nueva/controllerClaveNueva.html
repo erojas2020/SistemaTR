@@ -1,112 +1,78 @@
 <script>
   //Almacenamiento de los campos en variables
-    var contrasenaNueva=  formClaveNueva.imputContrasenaNueva.value
-    var contrasenaConfirmada = formClaveNueva.imputConfirmarContrasena.value;
-    var inputContrasena = document.getElementById("imputContrasenaNueva");
-    var inputConfirmar = document.getElementById("imputConfirmarContrasena");
-    var formulario = document.getElementById("formClaveNueva")
-
-  //Validar longitud de: Contraseña y confirmación
-    //1. si el campo tiene menos de 8 caracteres, envia alerta
-    //2. si los campos de contraseña no coincide, envia alerta
-    //3. si los campos tienen la longitud minima y coincide, elimina alerta
-  function contrasenaConfirmaValida(){
-
-    if ((inputContrasena.value.length < 8) && (inputContrasena.value != "") && (formulario.hidden == false)){
-      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres")
-      inputContrasena.classList.add("border-danger");
-      enfocarCampo("imputContrasenaNueva");
-
-    }else if ((inputContrasena.value != inputConfirmar.value) && (inputContrasena.value != "")){
-      alertaError ("true", "las contraseñas no coinciden");
-      inputConfirmar.classList.add("border-danger");
-      enfocarCampo("imputConfirmarContrasena"); 
-      
-    }else {
-      alertaError ("false", "");
-      inputContrasena.classList.remove('border-danger');
-      inputConfirmar.classList.remove('border-danger');
-    }
-  }
+  var contrasenaNueva = document.getElementById("imputContrasenaNueva");
+  var confirmacionNueva = document.getElementById("imputConfirmarContrasena");  
 
   //Al enviar formulario: valida campos
     // 1. si existe algun campo vacio envia alerta
     // 2. si esta correcto los campos, envia datos
     // 3. segun respuesta del backend se activa modal con el msj de correcto o errado
-  async function aceptarFomConstrasenaNueva(form) {
-
+  function indexcontrollerClaveNueva(datosFormulario) {
     event.preventDefault();
-    var contrasena = formClaveNueva.imputContrasenaNueva.value;
-    var confirmacion = formClaveNueva.imputConfirmarContrasena.value;
-    var preguntaI = formClaveNueva.inputPreguntaSeguridad1.value;
-    var respuestaI = formClaveNueva.inputRespuestaSeguridad1.value;
-    var preguntaII = formClaveNueva.inputPreguntaSeguridad2.value;
-    var respuestaII = formClaveNueva.inputRespuestaSeguridad2.value;
+    var preguntaI = document.getElementById("inputPreguntaSeguridad1");
+    var respuestaI = document.getElementById("inputRespuestaSeguridad1");
+    var preguntaII = document.getElementById("inputPreguntaSeguridad2");
+    var respuestaII = document.getElementById("inputRespuestaSeguridad2");
 
-    if (contrasena == "") {
+
+    let datos = {
+      pregunta1: datosFormulario.pregunta1.value,
+      pregunta2: datosFormulario.pregunta2.value,
+      claveNueva: datosFormulario.claveNueva.value,
+      respuesta1: datosFormulario.respuesta1.value,
+      respuesta2: datosFormulario.respuesta2.value,
+      email: document.getElementById("imputInicioEmail").value
+    }
+
+    console.log(datos);
+
+    if (contrasenaNueva.value == "") {
       alertaError ("true", "Debe indicar una clave");
       enfocarCampo("imputContrasenaNueva");
-    }else if (confirmacion == ""){
+
+    }else if (confirmacionNueva.value == ""){
       alertaError ("true", "Debe confirmar la clave");
       enfocarCampo("imputConfirmarContrasena");
-    }else if (preguntaI == ""){
+
+    }else if (preguntaI.value == ""){
       alertaError ("true", "Indique una pregunta de seguridad");
       enfocarCampo("inputPreguntaSeguridad1");
-    }else if (respuestaI == ""){
+
+    }else if (respuestaI.value == ""){
       alertaError ("true", "Indique una respuesta a su pregunta de seguridad");
       enfocarCampo("inputRespuestaSeguridad1");
-    }else if (preguntaII == ""){
+
+    }else if (preguntaII.value == ""){
       alertaError ("true", "Indique una segunda pregunta de seguridad");
       enfocarCampo("inputPreguntaSeguridad2");
-    }else if (preguntaII == ""){
-      alertaError ("true", "Indique una segunda pregunta de seguridad");
-      enfocarCampo("inputPreguntaSeguridad2");  
-    }else if (respuestaII == ""){
+
+    }else if (respuestaII.value == ""){
       alertaError ("true", "Indique una respuesta a su segunda pregunta de seguridad");
       enfocarCampo("inputRespuestaSeguridad2");
+
     }else {
       alertaError("false", "");
-      activarSpiner("true", "claveNueva");
-
-      //Aqui codigo para registrar la clave en BD
-      //Variables de simulacion: respuesta del backend
-      var respuestaBackend = "true"
-
-      //Simulacion del proceso de guardar clave y su respuesta
-      if (respuestaBackend == "true"){
-        setTimeout(registroClaveCorrecto,3000);
-      }else if (respuestaBackend == "false"){
-        setTimeout(registroClaveErrado,3000); 
-      }
+      activarModal("spiner", "Guardando preguntas y contraseña...");
       
-    }     
+      indexModelClaveNueva(datos);
+      
+    }    
   }
   
-  //Actival Modal: Confirmando de clave registrada correctamente
-  function registroClaveCorrecto(){
-    activarSpiner("false")
-    ocultarElementos("false", ".respuestaPositiva");
-    document.getElementById("msjBackend").innerHTML = "Su clave a sido registrada exitosamente, ingrese nuevamente con su nueva clave"
-
+  function storeControllerClaveNueva(){
+      
   }
 
-
-  //Actival Modal: enviando mensaje de error.
-  function registroClaveErrado(){
-    activarSpiner("false")
-    ocultarElementos("false", ".respuestaNegativa");
-    document.getElementById("msjBackend").innerHTML = "Su clave no a podido ser registrada intente nuevamente"
-  }
-
-  //Cierra formulario segun respuesta.
-  function cerrarNuevaContrasena(respuesta){
+  function showControllerClaveNueva(show){  
     
-    alertaError ("false", "");
-    ocultarElemento("true", "formClaveNueva");
-    ocultarElemento("false", "formularioInicio");
-    document.getElementById("imputInicioContrasena").value = "";
-    document.getElementById("imputInicioContrasena").type ="password"
-    enfocarCampo("imputInicioContrasena");
-
   }
+
+  function updateControllerClaveNueva(){
+    
+  }
+
+  function destroyControllerClaveNueva(){
+    
+  }
+  
 </script>  

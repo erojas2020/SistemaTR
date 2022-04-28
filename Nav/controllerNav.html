@@ -1,13 +1,12 @@
 <script>
+//Gestion de esucha del nav  
 //Al tocar el logo:
   document.getElementById("logo").addEventListener("click", 
   function(e){
     e.preventDefault();
     if (document.getElementById("nombreUsuario").hidden== false){
       mostrarContenido("home", "false");
-    }
-      
-    });
+    }});
 
   //Al tocar "Incio"
   document.getElementById("inicio").addEventListener("click", 
@@ -19,41 +18,52 @@
   //Al tocar "Clientes/Recomendado (Nivel1)"
   var clienten1 = document.getElementById("clienteNivel1");
   clienten1.addEventListener("click", 
-  function(){ llamadoDesde= "tabN1"; mostrarContenido('tabN1', "true")});
+  function(){ 
+    mostrarContenido('tabN1', "true")
+    });
 
   //Al tocar "Clientes/Recomendado (Nivel2)"
   var clienten2 = document.getElementById("clienteNivel2");
   clienten2.addEventListener("click", 
-  function(){ llamadoDesde= "tabN2"; mostrarContenido('tabN2', "true")});
+  function(){ 
+    mostrarContenido('tabN2', "true")
+    });
 
   //Al tocar "Administrador/Clientes/Nivel1"
   var clienten1admin = document.getElementById("clienteNivel1Admin");
   clienten1admin.addEventListener("click", 
-  function(e){ e.preventDefault(); mostrarContenido('clienteNivel1Admin', "true")});
-
-  //Al tocar "Configuración/Cerrar Sesión"
-  var configuracion = document.getElementById("cerrarSesion");
-  configuracion.addEventListener("click", 
-  function(){//Colapsa boton responsi
-    if (window.innerWidth <= '990' ){
-      clickBoton("botonResponsi");
-    }
-    advertenciaSalida ("sistematr")})
+  function(e){ 
+    e.preventDefault(); 
+    mostrarContenido('clienteNivel1Admin', "true")
+    });
 
   //Al tocar "Configuración/Cambiar clave"
   var cambiarClave = document.getElementById("cambiarClave")
   cambiarClave.addEventListener("click",
   function(){
     event.preventDefault();
-    
     //Colapsa boton responsi
     if (window.innerWidth <= '990' ){
       clickBoton("botonResponsi");
     }
+    activarModal("spiner", "Cargando preguntas de seguridad");
+    let email = document.getElementById("imputInicioEmail").value;
+    cambiarClavePreguntas(email);
+  })  
 
-    llamadoDesde= "cambiarClave" //Indica desde donde es llamado el form de cambiarClave
-    mostrarContenido("cambioClave", "false");
+  //Al tocar "Configuración/Cerrar Sesión"
+  var configuracion = document.getElementById("cerrarSesion");
+  configuracion.addEventListener("click", 
+  function(){
+    //Colapsa boton responsi
+    if (window.innerWidth <= '990' ){
+      clickBoton("botonResponsi");
+    }
+    vistaActual= "sistematr"
+    activarModal("advertencia", "¿Esta seguro de cerrar sesión?")
   })
+
+  
 
 
   //Cerrar sesion

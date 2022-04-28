@@ -1,21 +1,21 @@
-<nav class="navbar navbar-expand-lg text-secondary bg-warning d-grid ">
+<nav class="row navbar navbar-expand-lg text-secondary bg-warning d-grid home">
 
-    <div class="container-fluid">
+    <div class="container">
       <a class="navbar-brand text-dark fw-bold" href="#" id="logo">
         <img src="https://drive.google.com/uc?export=download&id=1DFViidwKD6GJQZERQB7gghyLS9wvtIKa" alt="" width="80" height="80" class=" ">
           Tranferencias <span class="text-danger"> Rojas </span>
       </a>
       
       <!-- Boton: Colapse Responsi -->   
-      <button id="botonResponsi" class="navbar-toggler navbar-light text-secondary border border-primary sesionApp" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" hidden>
+      <button id="botonResponsi" class="navbar-toggler navbar-light text-secondary border border-primary sesionApp home ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" hidden>
         <span class="navbar-toggler-icon "></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse ms-2" id="navbarSupportedContent">
         <div class="navbar-nav  mb-2 mb-lg-0 text-lg-center">
 
           <!-- Opción: Inicio -->
-          <div id="opcionInicio" class="opcionNav viewRepresentante viewPromotor" hidden>
+          <div id="opcionInicio" class="opcionNav viewRepresentante viewPromotor sesionApp" hidden>
             <li class="nav-item">
               <a class="nav-link active" id="inicio" aria-current="page" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
@@ -27,7 +27,7 @@
           </div>
 
           <!-- Opción: Cliente -->
-          <li id="clientes" class="nav-item dropdown opcionNav viewRepresentante viewPromotor" hidden>
+          <li id="clientes" class="nav-item dropdown opcionNav viewRepresentante viewPromotor sesionApp" hidden>
             <a 
             class="nav-link dropdown-toggle"
             href="#"
@@ -61,7 +61,7 @@
           </li>
 
           <!-- Opción: Solicitudes -->
-          <li id="solicitudes" class="nav-item dropdown opcionNav viewRepresentante viewPromotor" hidden>
+          <li id="solicitudes" class="nav-item dropdown opcionNav viewRepresentante viewPromotor sesionApp" hidden>
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
               <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -78,7 +78,7 @@
           </li>
 
           <!-- Opción: Comprobantes -->
-          <li id="comprobantes" class="nav-item dropdown opcionNav viewRepresentante" hidden>
+          <li id="comprobantes" class="nav-item dropdown opcionNav viewRepresentante sesionApp" hidden>
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bank" viewBox="0 0 16 16">
               <path d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"/>
@@ -94,7 +94,7 @@
           </li>
 
           <!-- Opción: Cuenta TR -->
-          <li id="cuentaTR" class="nav-item opcionNav viewRepresentante viewPromotor" hidden>
+          <li id="cuentaTR" class="nav-item opcionNav viewRepresentante viewPromotor sesionApp" hidden>
             <a class="nav-link disabled" aria-current="page" href="#">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
@@ -109,7 +109,7 @@
           </li>
 
           <!-- Opción: Admistrador -->
-          <li id="Administrador" class="nav-item dropdown opcionNav" hidden>
+          <li id="Administrador" class="nav-item dropdown opcionNav sesionApp" hidden>
             <a 
             class="nav-link dropdown-toggle"
             href="#" id="navbarDropdown"
@@ -152,7 +152,7 @@
           </li>
 
           <!-- Opción: Configuración -->
-          <li id="config" class="nav-item dropdown opcionNav viewRepresentante viewPromotor" hidden>
+          <li id="config" class="nav-item dropdown opcionNav viewRepresentante viewPromotor sesionApp" hidden>
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
                 <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
@@ -170,4 +170,4 @@
         </div>
       </div>  
     </div>  
-  </nav>
+</nav>

@@ -1,0 +1,84 @@
+<!------------------------------------------------------------------------------------->  
+                        <!-- Primera parte: Preguntas -->
+<!------------------------------------------------------------------------------------->
+  <form class="row g-3 needs-validation viewsApp sesionApp" id="olvidoClavePregunta" name="olvidoClavePregunta" onsubmit="indexControllerOlvidoClave(this)" novalidate hidden>
+
+    <!-- Encabezado del formulario -->
+    <h4 class="text-center p-2" id="encabezadoPreguntas"></h4>
+    <p> Responda las siguientes preguntas de seguridad para restablecer su clave</p>
+    
+    <!-- Pregunta de seguridad 1 -->
+    <div class='mb-4 col-md-6' id="respuesta1">
+      <p class="fw-bold" id="preguntaI"> Preguna 1</p>
+      <input type='text' class='form-control borde' id='inputRespuesta1' placeholder='respuesta' name="inputRespuesta1" required>
+      <div class='invalid-feedback'>Por favor colocar una respuesta válida</div>
+    </div>
+
+    <!-- Pregunta de seguridad 2 -->
+    <div class='mb-4 col-md-6' id="respuesta2">
+      <p class="fw-bold" id="preguntaII">Pregunta 2</p>
+      <input type='text' class='form-control borde' id='inputRespuesta2' placeholder='respuesta' name="inputRespuesta2" required>
+      <div class='invalid-feedback'>Por favor colocar una respuesta válida</div>
+    </div>
+
+    <!-- Bontones -->
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-end mb-3">
+      <button type="button" class="btn btn-secondary px-5" onclick="activarModal('advertencia','¿Esta seguro de salir sin restablecer su contraseña?')" id="btnPreguntasOlvide" >Cancelar</button>
+
+      <button type="submit" class="btn btn-warning px-5" >Siguiente</button>
+    </div>
+  </form>
+
+  <!------------------------------------------------------------------------------------->    
+                          <!-- Segunda parte: Cambio de clave -->
+  <!------------------------------------------------------------------------------------->
+  <form class="row g-3 needs-validation viewsApp sesionApp" id="formRestablecerClave" name="formRestablecerClave" onsubmit="indexControllerOlvidoClave(this)" novalidate hidden>
+
+    <!-- Encabezado del formulario -->
+    <h4 class="text-center p-2" id="encabezadoClaves"></h4>
+    
+    <p> A continuación crea una nueva clave para su cuenta <span class="fw-bold"> de minimo 8 caracteres</span></p>
+
+    <!-- Campo: Contraseña nueva -->
+    <div class='mb-3 col-md-6' id="cambioContraseña">
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon2'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+            <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+            <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+          </svg>
+        </span>
+        <input type='password' class='form-control d-block password bordes' id='imputCambioContrasena' name="imputCambioContrasena" placeholder='Contraseña nueva' onblur="olvideClaveLongitud()" required>
+        <div class='invalid-feedback'>Por favor colocar una contraseña válida</div>
+      </div>
+    </div>
+
+    <!-- Campo: Confirmar contraseña nueva -->
+    <div class= "col-md-6 mb-2" id="confirmarCambioContraseña">
+      <div class='input-group'>
+        <span class='input-group-text' id='basic-addon1'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+            <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"/>
+            <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+          </svg>
+        </span>
+        <input type='password' class='form-control password bordes' id='imputConfirmarCambioContrasena' placeholder='Confirme contraseña' name="imputConfirmarCambioContrasena" onblur="olvideClaveLongitud()" required>
+        <div class='invalid-feedback'>Por favor colocar una contraseña válida</div>
+      </div>
+    </div>
+
+    <!-- ver contraseña -->
+    <div class='form-check mb-3 ms-2'>
+      <input class='form-check-input' type='checkbox' id='verContraseñaCambio' name="verContraseñaCambio" onclick="mostrarContrasena('.password')">
+      <label class='form-check-label'>
+        Mostrar contraseña
+      </label>
+    </div>
+
+    <!-- Bontones -->
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-end mb-3">
+      <button type="button" class="btn btn-secondary px-5" onclick="activarModal('advertencia','¿Esta seguro de salir sin restablecer su contraseña?')" id="btnOlvideClave" >Cancelar</button>
+
+      <button type="submit" class="btn btn-warning px-5">Aceptar</button>
+    </div>
+  </form>

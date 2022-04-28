@@ -1,0 +1,41 @@
+<script>
+  function indexmodelFormN1(form){
+    registrarNivel1(form)
+  }
+
+  async function registrarNivel1(form){
+    var resultado = await google.script.run
+      .withSuccessHandler( confirmacionRegistroNivel1 )
+      .withFailureHandler( mostrarError )
+      .registrarNuevoCliente1(form)
+  }
+
+  //Confirmación de usuario nivel 1 registrado
+  function confirmacionRegistroNivel1(){
+    activarModal("respuestaPositiva","Su cliente a sido registrado exitosamente");
+  }
+
+  //Mensaje de error
+  function mostrarError(error){
+    activarModal("respuestaNegativa", error); 
+  }
+
+  function cargarListaPaises(listaPaises){
+    var select = document.getElementById("pais");
+    var select2 = document.getElementById("areaNivel1");
+    // select.options.length = 0; 
+
+    listaPaises.forEach(element =>{
+    var option = document.createElement('option');
+    option.value = element[0];
+    option.innerHTML = element[1];
+    select.appendChild(option)})
+
+    listaPaises.forEach(element =>{
+    var option = document.createElement('option');
+    option.value = element[4];
+    option.innerHTML = element[4];
+    select2.appendChild(option)})
+      
+  }
+</script>  

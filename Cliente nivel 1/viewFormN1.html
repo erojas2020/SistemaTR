@@ -1,14 +1,14 @@
-<form id="formularioNivel1" name="formularioNivel1" class="row g-3 ms-2 needs-validation viewsApp sesionApp" onsubmit="validarFormClienteNivel1(this)" novalidate hidden >
+<form id="formularioNivel1" name="formularioNivel1" class="row g-3 ms-2 needs-validation viewsApp sesionApp" onsubmit="indexcontrollerFormN1(this)" novalidate hidden >
 
   <!-- Encabezado-->
   <div class='col-md-12 p3 mb-3'>
     <h4>Nuevo Cliente Nivel 1</h4>
   </div>
 
-  <!-- Usuario -->
+  <!-- Email del Usuario -->
   <input type='text' class='form-control' id='usuarioNivel1' placeholder= 'Nombre completo' name="usuarioNivel1" hidden>
 
-    <!-- NombreUsuario -->
+    <!-- Nombre del Usuario -->
   <input type='text' class='form-control' id='nombreUserNivel1' placeholder= 'Nombre completo' name="nombreUserNivel1" hidden>
 
   <!-- Campo: Nombre -->
@@ -180,7 +180,7 @@ Condiciones atípicas: Más de 2 horas.</br></p>
 
   <!-- Botones -->
   <div class=' d-grid gap-2 d-sm-flex justify-content-sm-end mb-3 '>
-    <button type='button' class='btn btn-secondary px-5' onclick='advertenciaSalida("formN1")'>Atras</button>
+    <button type='button' class='btn btn-secondary px-5' onclick='activarModal("advertencia","¿Esta seguro de salir sin completar el registro?")'>Atras</button>
     <button type='submit' id='enviarForm1' class='btn btn-warning px-5'> Enviar </button>
   </div>           
 </form>

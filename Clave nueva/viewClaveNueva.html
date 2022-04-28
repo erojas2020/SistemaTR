@@ -1,4 +1,4 @@
-<form class="row g-3 needs-validation viewsApp" id="formClaveNueva" name="formClaveNueva" onsubmit="aceptarFomConstrasenaNueva(this)" novalidate hidden>
+<form class="row g-3 needs-validation viewsApp" id="formClaveNueva" name="formClaveNueva" onsubmit="indexcontrollerClaveNueva(this)" novalidate hidden>
   <!-- Encabezado del formulario -->
   <h4 class="text-center p-2" id="encabezadoClaveNueva">Clave nueva</h4> 
   <p> Su cuenta no posee una contraseña asignada, por favor cree una nueva <span class="fw-bold">de minimo 8 caracteres</span> para iniciar</p>
@@ -12,7 +12,7 @@
           <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
         </svg>
       </span>
-      <input type='password' class='form-control d-block password' id='imputContrasenaNueva' name="imputContrasenaNueva" placeholder='Contraseña nueva' onblur="contrasenaConfirmaValida()" required>
+      <input type='password' class='form-control d-block password' id='imputContrasenaNueva' name="claveNueva" placeholder='Contraseña nueva' onblur="nuevaClaveLongitudConfirmacion()" required>
       <div class='valid-feedback'>Muy bien!</div>
       <div class='invalid-feedback'>Por favor colocar una contraseña válida</div>
     </div>
@@ -27,7 +27,7 @@
           <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
         </svg>
       </span>
-      <input type='password' class='form-control password' id='imputConfirmarContrasena' placeholder='Confirme contraseña' name="imputConfirmarContrasena" onblur="contrasenaConfirmaValida()" required>
+      <input type='password' class='form-control password' id='imputConfirmarContrasena' placeholder='Confirme contraseña' name="imputConfirmarContrasena" onblur="nuevaClaveLongitudConfirmacion()" required>
       <div class='valid-feedback'>Muy bien!</div>
       <div class='invalid-feedback'>Por favor colocar una contraseña válida</div>
     </div>
@@ -51,7 +51,7 @@
           <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
         </svg>
       </span>
-      <input type='text' class='form-control' id='inputPreguntaSeguridad1' placeholder='Pregunta de seguridad' name="inputPreguntaSeguridad1" required>
+      <input type='text' class='form-control' id='inputPreguntaSeguridad1' placeholder='Pregunta de seguridad' name="pregunta1" required>
       <div class='valid-feedback'>Muy bien!</div>
       <div class='invalid-feedback'>Por favor colocar una pregunta válida</div>
     </div>
@@ -59,7 +59,7 @@
 
   <!-- Campo: respuesta de pregunta 1-->
   <div class='mb-3 col-md-6' id="respuestaSeguridad1">
-    <input type='text' class='form-control' id='inputRespuestaSeguridad1' placeholder='respuesta' name="inputRespuestaSeguridad1" required>
+    <input type='text' class='form-control' id='inputRespuestaSeguridad1' placeholder='respuesta' name="respuesta1" required>
     <div class='valid-feedback'>Muy bien!</div>
     <div class='invalid-feedback'>Por favor colocar una pregunta válida</div>
   </div>
@@ -73,7 +73,7 @@
           <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
         </svg>
       </span>
-      <input type='text' class='form-control' id='inputPreguntaSeguridad2' placeholder='Pregunta de seguridad' name="inputPreguntaSeguridad2" required>
+      <input type='text' class='form-control' id='inputPreguntaSeguridad2' placeholder='Pregunta de seguridad' name="pregunta2" required>
       <div class='valid-feedback'>Muy bien!</div>
       <div class='invalid-feedback'>Por favor colocar una pregunta válida</div>
     </div>
@@ -81,14 +81,14 @@
 
   <!-- Campo: respuesta de pregunta 2-->
   <div class='mb-3 col-md-6' id="respuestaSeguridad2">
-    <input type='text' class='form-control' id='inputRespuestaSeguridad2' placeholder='respuesta' name="inputRespuestaSeguridad2" required>
+    <input type='text' class='form-control' id='inputRespuestaSeguridad2' placeholder='respuesta' name="respuesta2" required>
     <div class='valid-feedback'>Muy bien!</div>
     <div class='invalid-feedback'>Por favor colocar una pregunta válida</div>
   </div>
 
   <!-- Bontones-->
   <div class="d-grid gap-2 d-sm-flex justify-content-sm-end mb-3">
-    <button type="button" class="btn btn-secondary px-5" onclick="advertenciaSalida('claveNueva')" >Cancelar</button>
+    <button type="button" class="btn btn-secondary px-5" onclick="activarModal('advertencia','¿Esta seguro de salir sin crear su contraseña?')" >Cancelar</button>
     <button type="submit" class="btn btn-warning px-5">Aceptar</button>
   </div>
 </form> 

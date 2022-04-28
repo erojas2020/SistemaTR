@@ -1,0 +1,24 @@
+<script>
+  
+  function indexModelClaveNueva(datos){
+    registrarDatosClaveNueva(datos);
+  }
+
+  async function registrarDatosClaveNueva(datos){
+    var resultado =  
+  await google.script.run.
+  withSuccessHandler(registroClaveNuevaTrue).
+  withFailureHandler(registroClaveNuevaFalse).
+  insertClaveNueva(datos);
+    
+  }
+
+  function registroClaveNuevaTrue(respuesta){
+    console.log(respuesta);
+    activarModal("respuestaPositiva", "Su clave a sido registrada existosamente");
+  }
+
+  function registroClaveNuevaFalse(){
+    activarModal("respuestaNegativa", "Su clave no a podido ser registrada");
+  }
+</script>  
