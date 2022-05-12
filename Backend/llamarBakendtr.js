@@ -66,5 +66,91 @@ function insertClaveNueva_OlvidoClave(datos){
   return resultado
 }
 
+/*
+newUser: Crea nuevo Usuario. 
+
+Datos requeridos: 
+  email: string
+  nombre: string
+  perfil: string
+
+  Repuesta:
+  True = Registrado exitosamente
+  False = Email ya existe
+*/
+
+function newUser(datos) {
+  let resultado = Bakendtr.newUser(datos);
+
+  return resultado
+}
+
+/*
+getAllUsers: Devuelve un Array con todos los Usuarios. 
+
+Respuesta: 
+  email: string
+  nombre: string
+  perfil: string
+  usuario_nuevo: boolean 
+*/
+
+function getAllUsers() {
+  let resultado = Bakendtr.getAllUsers();
+
+  return resultado
+}
+
+/*
+getEmailUsers: Devuelve un Array con todos los Usuarios. 
+
+Respuesta: 
+  email: string
+ 
+*/
+
+function getEmailUsers() {
+  let resultado = Bakendtr.getEmailUsers();
+
+  return resultado;
+}
+
+/*
+resetUser: Reinicia Clave del usuario. 
+
+Requerimiento:
+email
+
+Respuesta: 
+  true = "reiniciado exitosamente"
+  false = "no existe email o error del sistema"
+ 
+*/
+
+function resetUser(email) {
+  let resultado = Bakendtr.resetUser(email);
+
+  return resultado;
+}
+
+/*
+deleteUser: Elimina Usuario 
+
+Requerimiento:
+email
+
+Respuesta: 
+  true = "Eliminado exitosamente"
+  false = "no existe email o error del sistema"
+ 
+*/
+
+function deleteUser(email) {
+  let resultado = Bakendtr.deleteUser(email);
+
+  return resultado;
+}
+
+
 
 

@@ -1,173 +1,151 @@
-<nav class="row navbar navbar-expand-lg text-secondary bg-warning d-grid home">
+<nav class="row navbar-expand-lg home bg-warning">
+  <span class="col-1 col-sm-2" id="espaciador"></span>
 
-    <div class="container">
-      <a class="navbar-brand text-dark fw-bold" href="#" id="logo">
-        <img src="https://drive.google.com/uc?export=download&id=1DFViidwKD6GJQZERQB7gghyLS9wvtIKa" alt="" width="80" height="80" class=" ">
-          Tranferencias <span class="text-danger"> Rojas </span>
-      </a>
-      
-      <!-- Boton: Colapse Responsi -->   
-      <button id="botonResponsi" class="navbar-toggler navbar-light text-secondary border border-primary sesionApp home ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" hidden>
-        <span class="navbar-toggler-icon "></span>
-      </button>
+  <div class="col-10 col-sm-8 text-center" id="logotipo">
+    <a class="navbar-brand text-dark fw-bold" href="#" id="logo">
+      <img src="https://drive.google.com/uc?export=download&id=1DFViidwKD6GJQZERQB7gghyLS9wvtIKa" alt="" width="50" height="50" class="h3 p-0">
+        Tranferencias <span class="text-danger"> Rojas </span>
+    </a>
+  </div>
 
-      <div class="collapse navbar-collapse ms-2" id="navbarSupportedContent">
-        <div class="navbar-nav  mb-2 mb-lg-0 text-lg-center">
-
-          <!-- Opción: Inicio -->
-          <div id="opcionInicio" class="opcionNav viewRepresentante viewPromotor sesionApp" hidden>
-            <li class="nav-item">
-              <a class="nav-link active" id="inicio" aria-current="page" href="#">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-                <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-                </svg>
-                <div class="d-inline d-lg-block align-sm-middle"> Inicio</div>  
-              </a>
-            </li>
-          </div>
-
-          <!-- Opción: Cliente -->
-          <li id="clientes" class="nav-item dropdown opcionNav viewRepresentante viewPromotor sesionApp" hidden>
-            <a 
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
-
-            <svg 
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-person-video2"
-            viewBox="0 0 16 16">
-              <path d="M10 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-              <path d="M2 1a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2ZM1 3a1 1 0 0 1 1-1h2v2H1V3Zm4 10V2h9a1 1 0 0 1 1 1v9c0 .285-.12.543-.31.725C14.15 11.494 12.822 10 10 10c-3.037 0-4.345 1.73-4.798 3H5Zm-4-2h3v2H2a1 1 0 0 1-1-1v-1Zm3-1H1V8h3v2Zm0-3H1V5h3v2Z"/>
-            </svg>
-
-              <div class="d-inline d-lg-block align-middle">
-                Clientes
-              </div>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a id="clienteNivel1" class="dropdown-item">Recomendado (Nivel 1)</a></li>
-              <li><a id="clienteNivel2" class="dropdown-item">Registrado (Nivel 2)</a></li>
-              <li><a id="clienteNivel3" class="dropdown-item disabled">Comerciante (Nivel 3)</a></li>
-                <li><hr class="dropdown-divider"></li>
-              <li><a id="Beneficiario" class="dropdown-item disabled" href="#">Beneficiarios</a></li>
-            </ul>
-          </li>
-
-          <!-- Opción: Solicitudes -->
-          <li id="solicitudes" class="nav-item dropdown opcionNav viewRepresentante viewPromotor sesionApp" hidden>
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
-              <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-              <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
-              </svg>
-              <div class="d-inline d-lg-block align-middle">
-                Solicitudes
-              </div>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a id="solicitudRemesa" class="dropdown-item disabled">Remesa</a></li>
-              <li><a id="solicitudRecarga" class="dropdown-item disabled" >Recarga</a></li>
-            </ul>
-          </li>
-
-          <!-- Opción: Comprobantes -->
-          <li id="comprobantes" class="nav-item dropdown opcionNav viewRepresentante sesionApp" hidden>
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bank" viewBox="0 0 16 16">
-              <path d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z"/>
-              </svg>
-              <div class="d-inline d-lg-block align-middle">
-                Comprobantes
-              </div>  
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a id="clienteNivel1" class="dropdown-item disabled">Confirmación</a></li>
-              <li><a id="clienteNivel2" class="dropdown-item disabled" >Transferencia final</a></li>
-            </ul>
-          </li>
-
-          <!-- Opción: Cuenta TR -->
-          <li id="cuentaTR" class="nav-item opcionNav viewRepresentante viewPromotor sesionApp" hidden>
-            <a class="nav-link disabled" aria-current="page" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
-                <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
-                <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
-                <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
-              </svg>
-              <div class="d-inline d-lg-block align-middle disabled">
-                Cuenta TR
-              </div>
-            </a>
-          </li>
-
-          <!-- Opción: Admistrador -->
-          <li id="Administrador" class="nav-item dropdown opcionNav sesionApp" hidden>
-            <a 
-            class="nav-link dropdown-toggle"
-            href="#" id="navbarDropdown"
-            role="button" 
-            data-bs-toggle="dropdown" 
-            aria-expanded="false">
-              <svg 
-              xmlns="http://www.w3.org/2000/svg"
-              width="16" 
-              height="16" 
-              fill="currentColor" 
-              class="bi bi-pencil-square" 
-              viewBox="0 0 16 16">
-                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-              </svg>
-
-              <div class="d-inline d-lg-block align-middle">
-                Administrador
-              </div> 
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <a class="dropdown-item" >
-                  Clientes &raquo;
-                </a>
-                <ul class="dropdown-menu dropdown-submenu">
-                  <li>
-                    <a class="dropdown-item" id="clienteNivel1Admin" href="#">Clientes Nivel 1</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item disabled" href="#" disabled>Clientes Nivel 2</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item disabled" href="#" disabled>Clientes Nivel 3</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-
-          <!-- Opción: Configuración -->
-          <li id="config" class="nav-item dropdown opcionNav viewRepresentante viewPromotor sesionApp" hidden>
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-                </svg>
-              <div class="d-inline d-lg-block align-middle">
-                Configuración
-              </div>  
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a id="cambiarClave" class="dropdown-item">Cambiar contraseña</a></li>
-              <li><a id="cerrarSesion" class="dropdown-item" >Cerrar Sesión</a></li>
-            </ul>
-          </li>
-        </div>
-      </div>  
-    </div>  
+  <!----Boton Menu---->
+  <div class="col-1 col-sm-2 sesionApp botonResponsi d-flex justify-content-end align-middle" id="botonMenu">
+    <button class="btn home sesionApp" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" hidden>
+      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24" style=" fill:#000000;">
+      <path d="M 2 5 L 2 7 L 22 7 L 22 5 L 2 5 z M 2 11 L 2 13 L 22 13 L 22 11 L 2 11 z M 2 17 L 2 19 L 22 19 L 22 17 L 2 17 z"></path>
+      </svg>
+    </button>
+  </div>
 </nav>
+
+<!------------------------------------------------------------------------------------>
+                                <!----Usuario---->
+<!------------------------------------------------------------------------------------>
+<div class="bg-light bg-gradient shadow-lg mb-3 p-2 sesionApp home" id="nombreUsuario" hidden>
+  <div class="d-flex">
+    <div class="position-relative">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+      </svg>
+    </div>  
+    <div class="my-auto">  
+      <h6 class="container text-uppercase text-primary mt-1 align-middle">
+        <span class="fw-bold" id="perfil">Usuario:</span> <span id="user">Nombre</span>
+      </h6>
+    </div>
+  </div>     
+</div>
+
+<!------------------------------------------------------------------------------------>
+                                <!----Nav Lateral (en prueba)---->
+<!------------------------------------------------------------------------------------>
+<div class="offcanvas offcanvas-end bg-light bg-gradient" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header bg-warning bg-gradient">
+    <img src="https://drive.google.com/uc?export=download&id=1DFViidwKD6GJQZERQB7gghyLS9wvtIKa" alt="" width="40" height="40" class="p-0">
+    <h4 id="offcanvasRightLabel">Menu</h4>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" id="closeMenu"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+
+      <!-- Opción: Inicio -->
+      <div class="accordion-item opcionNav viewRepresentante viewPromotor sesionApp" hidden>
+        <h2 class="accordion-header ms-2" id="flush-heading0">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse0" aria-expanded="false" aria-controls="flush-collapse0">
+            Inicio
+          </button>
+        </h2>
+        <div id="flush-collapse0" class="accordion-collapse collapse" aria-labelledby="flush-heading0" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body"> 
+            <button id="inicio" class="dropdown-item" onclick="indexcontrollerNav('home')">Inicio</button>
+            <button id="cuentTR" class="dropdown-item disabled" onclick="indexcontrollerNav('')">Cuenta TR</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opción: Clientes -->  
+      <div class="accordion-item opcionNav viewRepresentante viewPromotor sesionApp" hidden>
+        <h2 class="accordion-header ms-2" id="flush-headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Clientes
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body"> 
+            <button id="clienteNivel1" class="dropdown-item" onclick="indexcontrollerNav('tabN1')">Recomendado (Nivel 1)</button>
+            <button id="clienteNivel2" class="dropdown-item" onclick="indexcontrollerNav('tabN2')">Registrado (Nivel 2)</button>
+            <button id="Beneficiario" class="dropdown-item disabled" onclick="indexcontrollerNav('')">Beneficiarios</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Opción: Solicitudes -->
+      <div class="accordion-item opcionNav viewRepresentante viewPromotor sesionApp" hidden>
+        <h2 class="accordion-header" id="flush-headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            Solicitudes
+          </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <button id="solicitudRemesa" class="dropdown-item disabled" onclick="indexcontrollerNav('')">Remesa</button>
+            <button id="solicitudRecarga" class="dropdown-item disabled" onclick="indexcontrollerNav('')">Recarga</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opción: Comprobantes -->
+      <div class="accordion-item opcionNav viewRepresentante sesionApp" hidden>
+        <h2 class="accordion-header" id="flush-headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+            Comprobantes
+          </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <button id="clienteNivel1" class="dropdown-item disabled" onclick="indexcontrollerNav('')">Confirmación</button>
+            <button id="clienteNivel2" class="dropdown-item disabled" onclick="indexcontrollerNav('')">Transferencia final</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opción: Administrador -->
+      <div class="accordion-item opcionNav sesionApp" hidden>
+        <h2 class="accordion-header" id="flush-heading4">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse4">
+            Administrador
+          </button>
+        </h2>
+        <div id="flush-collapse4" class="accordion-collapse collapse" aria-labelledby="flush-heading4" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body" style="list-style:none">
+            <li data-bs-toggle="collapse" href="#collapsClientes" role="button" aria-expanded="false" aria-controls="collapsClientes" id="AdminClientes" class="text-decoration-none dropdown-item dropdown-toggle">Clientes</li>
+            <div class="collapse" id="collapsClientes">
+              <div class="card card-body">
+                <button class="dropdown-item" id="clienteNivel1Admin" onclick="indexcontrollerNav('')">Clientes Nivel 1</button>
+                <button class="dropdown-item disabled" onclick="indexcontrollerNav('')">Clientes Nivel 2</button>
+              </div>
+            </div>
+            <button id="AdminUsuarios" class="dropdown-item" onclick="indexcontrollerNav('crearUsuario')">Usuarios</button> 
+          </div>
+        </div>
+      </div>
+
+      <!-- Opción: Configuración -->
+      <div class="accordion-item opcionNav viewRepresentante viewPromotor sesionApp" hidden>
+        <h2 class="accordion-header" id="flush-heading5">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse5" aria-expanded="false" aria-controls="flush-collapse5">
+            Configuración
+          </button>
+        </h2>
+        <div id="flush-collapse5" class="accordion-collapse collapse" aria-labelledby="flush-heading5" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <button id="cambiarClave" class="dropdown-item" onclick="indexcontrollerNav('cambiarClave')">Cambiar contraseña</button>
+            <button id="cerrarCuenta" class="dropdown-item" onclick="indexcontrollerNav('cerrarSesion')">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

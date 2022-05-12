@@ -23,13 +23,11 @@
         <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form class="needs-validation">
+      <form class="needs-validation" onsubmit="indexcontrollerTabN2(this)">
         <div class="modal-body text-center">
-          <!-- Alerta -->
-          <div id="modalAlertError" class="alert alert-danger mt-2 viewsApp" role="alert" hidden></div>
-          
+
           <!-- Preguntas para configurar formulario-->
-          <div class= "d-flex ms-4 needs-validation">
+          <div class= "d-flex needs-validation">
             <!-- Preguntas -->
             <div class="text-end">
               <label for='validationCustom01' class='form-label mb-2'>¿Es un cliente nivel 1?</label><br>
@@ -45,10 +43,9 @@
                 </div>
               
                 <div class='form-check ms-4'>
-                  <input type='radio' class='form-check-input' id='ClienteNuevoSi' name='radioNuevoCliente' value="no" required>
+                  <input type='radio' class='form-check-input' id='ClienteNuevoNo' name='radioNuevoCliente' value="no" required>
                   <label class='form-check-label' for='validationCustom01' >No</label>
                 </div>
-                <div class='invalid-feedback'>Por favor indique si es nivel 1</div>
               </div>
               <div class= "d-flex">
                 <div class='form-check ms-4'>
@@ -60,14 +57,13 @@
                   <input type='radio' class='form-check-input' id='EnviarFormNo' name='radioEnviarForm' value="no" required>
                   <label class='form-check-label' for='validationCustom02' >No</label>
                 </div>
-                <div class='invalid-feedback'>Por favor indique si enviara el formulario</div>
               </div>  
             </div>
           </div>
         </div>  
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary px-4 mx-auto" onclick="" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-warning px-5 mx-auto" id="botonSalidaAlerta" onclick="validarModal('enviar')">Enviar</button>
+          <button type="submit" class="btn btn-warning px-5 mx-auto" id="botonSalidaAlerta" data-bs-dismiss="modal">Aceptar</button>
         </div>
       </form>  
     </div>

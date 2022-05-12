@@ -5,8 +5,11 @@
     <h4>Nuevo Cliente Nivel 2</h4>
   </div>
 
-  <!-- Usuario -->
-  <input type='text' class='form-control' id='usuarioNivel2' placeholder= 'Nombre completo' name="usuarioNivel2" hidden>
+   <!-- Email del Usuario -->
+  <input type='text' class='form-control' id='usuarioNivel1' placeholder= 'Nombre completo' name="usuarioNivel2" hidden>
+
+    <!-- Nombre del Usuario -->
+  <input type='text' class='form-control' id='nombreUserNivel1' placeholder= 'Nombre completo' name="nombreUserNivel2" hidden>
 
   <!-- ALERT ERROR  -->
   <div id="alertError" class="alert alert-danger" role="alert" hidden></div> 
@@ -45,11 +48,10 @@
     <div class='valid-feedback'>Muy bien!</div>
     <div class='invalid-feedback'>Por favor colocar su nombre completo</div>
     </div>
-
   </div>
 
   <!-- Campo: Codigo de Area -->
-  <div class='col-sm-4 col-md-2 enviarCliente registrarCliente'>
+  <div class='col-sm-4 col-md-2 elementFormN2 registrarCliente'>
     <div class='input-group'>
       <span class='input-group-text' id='basic-addon1'>
         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-phone-flip' viewBox='0 0 16 16'>
@@ -70,14 +72,14 @@
   </div>
 
   <!-- Campo: Numero de telefono -->
-  <div class='col-sm-8 col-md-4 enviarCliente registrarCliente'>
+  <div class='col-sm-8 col-md-4 elementFormN2 registrarCliente'>
     <input type='number' class='form-control' id='telefonoNivel2' placeholder='Numero de telefono' name="telefono" required>
     <div class='valid-feedback'>Muy bien!</div>
     <div class='invalid-feedback'>Por favor colocar un número de teléfono válido</div>
   </div>
 
   <!-- Campo: Email -->
-  <div class='col-md-5 registrarCliente'>
+  <div class='col-md-5 elementFormN2 enviarForm registrarCliente'>
     <div class='input-group'>
       <span class='input-group-text' id='basic-addon1'>
         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-envelope' viewBox='0 0 16 16'>
@@ -92,7 +94,7 @@
   </div>
 
   <!-- Campo: Tipo de documento -->
-  <div class='col-sm-4 col-md-3 enviarCliente registrarCliente'>
+  <div class='col-sm-4 col-md-3 elementFormN2 registrarCliente'>
     <div class='input-group'>
       <span class='input-group-text' id='basic-addon1'>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-postcard" viewBox="0 0 16 16">
@@ -113,14 +115,14 @@
   </div>
 
   <!-- Campo: documento -->
-  <div class='col-sm-8 col-md-4 enviarCliente registrarCliente'>
+  <div class='col-sm-8 col-md-4 elementFormN2 registrarCliente'>
     <input type='number' class='form-control' id='documentoNivel2' placeholder='Numero de documento' name="documento" required>
     <div class='valid-feedback'>Muy bien!</div>
     <div class='invalid-feedback'>Por favor colocar un número de documento válido</div>
   </div>
 
   <!-- Campo: Pais de residencia -->
-  <div class='col-md-6 enviarCliente registrarCliente'>
+  <div class='col-md-6 elementFormN2 registrarCliente'>
     <div class='input-group'>
       <span class='input-group-text' id='basic-addon1'>
         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-map' viewBox='0 0 16 16'>
@@ -142,7 +144,7 @@
   </div>
 
   <!-- Campo: Ciudad -->
-  <div class='col-md-6 enviarCliente registrarCliente'>
+  <div class='col-md-6 elementFormN2 registrarCliente'>
     <div class='input-group'>
       <span class='input-group-text' id='basic-addon1'>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
@@ -157,7 +159,7 @@
   </div>
 
   <!-- Campo: Dirección -->
-  <div class='col-md-12 enviarCliente registrarCliente'>
+  <div class='col-md-12 elementFormN2 registrarCliente'>
     <div class='input-group'>
       <span class='input-group-text' id='basic-addon1'>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
@@ -171,7 +173,7 @@
   </div>
 
   <!-- Campo: Adjuntar documento -->
-  <div class='col-12 col-md-5 border mx-auto enviarCliente registrarCliente'>
+  <div class='col-12 col-md-5 border mx-auto elementFormN2 registrarCliente'>
     <label class="mb-3">Foto del documento de identidad</label> </br>
     <button type="button" class="btn btn-warning mb-2 float-end">Adjuntar</button>
 
@@ -180,7 +182,7 @@
   </div>
 
   <!-- Campo: Adjuntar imagen -->
-  <div class='col-12 col-md-5 border mx-auto enviarCliente registrarCliente'>
+  <div class='col-12 col-md-5 border mx-auto elementFormN2 registrarCliente'>
     <label class="mb-3">Foto frontal con el documento y nota</label> </br>
     <button type="button" class="btn btn-warning mb-2 float-end">Adjuntar</button> 
 
@@ -244,7 +246,7 @@
   </div>
 
   <!-- Terminos y condiciones -->
-  <div class='form-check ms-3 mb-3 enviarCliente registrarCliente'>
+  <div class='form-check ms-3 mb-3 elementFormN2 registrarCliente'>
     <input class='form-check-input' onclick="aceptarTerminos" type='checkbox'  id='Check2' name="terminos" value="acepta" required>
     <a href=# class='text-decoration-none form-check-label' for='invalidCheck' data-bs-toggle='modal' data-bs-target='#Modal2'>
       Acepto Terminos y Condiciones
@@ -255,7 +257,7 @@
   </div>
 
   <!-- Pregunta: Via de envío a cliente -->
-  <div class="text-center" id="compartirFormulario" >
+  <div class="text-center elementFormN2 enviarForm" id="compartirFormulario" >
     <label  class='form-label col-sm-12'>Desea enviar el formulario a su cliente por:</label><br>
 
     <div class='col-sm-12 d-flex justify-content-center mx-auto' hidden>
@@ -295,7 +297,7 @@
 
   <!-- Botones -->
   <div class=' d-grid gap-2 d-sm-flex justify-content-sm-end mb-3 '>
-    <button type='button' class='btn btn-secondary px-5' onclick='advertenciaSalida("formN2","¿Esta seguro de salir sin completar el registro?")'>Atras</button>
+    <button type='button' class='btn btn-secondary px-5' onclick='activarModal("advertencia","¿Esta seguro de salir sin completar el registro?")'>Atras</button>
     <button type='submit' id='enviarForm2' class='btn btn-warning px-5'>
       <span class="spinner-border spinner-border-sm" id='spinerCarga' role="status" aria-hidden="true" hidden></span>
       Enviar

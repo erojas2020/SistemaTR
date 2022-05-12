@@ -1,0 +1,36 @@
+<script>
+async function cargarTabN1(email){
+  var resul = await google.script.run
+  .withSuccessHandler(crearTabN1)
+  .withFailureHandler()
+  .getData(email);
+}
+
+function crearTabN1(dataArray){
+  //Configuración de encabezado
+    ocultarElementos("false", ".viewNivel1");
+    //ocultarElemento("false", "tablaN1" );
+
+    $(document).ready(function(){
+    $('#data-tableN1').DataTable({
+          data: dataArray,
+        //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+
+        columns: [
+            {"title":"Codigo"},
+            {"title":"Nombre"},
+            {"title":"Pais Origen"},
+            {"title":"Celular"},
+            {"title":"Email"},
+            {"title":"TJ"},
+            {"title":"Familiar"},
+            {"title":"Confiable"},
+        ] , stateSave: true,
+    "bDestroy": true,
+    responsive:true
+      });
+    });
+    console.log(document.getElementById("data-table"))
+    activarModal("false");
+}
+</script>

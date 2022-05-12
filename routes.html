@@ -1,0 +1,129 @@
+<script>
+
+  /*Gestor de Contenido
+    1. Oculta todas las vistas de la App
+    1. Almacena la vista actual
+    3. Muestra el elemento solicitado*/
+  var vistaActual = "";   
+  async function mostrarContenido(view, colapse){
+    //Oculta todas las vistas de la App
+    ocultarElementos("true", ".viewsApp");
+    vistaActual = view; //Indica la vista actual
+
+    //Muestra el elemento solicitado
+    //form clave nueva
+    switch (view){
+      case "login":
+        limpiarForm("formularioInicio");
+        ocultarElementos("true", ".sesionApp");
+        ocultarElemento('false', 'formularioInicio' );
+        enfocarCampo("imputInicioEmail"); 
+        break;
+      case "home":
+        ocultarElementos("false", ".home");
+        break;    
+      case "claveNueva":
+        limpiarForm("formClaveNueva");
+        ocultarElemento("false", "formClaveNueva" );  
+        break
+      //Clientes form Olvide Contraseña preguntas
+      case "olvideClavePreguntas":
+        limpiarForm("olvidoClavePregunta");
+        ocultarElemento("false", "olvidoClavePregunta");
+        enfocarCampo('inputRespuesta1');
+        break
+      //form Olvide Contraseña Claves
+      case "olvideClaveContraseña":
+        limpiarForm("formRestablecerClave");
+        ocultarElemento("false", "formRestablecerClave");
+        enfocarCampo('imputCambioContrasena');
+        break;
+      //form cambio clave
+      case "cambioClavePreguntas":
+        limpiarForm("preguntasCambioClave");
+        ocultarElemento("false", "preguntasCambioClave");
+        enfocarCampo('ClaveNuevaRespuesta1'); 
+        break
+      case "cambioClaveContraseña":
+        limpiarForm("formCambiarClave");
+        ocultarElemento("false", "formCambiarClave");
+        enfocarCampo('ClaveNuevaAnterior'); 
+        break  
+      case "tabN1":
+        activarModal("spiner", "Cargando usuarios");
+        cargarTabN1(document.getElementById("imputInicioEmail").value)
+        break
+      case "tabN2":
+        activarModal("spiner", "Cargando usuarios");
+        var resul = await google.script.run.withSuccessHandler(showData).getData(user);
+        break
+      case "formN1":  
+        ocultarElemento("false", "formularioNivel1");
+        limpiarForm("formularioNivel1");
+        formularioNivel1.usuarioNivel1.value = document.getElementById("imputInicioEmail").value;
+        formularioNivel1.nombreUserNivel1.value = document.getElementById("user").innerText;
+        enfocarCampo('nombreNivel1');
+        var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();
+        break
+      case "formN2":  
+        ocultarElemento("false", "formularioNivel2");
+        limpiarForm("formularioNivel2");
+        formularioNivel1.usuarioNivel2.value = document.getElementById("imputInicioEmail").value;
+        formularioNivel1.nombreUserNivel2.value = document.getElementById("user").outerHTML;
+        enfocarCampo('listNombreNivel2');
+        var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();
+        break
+      case "crearUsuario":
+        activarModal("spiner", "Cargando usuarios");
+        modalActual= view;
+        cargarUsuarios();
+        indexControllerCrearUsuarios();
+        break  
+      //Clientes nivel 2
+      case "cliente2":
+        conte = indexCliente2();
+        break
+    }
+ 
+  }
+
+  /** Segun la vista actual
+   *   Gestiona la salida del modal
+   */ 
+   function salidaModal(){
+    switch (vistaActual) {
+      case "claveNueva":
+        mostrarContenido("login");
+        activarModal("false");
+        break;
+      case "sistematr":
+        mostrarContenido("login");
+        activarModal("false");
+        break;
+      case "olvideClavePreguntas":  
+      case "olvideClaveContraseña":
+        mostrarContenido("login");
+        activarModal("false");
+        break;
+      case "cambioClave":
+        mostrarContenido("home");
+        activarModal("false");
+        break;
+      case "cambioClavePreguntas":
+      case "cambioClaveContraseña":
+        mostrarContenido("home");
+        activarModal("false");
+        break;
+      case "formN1":
+        mostrarContenido("tabN1");
+        break;
+      case "formN2":
+        mostrarContenido("tabN2");
+        break;
+      case "crearUsuario":
+        activarModal("spiner","Cargando usuarios");
+        cargarTablaUsuarios();
+        break;        
+    }
+  }
+</script>

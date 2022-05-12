@@ -11,14 +11,9 @@
      
    
   </head>
-  <body>
+  <body class="bg-light bg-gradient">
 
     <?!= include('Nav/viewNav'); ?>
-    <div class="row bg-light shadow-lg mb-3 sesionApp home" id="nombreUsuario" hidden>
-      <h6 class="col container p-3 ms-4 text-uppercase">
-        <span class="fw-bold">Usuario:</span> <span id="user">Nombre</span>
-      </h6>
-    </div>
 
     <div class="container">
 
@@ -41,13 +36,14 @@
       <!------------------------------------------------------------------------------------>
       <?!= include('Cliente nivel 1/viewTabN1'); ?>
       <?!= include('Cliente nivel 2/viewTabN2'); ?>
+      <?!= include('Crear usuarios/viewCrearUsuarios'); ?> 
 
-      <!----Tabla---->
+      <!----Tabla--
       <div id="tabla" class="row viewsApp sesionApp" hidden >
-        <div class="table-responsive justify-content-center">
+        <div class="table-responsive mx-auto">
           <table id="data-table" class="table table-hover"></table>
         </div>
-      </div> 
+      </div> -->
 
         <!------------------------------------------------------------------------------------>
                                   <!----Formulario nivel 1---->
@@ -112,13 +108,17 @@
     <?!= include('Clave nueva/controllerClaveNueva'); ?>
     <?!= include('Clave nueva/funcionClaveNueva'); ?>
     <?!= include('Clave nueva/modeloClaveNueva'); ?>
+    <?!= include('Cliente nivel 1/ModeloTabN1'); ?>
     <?!= include('Cliente nivel 1/controllerFormN1'); ?>
     <?!= include('Cliente nivel 1/funcionFormN1'); ?>
     <?!= include('Cliente nivel 1/modelFormN1'); ?>
     <?!= include('Cliente nivel 2/controllerTabN2'); ?>
     <?!= include('Cliente nivel 2/controllerFormN2'); ?>
+    <?!= include('Crear usuarios/ControllerCrearUsuarios'); ?>
+    <?!= include('Crear usuarios/ModeloCrearUsuarios'); ?>
     <?!= include('Cambio clave/ControllerCambioClave'); ?>
     <?!= include('Cambio clave/FuncionCambioClave'); ?>
     <?!= include('Cambio clave/ModeloCambioClave'); ?>
+    <?!= include('routes'); ?>
   </body>
 </html>

@@ -1,99 +1,19 @@
 <script>
 /*---------------------------------------------------------------------------------------------------
-                                  Controller Visual
------------------------------------------------------------------------------------------------------*/
-
-/* Cambios luis
-/*Gestor de Contenido
-    1. Colapsa boton en modo responsi
-    2. Oculta todas las vistas de la App
-    3. Almacena la vista actual
-    4. Muestra el elemento solicitado*/
-  var vistaActual = "";   
-  async function mostrarContenido(view, colapse){
-    //Colapsa boton en modo responsi
-    if (colapse == "true"){
-      clickBoton("botonResponsi");
-    }
-
-    //Oculta todas las vistas de la App
-    ocultarElementos("true", ".viewsApp");
-    vistaActual = view; //Indica la vista actual
-
-    //Muestra el elemento solicitado
-    //form clave nueva
-    switch (view){
-      case "login":
-        limpiarForm("formularioInicio");
-        ocultarElementos("true", ".sesionApp");
-        ocultarElemento('false', 'formularioInicio' );
-        enfocarCampo("imputInicioEmail"); 
-        break;
-      case "home":
-        ocultarElementos("false", ".home");
-        break;    
-      case "claveNueva":
-        limpiarForm("formClaveNueva");
-        ocultarElemento("false", "formClaveNueva" );  
-        break
-      //Clientes form Olvide Contraseña preguntas
-      case "olvideClavePreguntas":
-        limpiarForm("olvidoClavePregunta");
-        ocultarElemento("false", "olvidoClavePregunta");
-        enfocarCampo('inputRespuesta1');
-        break
-      //form Olvide Contraseña Claves
-      case "olvideClaveContraseña":
-        limpiarForm("formRestablecerClave");
-        ocultarElemento("false", "formRestablecerClave");
-        enfocarCampo('imputCambioContrasena');
-        break;
-      //form cambio clave
-      case "cambioClavePreguntas":
-        limpiarForm("preguntasCambioClave");
-        ocultarElemento("false", "preguntasCambioClave");
-        enfocarCampo('ClaveNuevaRespuesta1'); 
-        break
-      case "cambioClaveContraseña":
-        limpiarForm("formCambiarClave");
-        ocultarElemento("false", "formCambiarClave");
-        enfocarCampo('ClaveNuevaAnterior'); 
-        break  
-      case "tabN1":
-        activarModal("spiner", "Cargando usuarios");
-        google.script.run.withSuccessHandler(showData).getData(document.getElementById("imputInicioEmail").value);
-        break
-      case "tabN2":
-        activarModal("spiner", "Cargando usuarios");
-        google.script.run.withSuccessHandler(showData).getData(user);
-        break
-      case "formN1":  
-        ocultarElemento("false", "formularioNivel1");
-        limpiarForm("formularioNivel1");
-        formularioNivel1.usuarioNivel1.value = document.getElementById("imputInicioEmail").value;
-        formularioNivel1.nombreUserNivel1.value = document.getElementById("user").innerText;
-        enfocarCampo('nombreNivel1');
-        var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();
-        break
-      case "formN2":  
-        ocultarElemento("false", "formularioNivel2");
-        limpiarForm("formularioNivel2");
-        formularioNivel1.usuarioNivel2.value = document.getElementById("imputInicioEmail").value;
-        formularioNivel1.nombreUserNivel2.value = document.getElementById("user").outerHTML;
-        enfocarCampo('listNombreNivel2');
-        var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();  
-        break
-      //Clientes nivel 2
-      case "cliente2":
-        conte = indexCliente2();
-        break
-    }
- 
-  }
-/*---------------------------------------------------------------------------------------------------
                                   Controller Utilidades
 -----------------------------------------------------------------------------------------------------*/  
+  function reiniciarTabla(){
+    /*var table = document.getElementById("data-table");
+    table.innerHTML = "";*/
+    let tabla = document.getElementById("data-table");
+    let emcabezado = document.getElementsByTagName("thead");
+    let cuerpo = document.getElementsByTagName("tbody");
+    tabla.removeChild(emcabezado);
+    tabla.removeChild(cuerpo);
 
+  }
+  
+  
   //Mensaje de alerta desde form
   function alertaError (visualizar, texto){
     var alerta = document.getElementById('alertError');
@@ -109,9 +29,7 @@
 
   //Ocultar un elemento a la vez por su ID
   function ocultarElemento(ocultar, elementId ){
-    
     var element = document.getElementById(elementId);
-
       if(ocultar== 'true'){
         element.hidden = true;
       }else if (ocultar== 'false'){
@@ -154,10 +72,8 @@
 
   //Hacer click a un boton por su ID
   function clickBoton(elementId){
-    if (window.innerWidth <= '990'){
       var elemento = document.getElementById(elementId)
       elemento.click();
-    }
   }
 
 
@@ -202,7 +118,22 @@
   function ValidarEmail (email) {
     var emailPattern =  /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
     return emailPattern.test(email); 
-  } 
+  }
+  
+  /**Reiniciar select
+   * 
+   */
+  function removeOptions(selectId){
+    var i;
+    for(i = selectId.options.length - 1 ; i > 0 ; i--)
+    {
+      selectId.remove(i);
+    }
+  }
+
+  function selectionDefault(selectId){
+    $('#'+selectId).get(0).selectedIndex = 0
+  }
 
   // Scrip de bootstrap para validar campos
   (function validarform () {
@@ -229,57 +160,12 @@
                                   Controller Tabla
 -----------------------------------------------------------------------------------------------------*/
 
-  /*Carga de datos en tabla
-    1. Busca los datos qu corresponden al usuario
-    2. Carga los datos en la tabla
-    3. desactiva spiner de carga*/
-  function showData(dataArray){
-    activartable("true");
-    $(document).ready(function(){
-    $('#data-table').DataTable({
-          data: dataArray,
-        //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
-        columns: [
-          {"title":"Codigo"},
-          {"title":"Nombre"},
-          {"title":"Pais Origen"},
-          {"title":"Celular"},
-          {"title":"Email"},
-          {"title":"TJ"},
-          {"title":"Familiar"},
-          {"title":"Conocido"},
-          {"title":"Promotor"},
-        ], stateSave: true,
-    "bDestroy": true,
-    responsive:true
-
-      });
-
-    //table.destroy();
-    console.log("dataTable "+dataArray);
-
-    switch(vistaActual){
-      case "tabN1": 
-        ocultarElementos("false", ".viewNivel1");
-        break;
-      case "tabN2": 
-        ocultarElementos("false", ".viewNivel2");
-        break;
-    }
-    
-    activarModal("false");
-
-    });
-
-  }
-
-
   /*Mostrar tablas*/
   function activartable(activar){
     if(activar == "true"){
-      ocultarElemento('false', 'tabla' );
+      ocultarElemento('false', "tabla" );
     }else if(activar == "false"){
-      ocultarElemento('true', 'tabla' );
+      ocultarElemento('true', "tabla" );
     }
     
   }
@@ -323,124 +209,6 @@
         $("#modalAlertaSalida").modal('hide');  
     }
     
-  }
-
-  /** Segun la vista actual
-   *   Gestiona la salida del modal
-   */ 
-  function salidaModal(){
-    
-    switch (vistaActual) {
-      case "claveNueva":
-        mostrarContenido("login");
-        activarModal("false");
-        break;
-      case "sistematr":
-        mostrarContenido("login");
-        activarModal("false");
-        break;
-      case "olvideClavePreguntas":  
-      case "olvideClaveContraseña":
-        mostrarContenido("login");
-        activarModal("false");
-        break;
-      case "cambioClave":
-        mostrarContenido("home");
-        activarModal("false");
-        break;
-      case "cambioClavePreguntas":
-      case "cambioClaveContraseña":
-        mostrarContenido("home");
-        activarModal("false");
-        break;
-      case "formN1":
-        mostrarContenido("tabN1");
-        break;
-      case "formN2":
-        mostrarContenido("tabN2");
-        break;  
-    }
-      
-  }
-
-/*---------------------------------------------------------------------------------------------------
-                                  Codigo por ordenar
------------------------------------------------------------------------------------------------------*/
-
-//Descripcion: nivel 2
-  function indexCliente2(){
-
-    ocultarElemento('true', 'formularioNivel1' );  
-
-    ocultarElemento('true', 'formularioNivel2' );  
-
-    ocultarElemento('false', 'contenido' );
-
-    activartable("true");
-        
-  }
-
-  function indexCliente1Adm(){
-    
-    ocultarElemento('true', 'formularioNivel1' );  
-
-    ocultarElemento('true', 'formularioNivel2' );  
-
-    ocultarElemento('false', 'contenido' );  
-
-    activartable("true");
-
-    var cont="";
-
-        cont+="<div class='row p-3'>";
-        cont+=  "<div class='col-md-12 mb-2'>";
-        cont+=     "<h3>Clientes Nivel 1</h3>";
-        cont+=  "</div>";
-        cont+="</div>";
-        
-        contenido.innerHTML = cont;
-        google.script.run.withSuccessHandler(showData).getDataTodo();
-        return cont;  
-  }
-
-  //Formulario: Nuevo cliente nivel 2
-  function nuevoCliente2(tipo){
-      ocultarElemento('true', 'formularioNivel1');
-      ocultarElemento ('false', 'formularioNivel2' )
-      ocultarElemento('true', 'contenido' );
-      activartable("false");
-
-      if (tipo == 'nuevo'){
-        promoverClientNivel1('false')
-        enfocarCampo('nombreNivel2')
-      }else if (tipo == 'promover'){
-        promoverClientNivel1('true')
-        enfocarCampo('listNombreNivel2')
-      };
-
-  }
-  
-
-  function respuestasValidas() {
-    ocultarElemento("true", "spinerCargaClave" );
-    ocultarElemento("true", "preguntaCambioClave" );
-    ocultarElemento("false", "restablecerClave" );
-    alertaError("false", "");
-  }
-
-
-  function promoverClientNivel1(respuesta){
-    
-    var nombreNivel1 = document.getElementById('promoverNivel1');
-    var nombreNuevo = document.getElementById('nombreNuevo');
-
-    if (respuesta == 'true'){
-      nombreNivel1.hidden= false;
-      nombreNuevo.hidden= true;
-    }else if (respuesta == 'false'){
-      nombreNivel1.hidden= true;
-      nombreNuevo.hidden= false;
-    }
   }
 
 </script>

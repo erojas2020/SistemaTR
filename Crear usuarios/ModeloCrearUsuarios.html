@@ -1,0 +1,131 @@
+<script>
+
+async function crearUsuario(datos){
+  let resultado = await google.script.run
+      .withSuccessHandler( crearUsuarioTrue )
+      .withFailureHandler( crearUsuariofalse )
+      .newUser(datos)
+}
+
+function crearUsuarioTrue(registro){
+  switch (registro) {
+    case true:
+      vistaActual = "crearUsuario";
+      activarModal("respuestaPositiva","El usuario a sido registrado con exito");
+      break;
+    case false:
+      vistaActual = "crearUsuarioError";
+      activarModal("respuestaNegativa","El email "+document.getElementById("inputUsuarioEmail").value+" ya existe");
+      break;  
+  }
+  
+}
+
+function crearUsuariofalse(error){
+  activarModal("respuestaNegativa", error);
+}
+
+async function cargarTablaUsuarios(){
+  var resul = await google.script.run
+  .withSuccessHandler(cargarTablaUsuariosTrue)
+  .withFailureHandler(mostrarError)
+  .getAllUsers();
+}
+
+  function cargarTablaUsuariosTrue(dataArray){
+    //Configuración de encabezado
+    ocultarElementos("false", ".crearUsuario");
+    
+    //activartable("true");
+
+    $(document).ready(function(){
+    $('#data-tableUsuario').DataTable({
+      
+          data: dataArray,
+        //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+        
+        columns: [
+            {"title":"Email"},
+            {"title":"Nombre"},
+            {"title":"Perfil"},
+        ] , stateSave: true,
+    "bDestroy": true,
+    responsive:true
+      });
+    
+    });
+    activarModal("false");
+  }
+    
+  function cargarTablaUsuariosFalse(error){
+    activarModal("respuestaNegativa", error) 
+  }
+
+  async function cargarUsuarios(){
+  var resul = await google.script.run
+  .withSuccessHandler(cargarUsuariosTrue)
+  .withFailureHandler(cargarUsuariosfalse)
+  .getEmailUsers();
+  }
+
+  function cargarUsuariosTrue(listaUsuarios){
+    var select = document.getElementById("inputUsuarioNuevo");
+    removeOptions(select);
+    
+    listaUsuarios.forEach(element =>{
+    var option = document.createElement('option');
+    option.value = element[0];
+    option.innerHTML = element[0];
+    select.appendChild(option)})
+  }
+
+  function cargarUsuariosfalse(){
+    
+  }
+
+  async function reiniciarUser(email){
+  var resul = await google.script.run
+  .withSuccessHandler(reiniciarUsuariosTrue)
+  .withFailureHandler(reiniciarUsuariosfalse)
+  .resetUser(email);
+  }
+
+  function reiniciarUsuariosTrue(resultado){
+    switch(resultado){
+      case true:
+        activarModal("respuestaPositiva", "El usuario a sido reiniciado exitosamente");
+        break;
+      case false:
+        activarModal("respuestaNegativa", "El usuario no a podido ser reiniciado");
+      break;
+    }    
+  }
+
+  function reiniciarUsuariosfalse(error){
+    activarModal("respuestaNegativa", error);
+  }
+
+  async function eliminarUser(email){
+  var resul = await google.script.run
+  .withSuccessHandler(eliminarUsuariosTrue)
+  .withFailureHandler(eliminarUsuariosfalse)
+  .deleteUser(email);
+  }
+
+  function eliminarUsuariosTrue(resultado){
+    console.log(resultado);
+    switch (resultado){
+      case true:
+        activarModal("respuestaPositiva", "El usuario a sido eliminado exitosamente");
+        break;
+      case false:
+        activarModal("respuestaPositiva", "El usuario no a podido ser eliminado");
+        break;
+    }
+  }
+
+  function eliminarUsuariosfalse(error){
+    activarModal("respuestaNegativa", error);
+  }
+
+</script>

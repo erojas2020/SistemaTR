@@ -1,0 +1,69 @@
+<script>
+let modalActual = ""
+function indexControllerCrearUsuarios(datosForm){
+  event.preventDefault();
+  $("#crearUsuarioModal").modal('hide');
+  switch (modalActual) {
+    case "crearUsuario":
+      cargarTablaUsuarios();
+      break;
+    case "nuevoUsuario": 
+      activarModal("spiner", "Creando usuario");
+      let datos = {
+        email: datosForm.inputUsuarioEmail.value,
+        nombre: datosForm.inputUsuarioNombre.value,
+        perfil: datosForm.inputperfilUsuario.value
+      }
+      crearUsuario(datos);
+      break;
+    case "reiniciarUsuario":
+      activarModal("spiner", "Reiniciando usuario");
+      let email= datosForm.inputUsuarioNuevo.value;
+      reiniciarUser(email);
+      break;
+    case "eliminarUsuario":
+      activarModal("spiner", "Eliminando usuario");
+      let emailDelet= datosForm.inputUsuarioNuevo.value;
+      eliminarUser(emailDelet);
+      break;    
+  }
+}
+
+function showControllerCrearUsuarios(formulario){
+  let email = document.getElementById("inputUsuarioEmail");
+  let nombreUsuario = document.getElementById("inputUsuarioNombre");
+  let perfil = document.getElementById("inputperfilUsuario");
+  let usuarioActivo = document.getElementById("inputUsuarioNuevo");
+
+  $("#crearUsuarioModal").modal('show');
+  ocultarElementos("true", ".elementUsuarioModal");
+  limpiarForm("gestionarUsuario");
+  modalActual = formulario
+
+  switch (formulario){
+    case "nuevoUsuario":
+      UtilidadesFront.ocultarElementos("false", ".nuevoUsuario");
+      usuarioActivo.disabled = true;
+      email.disabled = false;
+      nombreUsuario.disabled = false;
+      perfil.disabled = false;
+      break;
+    case "reiniciarUsuario":
+      ocultarElementos("false", ".reiniciarUsuario");
+      selectionDefault("inputUsuarioNuevo");
+      usuarioActivo.disabled = false;
+      email.disabled = true;
+      nombreUsuario.disabled = true;
+      perfil.disabled = true;
+      break;
+    case "eliminarUsuario":
+      ocultarElementos("false", ".eliminarUsuario");
+      usuarioActivo.disabled = false;
+      email.disabled = true;
+      nombreUsuario.disabled = true;
+      perfil.disabled = true;   
+      break;
+  }
+}
+
+</script>  

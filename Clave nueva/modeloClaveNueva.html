@@ -5,11 +5,10 @@
   }
 
   async function registrarDatosClaveNueva(datos){
-    var resultado =  
-  await google.script.run.
-  withSuccessHandler(registroClaveNuevaTrue).
-  withFailureHandler(registroClaveNuevaFalse).
-  insertClaveNueva(datos);
+    var resultado = await google.script.run.
+    withSuccessHandler(registroClaveNuevaTrue).
+    withFailureHandler(registroClaveNuevaFalse).
+    insertClaveNueva(datos);
     
   }
 

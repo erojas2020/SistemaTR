@@ -110,7 +110,7 @@ function validarRespuestaBakendTrue(datos){
   }else if (datos){
     activarModal("false");
     alertaError("false", "");
-    mostrarUsuario(datos.nombre);  
+    mostrarUsuario(datos.nombre, datos.perfil);  
     habilitarAcessos(datos.perfil);
     mostrarContenido("home");
   }
@@ -118,8 +118,10 @@ function validarRespuestaBakendTrue(datos){
 }
 
     
-function mostrarUsuario (usuario){
+function mostrarUsuario (usuario, perfil){
+  var htmlperfil = document.getElementById("perfil")
   var htmlUser = document.getElementById('user');
+  htmlperfil.innerHTML = perfil + ":";
   htmlUser.innerHTML = usuario;
 
 }

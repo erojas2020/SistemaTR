@@ -9,6 +9,7 @@
       .withFailureHandler( mostrarError )
       .registrarNuevoCliente1(form)
   }
+  
 
   //Confirmación de usuario nivel 1 registrado
   function confirmacionRegistroNivel1(){
@@ -23,8 +24,7 @@
   function cargarListaPaises(listaPaises){
     var select = document.getElementById("pais");
     var select2 = document.getElementById("areaNivel1");
-    // select.options.length = 0; 
-
+    
     listaPaises.forEach(element =>{
     var option = document.createElement('option');
     option.value = element[0];
