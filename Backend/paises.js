@@ -1,4 +1,4 @@
-function getPaises(){
+/*function getPaises(){
  var dataPaises = sheetPaises.getDataRange().getValues();
 var paises = []; 
 
@@ -28,4 +28,4 @@ return paises;
 }
 
  return nombrePais;
- }
+ }*/

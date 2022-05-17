@@ -1,0 +1,32 @@
+<script>
+    function indexControllerAdminNivel1(dateForm){
+        event.preventDefault();
+        let select = document.getElementById("eliminarClienteN1Select");
+        let nombre = select.options[select.selectedIndex].text;
+        datoEliminar ="clienteN1";
+        activarModal("eliminar", "Esta seguro de eliminar al cliente: "+nombre);
+    }
+
+    function showControllerAdminNivel1(view){
+        switch (view){
+        case "actualizarTabN1":
+            activarModal("spiner", "Actualizando lista de clientes");
+            cargarAdminTabN1();
+            buscarClientesN1();
+            break;
+        case "eliminarClienteN1Modal":        
+            activarModal("formulario",view);
+            cargarSelect("reiniciar","eliminarClienteN1Select");
+            break;
+        }   
+        
+    }
+
+    function destroyControllerAdminNivel1(){
+        activarModal("false","crearUsuarioModal");
+        activarModal("spiner", "Eliminando usuario");
+        let emailDelet= document.getElementById("inputUsuarioNuevo").value;
+        eliminarUser(emailDelet); 
+    }
+</script>
+

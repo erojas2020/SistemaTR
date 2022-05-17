@@ -1,0 +1,78 @@
+<script>
+  //Almacenamiento de los campos en variables
+  var contrasenaNueva = document.getElementById("imputContrasenaNueva");
+  var confirmacionNueva = document.getElementById("imputConfirmarContrasena");  
+
+  //Al enviar formulario: valida campos
+    // 1. si existe algun campo vacio envia alerta
+    // 2. si esta correcto los campos, envia datos
+    // 3. segun respuesta del backend se activa modal con el msj de correcto o errado
+  function indexcontrollerClaveNueva(datosFormulario) {
+    event.preventDefault();
+    var preguntaI = document.getElementById("inputPreguntaSeguridad1");
+    var respuestaI = document.getElementById("inputRespuestaSeguridad1");
+    var preguntaII = document.getElementById("inputPreguntaSeguridad2");
+    var respuestaII = document.getElementById("inputRespuestaSeguridad2");
+
+
+    let datos = {
+      pregunta1: datosFormulario.pregunta1.value,
+      pregunta2: datosFormulario.pregunta2.value,
+      claveNueva: datosFormulario.claveNueva.value,
+      respuesta1: datosFormulario.respuesta1.value,
+      respuesta2: datosFormulario.respuesta2.value,
+      email: document.getElementById("imputInicioEmail").value
+    }
+
+    console.log(datos);
+
+    if (contrasenaNueva.value == "") {
+      alertaError ("true", "Debe indicar una clave","formulario");
+      enfocarCampo("imputContrasenaNueva");
+
+    }else if (confirmacionNueva.value == ""){
+      alertaError ("true", "Debe confirmar la clave","formulario");
+      enfocarCampo("imputConfirmarContrasena");
+
+    }else if (preguntaI.value == ""){
+      alertaError ("true", "Indique una pregunta de seguridad","formulario");
+      enfocarCampo("inputPreguntaSeguridad1");
+
+    }else if (respuestaI.value == ""){
+      alertaError ("true", "Indique una respuesta a su pregunta de seguridad","formulario");
+      enfocarCampo("inputRespuestaSeguridad1");
+
+    }else if (preguntaII.value == ""){
+      alertaError ("true", "Indique una segunda pregunta de seguridad","formulario");
+      enfocarCampo("inputPreguntaSeguridad2");
+
+    }else if (respuestaII.value == ""){
+      alertaError ("true", "Indique una respuesta a su segunda pregunta de seguridad","formulario");
+      enfocarCampo("inputRespuestaSeguridad2");
+
+    }else {
+      alertaError("false", "","formulario");
+      activarModal("spiner", "Guardando preguntas y contraseña...");
+      
+      indexModelClaveNueva(datos);
+      
+    }    
+  }
+  
+  function storeControllerClaveNueva(){
+      
+  }
+
+  function showControllerClaveNueva(show){  
+    
+  }
+
+  function updateControllerClaveNueva(){
+    
+  }
+
+  function destroyControllerClaveNueva(){
+    
+  }
+  
+</script>  

@@ -1,0 +1,260 @@
+<script>
+/*---------------------------------------------------------------------------------------------------
+                                  Controller Utilidades
+-----------------------------------------------------------------------------------------------------*/  
+  function reiniciarTabla(){
+    /*var table = document.getElementById("data-table");
+    table.innerHTML = "";*/
+    let tabla = document.getElementById("data-table");
+    let emcabezado = document.getElementsByTagName("thead");
+    let cuerpo = document.getElementsByTagName("tbody");
+    tabla.removeChild(emcabezado);
+    tabla.removeChild(cuerpo);
+
+  }
+  
+  
+  //Mensaje de alerta desde form
+  function alertaError (visualizar, texto, tipo){
+    var alerta = document.getElementById('alertError');
+    let alertaModal = document.getElementById('alertErrorModal');
+    switch (tipo){
+      case "formulario":
+        if(visualizar == "true"){
+          alerta.hidden = false; 
+          alerta.innerHTML = texto;
+
+        }else if (visualizar == "false"){
+          alerta.hidden = true; 
+        }
+        break;
+      case "modal":
+        if(visualizar == "true"){
+          alertaModal.hidden = false; 
+          alertaModal.innerHTML = texto;
+
+        }else if (visualizar == "false"){
+          alertaModal.hidden = true; 
+        }
+        break;
+    }  
+  }
+    
+
+  //Ocultar un elemento a la vez por su ID
+  function ocultarElemento(ocultar, elementId ){
+    var element = document.getElementById(elementId);
+      if(ocultar== 'true'){
+        element.hidden = true;
+      }else if (ocultar== 'false'){
+        element.hidden = false;
+      }
+  }
+
+  //Ocultar varios elementos a la vez por su clase
+  function ocultarElementos(ocultar, elementClass){
+    
+    let elements = document.querySelectorAll(elementClass);
+    elements.forEach(function(element) {
+      if (ocultar == "false"){
+        element.hidden = false;
+      } else if (ocultar == "true"){
+        element.hidden = true;
+      }
+    });
+  }
+
+  //Desactiva algun elemento por su ID
+  function disactivarElement(desactivar, elementId){
+    var button = document.getElementById(elementId);
+    
+    if(desactivar== 'true'){
+      button.disabled = true;
+    }else if (desactivar=='false'){
+      button.disabled = false;
+    }
+     
+  }
+
+
+  //Enfoque a algun campo especifico
+  function enfocarCampo(elementId){
+    var elemento = document.getElementById(elementId);
+      elemento.focus();
+  }
+
+
+  //Hacer click a un boton por su ID
+  function clickBoton(elementId){
+      var elemento = document.getElementById(elementId)
+      elemento.click();
+  }
+
+
+  //Reiniciar formulario
+  function limpiarForm(formulario){
+    document.getElementById(formulario).reset();
+
+    let passwordType = document.getElementById(formulario).querySelectorAll(".password");
+    passwordType.forEach(function(input) {
+      input.type = "password";
+    });
+
+    let borders = document.getElementById(formulario).querySelectorAll(".borde");
+    borders.forEach(function(input) {
+      input.classList.remove("border-danger");
+    });
+    
+  }
+
+  //Limpia un campo especefico
+  function limpiarCampo(campoID){
+    var input = document.getElementById(campoID)
+    input.value = ""
+    input.classList.remove("border-danger");
+  }
+
+
+  //Mostrar contraseña de un input
+  function mostrarContrasena(elementClass){
+    let elements = document.querySelectorAll(elementClass);
+    elements.forEach(function(element) {
+      if (element.type == "password" ){
+        element.type = "text";
+      }else {
+        element.type = "password";
+      }
+        
+    });
+
+  }  
+
+  //Valida que el Email escrito en input sea valido
+  function ValidarEmail (email) {
+    var emailPattern =  /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+    return emailPattern.test(email); 
+  }
+
+  /**
+   * Cargar opciones a select
+   * Param: acción para cargar o reiniciar select
+   * Param: elemento select a cargar
+   * Param: arreglo con lista a cargar en el select
+   * Param: posicion en el array para el value de la opción
+   * Param: posicion en el array para el text de la opción
+   */
+  function cargarSelect(accion,selectId, array, positionValue, positionText){
+    
+    switch (accion){
+      case "cargar":
+        //Almacena select a cargar
+        select = document.getElementById(selectId);
+
+        //Elimina las opciones del select
+        let i;
+        for(i = select.options.length - 1 ; i > 0 ; i--){
+          select.remove(i);
+        }
+
+        //Agrega opciones al select
+        array.forEach(element =>{
+        let option = document.createElement('option');
+        option.value = element[positionValue];
+        option.innerHTML = element[positionText];
+        select.appendChild(option)})
+        break;
+      case "reiniciar":    
+        //Toma la opción por Default
+        $( "#"+selectId )[0].selectedIndex = 0;
+        break;
+    }
+    
+  }
+
+  // Scrip de bootstrap para validar campos
+  (function validarform () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+
+/*---------------------------------------------------------------------------------------------------
+                                  Controller Tabla
+-----------------------------------------------------------------------------------------------------*/
+
+  /*Mostrar tablas*/
+  function activartable(activar){
+    if(activar == "true"){
+      ocultarElemento('false', "tabla" );
+    }else if(activar == "false"){
+      ocultarElemento('true', "tabla" );
+    }
+    
+  }
+
+/*---------------------------------------------------------------------------------------------------
+                                  Controller Modal
+-----------------------------------------------------------------------------------------------------*/
+
+  /**Gestion de modal
+   * indicar el tipo de modal a mostrar (spiner, respuestaPositiva, respuestaNegativa, advertencia)
+   * mensaje a mostrar
+   */
+  function activarModal(tipo, mensaje){
+    ocultarElementos("true", ".modalElements")
+
+    var respuestaBakckend = document.getElementById("msjBackend")
+    respuestaBakckend.innerHTML = mensaje
+
+    var advertencia = document.getElementById("alertaMensajeAdvertencia")
+    advertencia.innerHTML = mensaje
+
+    var advertencia = document.getElementById("alertaMensajeEliminar")
+    advertencia.innerHTML = mensaje
+
+    //Configuración del modal segun el tipo
+    switch (tipo) {
+      case "spiner":
+        ocultarElementos("false", ".viewCarga");
+        $("#respuestaBackend").modal('show');
+        break;
+      case "respuestaPositiva":
+        ocultarElementos("false", ".respuestaPositiva");
+        $("#respuestaBackend").modal('show');
+        break;
+      case "respuestaNegativa":
+        ocultarElementos("false", ".respuestaNegativa");
+        $("#respuestaBackend").modal('show');
+        break;
+      case "advertencia":
+        $("#modalAlertaSalida").modal('show');
+        break;
+      case "eliminar":
+        $("#modalAlertaEliminar").modal('show');
+        break;  
+      case "formulario":
+        $("#"+mensaje).modal('show');
+        break;  
+      default:
+        $("#respuestaBackend").modal('hide');  
+        $("#modalAlertaSalida").modal('hide');
+        $("#"+mensaje).modal('hide');  
+    }
+    
+  }
+
+</script>

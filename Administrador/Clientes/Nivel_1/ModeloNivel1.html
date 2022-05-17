@@ -1,0 +1,74 @@
+<script>
+  async function cargarAdminTabN1(){
+    let resul = await google.script.run
+    .withSuccessHandler(crearAdminTabN1)
+    .withFailureHandler(crearAdminTabN1false)
+    .getDataClienteN1Todo();
+  }
+
+  function crearAdminTabN1(dataArray){
+    //Configuración de encabezado
+      ocultarElementos("false", ".adminNivel1");
+
+      $(document).ready(function(){
+      $('#data-adminTablaN1').DataTable({
+            data: dataArray,
+          //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+
+          columns: [
+              {"title":"Codigo"},
+              {"title":"Nombre"},
+              {"title":"Pais Origen"},
+              {"title":"Celular"},
+              {"title":"Email"},
+              {"title":"TJ"},
+              {"title":"Familiar"},
+              {"title":"Confiable"},
+              {"title":"Usuario"},
+          ] , stateSave: true,
+      "bDestroy": true,
+      responsive:true
+        });
+      });
+      
+      activarModal("false");
+  }
+
+  function crearAdminTabN1false(error){
+    activarModal("respuestaNegativa",error);
+  }
+
+  async function buscarClientesN1(){
+    let resul = await google.script.run
+    .withSuccessHandler(cargarClientesN1)
+    .withFailureHandler()
+    .getAllClientLevel1ByNameAndEmail()
+    //.getDataClienteN1Todo();
+    
+  }
+
+  function cargarClientesN1(array){
+    cargarSelect("cargar","eliminarClienteN1Select", array,1,0);
+  }
+
+  async function eliminarClienteN1(email){
+    let resul = await google.script.run
+    .withSuccessHandler(clienteEliminadoTrue)
+    .withFailureHandler()
+    .deleteClientLevel1(email)
+  }
+
+  function clienteEliminadoTrue(resultado){
+    let select = document.getElementById("eliminarClienteN1Select");
+    let nombre = select.options[select.selectedIndex].text;
+    switch (resultado){
+      case true:
+        activarModal("respuestaPositiva", "El cliente " +nombre+ " a sido eliminado exitosamente");
+        break;
+      case false:
+        activarModal("respuestaNegativa", "El cliente " +nombre+ " no a podido ser eliminado");
+        break;
+    }
+    
+  }
+</script>

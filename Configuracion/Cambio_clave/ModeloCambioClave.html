@@ -1,0 +1,84 @@
+<script>
+
+  async function cargarPreguntas(email){
+    let datos = {
+      email: email,
+      posicion: 0
+    }
+
+      let resultado = await google.script.run
+      .withSuccessHandler( mostrarPreguntas )
+      .withFailureHandler( cambiarClaveFalseUser )
+      .buscarUsuario(datos);
+  }
+
+  function mostrarPreguntas(datos){
+    switch (datos){
+      case false:
+        activarModal("respuestaNegativa", "Datos no validos")
+        break;
+      default:
+        let htmlPregunta1 = document.getElementById("CambioClavePreguntaI")
+        let htmlPregunta2 = document.getElementById("CambioClavepreguntaII")
+            
+        htmlPregunta1.innerHTML = datos.pregunta1;
+        htmlPregunta2.innerHTML = datos.pregunta2;
+        mostrarContenido("cambioClavePreguntas");
+        break;  
+    }
+  }
+
+  function cambiarClaveFalseUser (error){
+    activarModal("respuestaNegativa", error)
+  }
+
+  async function cambioClaveVerificarRespuestas(respuestas){
+    var resultado = await google.script.run
+      .withSuccessHandler( cambioClaveTrueRespuesta )
+      .withFailureHandler( cambioClaveFalseRespuesta )
+      .validarRespuestas(respuestas)
+  }
+
+  function cambioClaveTrueRespuesta(validacion) {
+    switch(validacion){
+      case true:
+        showControllerCambioClave("cambioClaveNueva");
+        break;
+      case false:
+        activarModal("respuestaNegativa", "Sus respuestas son incorrectas, verifique nuevamente")
+        break;  
+    }
+  }
+
+  function cambioClaveFalseRespuesta(error){
+    activarModal("respuestaNegativa", error)
+  }
+
+  async function cambiarClaveActualizar(clave){
+    var resultado = await google.script.run
+      .withSuccessHandler( cambioClaveTrueActualizar )
+      .withFailureHandler( cambioClaveFalseActualizar )
+      .insertNewKey(clave)
+  }
+
+  function cambioClaveTrueActualizar(respuesta){
+    switch (respuesta) {
+      case true:
+        activarModal("respuestaPositiva","Su contraseña a sido cambiada correctamente")
+        break;
+      case "falseOldKeySameNewKey":
+        activarModal("respuestaNegativa", "Su contraseña nueva no puede ser igual a la anterior");
+        break;  
+      case "falseOldKey":
+        activarModal("respuestaNegativa","Su contraseña anterior no es la correcta, verifique e intente de nuevo")
+        break;  
+    }
+  }
+
+  function cambioClaveFalseActualizar(error){
+    activarModal("respuestaNegativa", error)
+  }
+
+
+
+</script>  

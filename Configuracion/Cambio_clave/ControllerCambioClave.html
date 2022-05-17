@@ -1,0 +1,70 @@
+<script>
+  //Almacenamiento de los elementos del formulario en variables
+  var inputRespuestaI = document.getElementById("ClaveNuevaRespuesta1");
+  var inputRespuestaII = document.getElementById("ClaveNuevaRespuesta2");
+  var inputClaveAnterior = document.getElementById("ClaveNuevaAnterior");
+  var inputCambioClave = document.getElementById("ClaveNuevaContrasena");
+  var inputConfiCambioClave = document.getElementById("ClaveNuevaConfirmar");
+  
+  //Validacion preguntas: los campos que no queden vacios
+  function indexControllerCambioClave(form){
+    event.preventDefault();    
+    switch (vistaActual){
+      case "cambioClavePreguntas":
+        if (inputRespuestaI.value == ""){
+          alertaError("true", "Indique una respuesta","formulario");
+          enfocarCampo("ClaveNuevaRespuesta1");
+        }else if(inputRespuestaII.value == ""){
+          alertaError("true", "Indique una respuesta","formulario");
+          enfocarCampo("ClaveNuevaRespuesta2");
+        }else{
+          alertaError("false", "","formulario");
+          activarModal("spiner", "Validando respuestas...");
+          let respuestas = {
+          email: document.getElementById("imputInicioEmail").value,
+          respuesta1: form.inputRespuesta1.value,
+          respuesta2: form.inputRespuesta2.value
+          };
+          cambioClaveVerificarRespuestas(respuestas);
+        }
+        break;
+      case "cambioClaveContraseña":
+        if (inputClaveAnterior.value == ""){
+          alertaError ("true", "Indique su clave anterior","formulario");
+          enfocarCampo("ClaveNuevaAnterior");
+        }else if (inputCambioClave.value == ""){
+          enfocarCampo("ClaveNuevaContrasena")
+          alertaError ("true", "Indique una nueva contraseña","formulario")
+        }else if (inputConfiCambioClave.value == ""){
+          enfocarCampo("ClaveNuevaConfirmar")
+          alertaError ("true", "Confirme su nueva contraseña","formulario")
+        }else{
+          alertaError("false", "","formulario");
+          activarModal("spiner", "Actualizando clave...")
+          let clave = {
+            email: document.getElementById("imputInicioEmail").value,
+            claveAnterior: form.imputclaveAnterior.value,
+            claveNueva: form.imputCambioContrasena.value
+          };
+          cambiarClaveActualizar(clave);
+        }
+        break; 
+    }
+       
+  }
+
+  function showControllerCambioClave(view){
+    activarModal("view");
+    switch (view){
+      case "cambioClavePreguntas":
+        activarModal("spiner", "Cargando preguntas de seguridad");
+        let email = document.getElementById("imputInicioEmail").value;
+        cargarPreguntas(email);
+        break;
+      case "cambioClaveNueva":
+        mostrarContenido("cambioClaveContraseña");
+        break;     
+    }
+  }
+
+</script>  

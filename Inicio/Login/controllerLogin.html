@@ -1,0 +1,61 @@
+<script>
+  //Esucha si es seleccionado "olvide contraseña"
+  var olvideContrasena = document.getElementById("olvideContraseña")
+  olvideContrasena.addEventListener("click", 
+  function(){
+    event.preventDefault(); 
+    vistaActual= "login" //Indica la vista actual
+    let email = formularioInicio.email.value
+    indexControllerOlvidoClave(email);
+    
+  });
+
+  function indexcontrollerInicio(datosUser){
+    event.preventDefault();
+
+    if (datosUser.email.value== ""){
+    alertaError("true", "Indique su email","formulario");
+    }else if (!ValidarEmail(datosUser.email.value)){
+      document.getElementById("imputInicioEmail").focus();
+      alertaError("true", "Email no válido, no use mayúsculas en el email", "formulario");
+    }else {
+      alertaError("false", "","formulario");
+      var datosUser = {
+        email: datosUser.email.value,
+        contrasena: datosUser.contrasena.value
+    }
+      activarModal("spiner", "Verificando usuario...")
+      validarUsuarioBakend(datosUser);
+    }
+  
+  }
+    
+  function showControllerLogin (usuario, perfil){
+    var htmlperfil = document.getElementById("perfil");
+    var htmlUser = document.getElementById('user');
+    htmlperfil.innerHTML = perfil + ":";
+    htmlUser.innerHTML = usuario;
+
+    switch (perfil){
+      case "administrador":
+        ocultarElementos("false", ".opcionNav");
+        break;
+      case "promotor":
+        ocultarElementos("false", ".viewPromotor");
+        break;
+      case "representante":
+        ocultarElementos("false", ".viewRepresentante");
+        break;
+      case "proceso":
+        ocultarElementos("false", ".viewProceso");
+        break;
+      case "atencion":
+        ocultarElementos("false", ".viewAtencion");
+        break;          
+    }
+
+    mostrarContenido("home");
+
+  }
+
+</script>

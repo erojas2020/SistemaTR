@@ -1,0 +1,29 @@
+<script>
+  /** Verifica que la longitud de la contraseña sea la correcta
+   */
+  function olvideClaveLongitud(){
+    if ((contrasenaRestaurar.value.length < 8) && (contrasenaRestaurar.value != "")){
+      enfocarCampo("imputCambioContrasena")
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres","formulario")
+    }else if ((confirmacionRestaurar.value.length < 8) && (confirmacionRestaurar.value != "")){
+      enfocarCampo("imputConfirmarCambioContrasena")
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres","formulario")
+    }else if ((contrasenaRestaurar.value != "") && (confirmacionRestaurar.value != "")){
+      if (contrasenaRestaurar.value != confirmacionRestaurar.value){
+        alertaError ("true", "Su contraseña no coincide con la confirmación","formulario")
+        enfocarCampo("imputConfirmarCambioContrasena")
+      }else{
+      alertaError("false", "","formulario");
+    }
+    }
+  }
+
+  function insertarPreguntas(pregunta1, pregunta2) {
+    let htmlPregunta1 = document.getElementById("preguntaI")
+    let htmlPregunta2 = document.getElementById("preguntaII")
+
+    htmlPregunta1.innerHTML = pregunta1;
+    htmlPregunta2.innerHTML = pregunta2;
+  }
+
+</script>  

@@ -1,0 +1,72 @@
+<script>
+  // Validar formulario: Nivel 1
+ function indexcontrollerFormN1(form){
+    event.preventDefault();
+    //formularioNivel1.usuario.value= user;   
+    var nombre = formularioNivel1.nombre.value;
+    var pais = formularioNivel1.pais.value;
+    var area = formularioNivel1.area.value;
+    var tel = formularioNivel1.telefono.value;
+    var email = formularioNivel1.email.value;
+    var radioTj = formularioNivel1.radioTj.value;
+    var radioFamiliar = formularioNivel1.radioFamiliar.value;
+    var radioConfiable = formularioNivel1.radioConfiable.value;
+    var terminos = formularioNivel1.terminos.checked;
+
+
+    var contenido = "";
+
+    if (nombre == ""){
+      contenido = "Colocar su nombre completo";
+      document.getElementById("nombreNivel1").focus();
+      alertaError("true", contenido,"formulario");
+
+    }else if (pais ==""){
+      contenido = "Seleccionar su país de Residencia";
+      document.getElementById("pais").focus();
+      alertaError("true", contenido,"formulario");
+
+    }else if (area == ""){
+      contenido = "Seleccionar el código de área de su país";
+      document.getElementById("areaNivel1").focus();
+      alertaError("true", contenido,"formulario");
+
+    }else if (tel == ""){
+      contenido = "Colocar un número de teléfono válido";
+      document.getElementById("telefonoNivel1").focus();
+      alertaError("true", contenido,"formulario");    
+
+    }else if (!ValidarEmail(email)){
+      contenido = "Debe colocar un email válido, no use mayúsculas";
+      document.getElementById("emailNivel1").focus();
+      alertaError("true", contenido,"formulario");
+      
+    } else if (radioTj == ""){
+      contenido = "Indique si es Testigo de Jehová";
+      document.getElementById("TJSiNivel1").focus();
+      alertaError("true", contenido,"formulario");
+
+    }else if (radioFamiliar == ""){ 
+      contenido = "Indique si es un Familiar";
+      document.getElementById("familiarSiNivel1").focus();
+      alertaError("true", contenido,"formulario");
+
+    }else if (radioConfiable == ""){ 
+      contenido = "Indique si lo conoce en persona";
+      document.getElementById("confiableSiNivel1").focus();
+      alertaError("true", contenido,"formulario");
+
+    }else if (terminos==false){
+      contenido = "Debe aceptar los terminos y condiciones.";
+      document.getElementById("terminosNivel1").focus();
+      alertaError("true", contenido,"formulario");
+
+    }else {
+      alertaError("false","","formulario"); 
+      activarModal("spiner", "Agregando cliente nivel 1...")
+      registrarNivel1(form);
+    }
+
+  }
+
+</script>

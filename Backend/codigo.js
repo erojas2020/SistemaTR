@@ -1,12 +1,12 @@
-// BD DESARROLLO
-var ss = SpreadsheetApp.openById("140NMdDlIlxVAwPwOrPOoHAjn4XBhhpZ_f_D6rdTJHcU");
+/* BD DESARROLLO
+//var ss = SpreadsheetApp.openById("140NMdDlIlxVAwPwOrPOoHAjn4XBhhpZ_f_D6rdTJHcU");
 // BD PRODUCCION
-//var ss = SpreadsheetApp.openById("1BtC-c6LkqELkAhcFTyvCzLlf6MZ5ehk-TQ0fDzdPokc");
+var ss = SpreadsheetApp.openById("1BtC-c6LkqELkAhcFTyvCzLlf6MZ5ehk-TQ0fDzdPokc");
 var sheetUsuarios = ss.getSheetByName('Usuarios');
 var sheetClienteN1 = ss.getSheetByName('clientesNivel1');
 var sheetConfiguracion = ss.getSheetByName('configuracion');
 var sheetPaises = ss.getSheetByName('paises');
-
+*/
 
  
 

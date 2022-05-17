@@ -1,0 +1,35 @@
+<script>
+    async function cargarTabN2(user){
+        let resul = await google.script.run
+        .withSuccessHandler(crearTabN2)
+        .getDataClienteN1(user);
+    }
+
+    function crearTabN2(dataArray){
+        //Configuración de encabezado
+        ocultarElementos("false", ".viewNivel2");
+
+        $(document).ready(function(){
+        $('#data-tableN2').DataTable({
+            data: dataArray,
+            //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+
+            columns: [
+                {"title":"Codigo"},
+                {"title":"Nombre"},
+                {"title":"Pais Origen"},
+                {"title":"Celular"},
+                {"title":"Email"},
+                {"title":"TJ"},
+                {"title":"Familiar"},
+                {"title":"Confiable"},
+            ] , stateSave: true,
+        "bDestroy": true,
+        responsive:true
+        });
+        });
+        
+        activarModal("false");
+    }
+    
+</script>

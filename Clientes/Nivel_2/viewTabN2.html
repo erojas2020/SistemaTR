@@ -1,0 +1,77 @@
+<div class='row p-3 viewsApp viewNivel2 sesionApp' hidden>
+  <div class='col-md-12 mb-2'>
+    <h3>Clientes Nivel 2</h3>
+    <h4>Limites: </h4>
+    <p>Diario: 250$ <br/> Semanal: 750$ <p>
+  </div>
+</div>
+
+<div class='row p-3 viewsApp viewNivel2' hidden>
+  <div class='col-md-12'>
+    <a id='nuevoCliente2' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#modalNivel2' >Nuevo Cliente</a>
+  </div>
+</div>
+
+<!----Tabla---->
+<div id="tablaN2" class="row viewNivel2 viewsApp sesionApp" hidden >
+  <div class="table-responsive mx-auto">
+    <table id="data-tableN2" class="table table-hover"></table>
+  </div>
+</div> 
+
+<!------------------------------------------------------------------------------------>
+                                  <!----Modal: Consulta si es nivel 1---->
+<!------------------------------------------------------------------------------------>
+<div class="modal fade" id="modalNivel2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="needs-validation" onsubmit="indexcontrollerTabN2(this)">
+        <div class="modal-body text-center">
+
+          <!-- Preguntas para configurar formulario-->
+          <div class= "d-flex needs-validation">
+            <!-- Preguntas -->
+            <div class="text-end">
+              <label for='validationCustom01' class='form-label mb-2'>¿Es un cliente nivel 1?</label><br>
+              <label for='validationCustom02' class='form-label'>¿Desea enviar el formulario al cliente?</label><br>
+            </div>
+
+            <!-- Opciones -->
+            <div class= "text-center">
+              <div class= "d-flex mb-2">
+                <div class='form-check ms-4'>
+                  <input type='radio' class='form-check-input' id='ClienteNuevoSi' name='radioNuevoCliente'value="si" required>
+                  <label class='form-check-label' for='validationCustom01' >Si</label>
+                </div>
+              
+                <div class='form-check ms-4'>
+                  <input type='radio' class='form-check-input' id='ClienteNuevoNo' name='radioNuevoCliente' value="no" required>
+                  <label class='form-check-label' for='validationCustom01' >No</label>
+                </div>
+              </div>
+              <div class= "d-flex">
+                <div class='form-check ms-4'>
+                  <input type='radio' class='form-check-input' id='EnviarFormSi' name='radioEnviarForm'value="si" required>
+                  <label class='form-check-label' for='validationCustom02' >Si</label>
+                </div>
+
+                <div class='form-check ms-4'>
+                  <input type='radio' class='form-check-input' id='EnviarFormNo' name='radioEnviarForm' value="no" required>
+                  <label class='form-check-label' for='validationCustom02' >No</label>
+                </div>
+              </div>  
+            </div>
+          </div>
+        </div>  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary px-4 mx-auto" onclick="" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-warning px-5 mx-auto" id="botonSalidaAlerta" data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </form>  
+    </div>
+  </div>
+</div>

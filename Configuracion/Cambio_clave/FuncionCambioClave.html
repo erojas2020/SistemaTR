@@ -1,0 +1,35 @@
+<script>
+//Validacion de longitud de clave
+  function cambioClaveLongitud(){
+    
+    if ((inputClaveAnterior.value.length < 8) && (inputClaveAnterior.value != "")){      
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres", "formulario")
+      inputClaveAnterior.classList.add("border-danger");
+      enfocarCampo("ClaveNuevaAnterior");
+    }else if ((inputCambioClave.value.length < 8) && (inputCambioClave.value != "")){      
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres", "formulario")
+      inputCambioClave.classList.add("border-danger");
+      enfocarCampo("ClaveNuevaContrasena");
+    }else if ((inputConfiCambioClave.value.length < 8) && (inputConfiCambioClave.value != "")){      
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres", "formulario")
+      inputConfiCambioClave.classList.add("border-danger");
+      enfocarCampo("ClaveNuevaConfirmar");
+    }else if ((inputCambioClave.value != "") && (inputConfiCambioClave.value != "")){
+      if (inputCambioClave.value != inputConfiCambioClave.value){
+        alertaError ("true", "Su contraseña no coincide con la confirmación", "formulario");
+        inputCambioClave.classList.add("border-danger");
+        enfocarCampo("ClaveNuevaConfirmar"); 
+      }else{
+        alertaError ("false", "", "formulario");
+        inputCambioClave.classList.remove('border-danger');
+        inputConfiCambioClave.classList.remove('border-danger');
+        inputClaveAnterior.classList.remove('border-danger');
+      }
+    }else {
+      inputCambioClave.classList.remove('border-danger');
+      inputConfiCambioClave.classList.remove('border-danger');
+      inputClaveAnterior.classList.remove('border-danger');
+    }
+  }
+
+</script>  

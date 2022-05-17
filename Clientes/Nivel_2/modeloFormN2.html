@@ -1,0 +1,15 @@
+<script>
+    async function cargarPaiseFormN2(){
+      var resultado = await google.script.run
+      .withSuccessHandler(cargarListaPaisesFormN1)
+      .withFailureHandler( )
+      .getPaises()
+
+    }
+
+    function cargarListaPaisesFormN2(listaPaises){
+    cargarSelect("cargar","paisClienteN2",listaPaises,0,1);
+    cargarSelect("cargar","areaNivel2",listaPaises,4,4);
+      
+  }
+</script>

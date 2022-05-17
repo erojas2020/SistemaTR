@@ -1,0 +1,44 @@
+<script>
+
+  async function cargarPaiseFormN1(){
+    var resultado = await google.script.run
+      .withSuccessHandler(cargarListaPaisesFormN1)
+      .withFailureHandler( )
+      .getPaises()
+
+  }
+
+  function cargarListaPaisesFormN1(listaPaises){
+    cargarSelect("cargar","pais",listaPaises,0,1);
+    cargarSelect("cargar","areaNivel1",listaPaises,4,4);
+      
+  }
+
+  async function registrarNivel1(form){
+    var resultado = await google.script.run
+      .withSuccessHandler( confirmacionRegistroNivel1 )
+      .withFailureHandler( mostrarError )
+      .registrarNuevoCliente1(form)
+  }
+  
+
+  //Confirmación de usuario nivel 1 registrado
+  function confirmacionRegistroNivel1(respuesta){
+    console.log(respuesta);
+    switch(respuesta){
+      case true:
+        activarModal("respuestaPositiva","Su cliente a sido registrado exitosamente");
+        break;
+      case false:
+        activarModal("respuestaNegativa","Su cliente no a podido ser registrado");
+        break;
+    }
+    
+  }
+
+  //Mensaje de error
+  function mostrarError(error){
+    activarModal("respuestaNegativa", error); 
+  }
+
+</script>  

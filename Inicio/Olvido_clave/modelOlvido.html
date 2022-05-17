@@ -1,0 +1,100 @@
+<script>
+function indexModelOlvidoClave(datos){
+  switch (vistaActual){
+    case "login":
+      verificarUsuario(datos);
+      break;
+    case "olvideClavePreguntas":
+      olvideClaveVerificarRespuestas(datos)
+      break; 
+    case "olvideClaveContraseña":
+      olvideClaveActualizar(datos)
+      break;
+  }
+  
+}
+
+/**
+Recibe paramentro Email
+* Recibe el email del usuario 
+* Valida si existe o es nuevo
+*/
+async function verificarUsuario(email){
+    let datos = {
+      email: email,
+      posicion: 0
+    }
+  var resultado = await google.script.run
+    .withSuccessHandler( olvideClaveTrueUser )
+    .withFailureHandler( olvideClaveFalseUser )
+    .buscarUsuario(datos);
+}
+
+/** Al tener una respuesta positiva del Backend
+ * Envia parametros al show del controller
+ */ 
+function olvideClaveTrueUser(email){
+  console.log(email);
+  if(email == false){
+    showControllerOlvidoClave("false","false")
+  }else if (email.usuarioNuevo == true){
+    showControllerOlvidoClave("false", "true")
+  }else{
+    let pregunta1 = email.pregunta1
+    let pregunta2 = email.pregunta2
+    insertarPreguntas(pregunta1, pregunta2)
+    showControllerOlvidoClave("true", "false")
+  }
+  
+}
+
+function olvideClaveFalseUser(error){
+  activarModal("respuestaNegativa", error)
+}
+
+async function olvideClaveVerificarRespuestas(respuestas){
+   var resultado = await google.script.run
+    .withSuccessHandler( olvideClaveTrueRespuesta )
+    .withFailureHandler( olvideClaveFalseRespuesta )
+    .validarRespuestas(respuestas)
+}
+
+function olvideClaveTrueRespuesta(validacion){
+  switch (validacion){
+    case true:
+      activarModal("false");
+      showControllerOlvidoClave("true", "false");
+      break;
+    case false:
+      activarModal("respuestaNegativa", "Sus respuestas son incorrectas, verifique nuevamente");
+      break;  
+  }
+}
+
+function olvideClaveFalseRespuesta(error){
+  activarModal("respuestaNegativa", error)
+}
+
+async function olvideClaveActualizar(clave){
+  var resultado = await google.script.run
+  .withSuccessHandler( olvideClaveTrueActualizar )
+  .withFailureHandler( olvideClaveFalseActualizar )
+  .insertClaveNueva_OlvidoClave(clave)
+}
+
+function olvideClaveTrueActualizar(registrado){
+  switch (registrado){
+    case true:
+      activarModal("respuestaPositiva", "Su clave a sido actualizada correctamente, ingrese con su nueva clave")
+      break;
+    case false:
+      activarModal("respuestaNegativa", "Su clave no a podido ser registrada, intente nuevamente")
+      break;  
+  }
+}
+
+function olvideClaveFalseActualizar(error){
+  activarModal("respuestaNegativa", error);
+}
+
+</script>

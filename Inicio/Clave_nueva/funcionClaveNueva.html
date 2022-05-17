@@ -1,0 +1,30 @@
+<script>
+/**Validar longitud de: Contraseña y confirmación
+    *1. si el campo tiene menos de 8 caracteres, envia alerta
+    *2. si los campos de contraseña no coincide, envia alerta
+    *3. si los campos tienen la longitud minima y coincide, elimina alerta
+  */
+function nuevaClaveLongitudConfirmacion(){
+  if ((contrasenaNueva.value.length < 8) && (contrasenaNueva.value != "")){
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres","formulario")
+      contrasenaNueva.classList.add("border-danger");
+      enfocarCampo("imputContrasenaNueva");
+
+    }else if ((confirmacionNueva.value.length < 8) && (confirmacionNueva.value != "")){
+      alertaError ("true", "la contraseñas debe tener un minimo de 8 caracteres","formulario")
+      confirmacionNueva.classList.add("border-danger");
+      enfocarCampo("imputConfirmarContrasena");
+
+    }else if ((contrasenaNueva.value != confirmacionNueva.value) && (contrasenaNueva.value != "" && confirmacionNueva.value != "")){
+      alertaError ("true", "las contraseñas no coinciden","formulario");
+      confirmacionNueva.classList.add("border-danger");
+      enfocarCampo("imputConfirmarContrasena"); 
+      
+    }else {
+      alertaError ("false", "","formulario");
+      contrasenaNueva.classList.remove('border-danger');
+      confirmacionNueva.classList.remove('border-danger');
+    }
+}
+
+</script>  

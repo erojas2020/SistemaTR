@@ -9,7 +9,7 @@
     //Oculta todas las vistas de la App
     ocultarElementos("true", ".viewsApp");
     vistaActual = view; //Indica la vista actual
-
+    
     //Muestra el elemento solicitado
     //form clave nueva
     switch (view){
@@ -42,7 +42,8 @@
       case "cambioClavePreguntas":
         limpiarForm("preguntasCambioClave");
         ocultarElemento("false", "preguntasCambioClave");
-        enfocarCampo('ClaveNuevaRespuesta1'); 
+        enfocarCampo('ClaveNuevaRespuesta1');
+        activarModal("false"); 
         break
       case "cambioClaveContraseña":
         limpiarForm("formCambiarClave");
@@ -51,11 +52,11 @@
         break  
       case "tabN1":
         activarModal("spiner", "Cargando usuarios");
-        cargarTabN1(document.getElementById("imputInicioEmail").value)
+        cargarTabN1(document.getElementById("imputInicioEmail").value);
         break
       case "tabN2":
         activarModal("spiner", "Cargando usuarios");
-        var resul = await google.script.run.withSuccessHandler(showData).getData(user);
+        cargarTabN2(document.getElementById("imputInicioEmail").value)
         break
       case "formN1":  
         ocultarElemento("false", "formularioNivel1");
@@ -63,26 +64,28 @@
         formularioNivel1.usuarioNivel1.value = document.getElementById("imputInicioEmail").value;
         formularioNivel1.nombreUserNivel1.value = document.getElementById("user").innerText;
         enfocarCampo('nombreNivel1');
-        var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();
+        cargarPaiseFormN1();
         break
       case "formN2":  
         ocultarElemento("false", "formularioNivel2");
         limpiarForm("formularioNivel2");
-        formularioNivel1.usuarioNivel2.value = document.getElementById("imputInicioEmail").value;
-        formularioNivel1.nombreUserNivel2.value = document.getElementById("user").outerHTML;
+        formularioNivel2.usuarioNivel2.value = document.getElementById("imputInicioEmail").value;
+        formularioNivel2.nombreUserNivel2.value = document.getElementById("user").outerHTML;
         enfocarCampo('listNombreNivel2');
-        var resul = await  google.script.run.withSuccessHandler(cargarListaPaises).withFailureHandler(mostrarError).getPaises();
+        cargarPaiseFormN2();
         break
       case "crearUsuario":
         activarModal("spiner", "Cargando usuarios");
         modalActual= view;
-        cargarUsuarios();
         indexControllerCrearUsuarios();
+        cargarUsuarios();
         break  
       //Clientes nivel 2
-      case "cliente2":
-        conte = indexCliente2();
-        break
+      case "adminClientesN1":
+        activarModal("spiner", "Cargando clientes");
+        cargarAdminTabN1();
+        buscarClientesN1();
+        break;
     }
  
   }
@@ -90,7 +93,7 @@
   /** Segun la vista actual
    *   Gestiona la salida del modal
    */ 
-   function salidaModal(){
+  function salidaModal(){
     switch (vistaActual) {
       case "claveNueva":
         mostrarContenido("login");
@@ -123,7 +126,27 @@
       case "crearUsuario":
         activarModal("spiner","Cargando usuarios");
         cargarTablaUsuarios();
-        break;        
+        break;
+      case "adminClientesN1":
+        activarModal("false");
+        showControllerAdminNivel1("actualizarTabN1");
+        break;
+    }
+  }
+
+  var datoEliminar = ""
+  function salidaModalEliminar(){
+    switch (datoEliminar){
+      case "clienteN1":
+        let email = document.getElementById("eliminarClienteN1Select");
+        let nombre = email.options[email.selectedIndex].text;
+        activarModal("cerrar","eliminarClienteN1Modal");
+        activarModal("spiner","Eliminando cliente: "+nombre);
+        eliminarClienteN1(email.value);
+        break;
+      case "eliminarUsuario":
+        destroyControllerAdminNivel1();
+        break;  
     }
   }
 </script>

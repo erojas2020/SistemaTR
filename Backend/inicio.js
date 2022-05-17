@@ -1,4 +1,4 @@
-function controllerLoginBackend(form){
+/*function controllerLoginBackend(form){
  var email = form.email;
  var contrasena = form.contrasena; 
  var resultado;
@@ -23,7 +23,7 @@ resultado = validarNewUser(email);
  }
   
 }
-
+*/
 
 
 /*

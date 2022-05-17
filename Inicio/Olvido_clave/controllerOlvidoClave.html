@@ -1,0 +1,102 @@
+
+<script>
+var contrasenaRestaurar = document.getElementById("imputCambioContrasena");
+var confirmacionRestaurar = document.getElementById("imputConfirmarCambioContrasena");  
+/**
+ * segun la vista actual valida los campos del formulario
+ */ 
+function indexControllerOlvidoClave(form){
+  var respuestaI = document.getElementById("inputRespuesta1");
+  var respuestaII = document.getElementById("inputRespuesta2");
+  switch (vistaActual){
+    case "login":
+      if(form==""){
+        alertaError("true","Debe indicar un correo","formulario");
+      }else{
+        alertaError("false", "");
+        activarModal("spiner", "Verificando usuario...")
+        indexModelOlvidoClave(form);
+      }
+      break;
+    case "olvideClavePreguntas":  
+      event.preventDefault();
+      if (respuestaI.value == ""){
+        enfocarCampo("inputRespuesta1")
+        alertaError("true", "Debe indicar una respuesta","formulario")
+      }else if (respuestaII.value == ""){
+        enfocarCampo("inputRespuesta2")
+        alertaError("true", "Debe indicar una respuesta","formulario")
+      }else {
+        alertaError("false", "")
+        activarModal("spiner", "Validando respuestas...")
+        let respuestas = {
+          email: document.getElementById("imputInicioEmail").value,
+          respuesta1: form.inputRespuesta1.value,
+          respuesta2: form.inputRespuesta2.value
+        }
+        indexModelOlvidoClave(respuestas)
+      }
+      break;
+    case "olvideClaveContraseña":
+      event.preventDefault();
+      if (contrasenaRestaurar.value == ""){
+        enfocarCampo("imputCambioContrasena")
+        alertaError ("true", "Indique una nueva contraseña","formulario")
+      }else if (confirmacionRestaurar.value == ""){
+        enfocarCampo("imputConfirmarCambioContrasena")
+        alertaError ("true", "Confirme su nueva contraseña","formulario")
+      }else{
+        alertaError("false", "","formulario");
+        activarModal("spiner", "Actualizando clave...")
+        let clave = {
+          email: document.getElementById("imputInicioEmail").value,
+          claveNueva: form.imputCambioContrasena.value
+        };
+        indexModelOlvidoClave(clave);
+      }
+      break;
+  }
+    
+}
+
+
+/*function storeControllerOlvidoClave(){
+      
+}*/
+
+/** Muestra formulario "Olvide Contraseña" si:
+ * Parametro show indica si se debe mostrar (true o false)
+ * Parametro nuevo indica si es usuario nuevo o no (true o false)
+ * Caso de email nuevo (true, true): Envia a formulario "Nueva contraseña".
+ * Caso de email valido (true, false): Envia a "Olvide Contraseña"
+ * Caso de email no valido (false, false): Envia modal de "datos no validos". 
+ */ 
+function showControllerOlvidoClave(show, nuevo){
+  if(show == "true"){
+    switch (vistaActual){
+    case "login":
+      mostrarContenido("olvideClavePreguntas");
+      break;
+    case "olvideClavePreguntas":
+      mostrarContenido("olvideClaveContraseña");
+      break;
+    }
+    activarModal("false");  
+  }else if(nuevo == "true"){
+    mostrarContenido("claveNueva")
+    activarModal("false");
+  }else if((show == "false") && (nuevo == "false")){
+    activarModal("respuestaNegativa", "Datos no validos");
+  }  
+  
+}
+
+/*function updateControllerOlvidoClave(){
+  
+}*/
+
+/*function destroyControllerOlvidoClave(){
+  
+}*/
+
+</script>

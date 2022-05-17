@@ -1,0 +1,58 @@
+<div class='row p-3 viewsApp adminNivel1 sesionApp' hidden>
+    <div class='col-md-12 mb-2'>
+        <h3>Gestión de Clientes Nivel 1</h3>
+    </div>
+</div>
+
+<div class='p-3 viewsApp adminNivel1 sesionApp' hidden>
+    <div class='d-inline p-2'>
+        <button id='actuaAdminTabN1' onclick='showControllerAdminNivel1("actualizarTabN1")' class='btn btn-warning'>Actualizar</button>
+    </div>
+    <div class='d-inline p-2'>
+        <button id='eliminarClienteN1Boton' onclick='showControllerAdminNivel1("eliminarClienteN1Modal")' class='btn btn-warning opcionNav viewAtencion sesionApp' hidden>Eliminar</button>
+    </div>
+</div>
+
+<!----Tabla---->
+<div id="adminTablaN1" class="row adminNivel1 viewsApp sesionApp" hidden >
+    <div class="table-responsive mx-auto">
+        <table id="data-adminTablaN1" class="table table-hover"></table>
+    </div>
+</div> 
+
+<!------------------------------------------------------------------------------------>
+                          <!----Modal: Clientes TR---->
+<!------------------------------------------------------------------------------------>
+<div class="modal fade" id="eliminarClienteN1Modal" tabindex="-1" aria-labelledby="eliminarClienteN1Label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarClienteN1Label">Gestionar Clientes Nivel 1</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form class="needs-validation" id="eliminarClienteN1Form" onsubmit="indexControllerAdminNivel1(this)">
+          <div class="modal-body text-center">
+  
+            <!-- Campo: Cliente activo -->
+            <div class='mb-2'>
+              <div class='input-group'>
+                <span class='input-group-text' id='basic-addon1'>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                  <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+                  </svg>
+                </span>
+                <select class='form-select icon-menu' name="eliminarClienteN1Select" id="eliminarClienteN1Select" required>
+                  <option selected disabled value='' >Cliente</option>
+                </select>
+              </div>
+            </div> 
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary px-4 mx-auto" onclick="" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-warning px-5 mx-auto" id="eliminarClienteN1Salida">Eliminar</button>
+          </div> 
+        </form> 
+      </div>
+    </div>
+  </div>
+  
