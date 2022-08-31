@@ -59,6 +59,17 @@
         <div id="flush-collapse0" class="accordion-collapse collapse" aria-labelledby="flush-heading0" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body"> 
             <button id="inicio" class="dropdown-item" onclick="indexcontrollerNav('home')">Inicio</button>
+
+            <!--Calculadora-->
+            <li data-bs-toggle="collapse" href="#collapsCalculadora" role="button" aria-expanded="false" aria-controls="collapsClientes" id="AdminClientes" class="text-decoration-none dropdown-item dropdown-toggle">Calculadora</li>
+            <div class="collapse" id="collapsCalculadora">
+              <div class="card card-body">
+                <button class="dropdown-item" id="clienteNivel1Admin" onclick="indexcontrollerNav('calculadora')">Remesa</button>
+
+                <button class="dropdown-item" onclick="indexcontrollerNav('calcuCripto')">Criptomonedas</button>
+              </div>
+            </div>
+
             <button id="cuentTR" class="dropdown-item disabled" onclick="indexcontrollerNav('')">Cuenta TR</button>
           </div>
         </div>
@@ -119,11 +130,23 @@
         </h2>
         <div id="flush-collapse4" class="accordion-collapse collapse" aria-labelledby="flush-heading4" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body" style="list-style:none">
+            <!--Clientes-->
             <li data-bs-toggle="collapse" href="#collapsClientes" role="button" aria-expanded="false" aria-controls="collapsClientes" id="AdminClientes" class="text-decoration-none dropdown-item dropdown-toggle">Clientes</li>
             <div class="collapse" id="collapsClientes">
               <div class="card card-body">
                 <button class="dropdown-item" id="clienteNivel1Admin" onclick="indexcontrollerNav('adminClientesN1')">Clientes Nivel 1</button>
                 <button class="dropdown-item disabled" onclick="indexcontrollerNav('')">Clientes Nivel 2</button>
+              </div>
+            </div>
+            <!--Calculadora-->
+            <li data-bs-toggle="collapse" href="#collapsCalculadora" role="button" aria-expanded="false" aria-controls="collapsClientes" id="AdminClientes" class="text-decoration-none dropdown-item dropdown-toggle">Calculadora</li>
+            <div class="collapse" id="collapsCalculadora">
+              <div class="card card-body">
+                <button class="dropdown-item" id="clienteNivel1Admin" onclick="indexcontrollerNav('calcPorcentaje')">Porcentaje</button>
+
+                <button class="dropdown-item" onclick="indexcontrollerNav('calcPrecios')">Precios</button>
+
+                <button class="dropdown-item" onclick="indexcontrollerNav('calcTasas')">Tasas</button>
               </div>
             </div>
             <button id="AdminUsuarios" class="dropdown-item opcionNav sesionApp" onclick="indexcontrollerNav('crearUsuario')" hidden>Usuarios</button> 

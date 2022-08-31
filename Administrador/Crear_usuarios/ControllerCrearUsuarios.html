@@ -1,78 +1,85 @@
 <script>
-let modalActual = ""
-function indexControllerCrearUsuarios(datosForm){
-  event.preventDefault();
-  
-  switch (modalActual) {
-    case "crearUsuario":
-      cargarTablaUsuarios();
-      break;
-    case "nuevoUsuario":
-      if(!ValidarEmail (datosForm.inputUsuarioEmail.value)){
-        alertaError("true","Email no válido, no use mayúsculas en el email","modal");
-      }else{
-        alertaError("false","","modal");
-        activarModal("false","crearUsuarioModal"); 
-        activarModal("spiner", "Creando usuario");
-        let datos = {
-          email: datosForm.inputUsuarioEmail.value,
-          nombre: datosForm.inputUsuarioNombre.value,
-          perfil: datosForm.inputperfilUsuario.value
+  let modalActual = ""
+  function indexControllerCrearUsuarios(datosForm){
+    event.preventDefault();
+    
+    switch (modalActual) {
+      case "crearUsuario":
+        cargarTablaUsuarios();
+        break;
+      case "nuevoUsuario":
+        if(!ValidarEmail (datosForm.inputUsuarioEmail.value)){
+          alertaError("true","Email no válido, no use mayúsculas en el email","modal");
+        }else{
+          alertaError("false","","modal");
+          activarModal("false","crearUsuarioModal"); 
+          activarModal("spiner", "Creando usuario");
+          let datos = {
+            email: datosForm.inputUsuarioEmail.value,
+            nombre: datosForm.inputUsuarioNombre.value,
+            perfil: datosForm.inputperfilUsuario.value
+          }
+          crearUsuario(datos);
         }
-        crearUsuario(datos);
-      }
-      break;
-    case "reiniciarUsuario":
-      activarModal("false","crearUsuarioModal");
-      activarModal("spiner", "Reiniciando usuario");
-      let email= datosForm.inputUsuarioNuevo.value;
-      reiniciarUser(email);
-      break;
-    case "eliminarUsuario":
-      let usuario = datosForm.inputUsuarioNuevo.value;
-      datoEliminar= "eliminarUsuario";
-      activarModal("eliminar", "Esta seguro de eliminar el usuario: "+usuario);
-     
+        break;
+      case "reiniciarUsuario":
+        activarModal("false","crearUsuarioModal");
+        activarModal("spiner", "Reiniciando usuario");
+        let email= datosForm.inputUsuarioNuevo.value;
+        reiniciarUser(email);
+        break;
+      case "eliminarUsuario":
+        let usuario = datosForm.inputUsuarioNuevo.value;
+        datoEliminar= "eliminarUsuario";
+        activarModal("eliminar", "Esta seguro de eliminar el usuario: "+usuario);
+      
+    }
   }
-}
 
-function showControllerCrearUsuarios(formulario){
-  let email = document.getElementById("inputUsuarioEmail");
-  let nombreUsuario = document.getElementById("inputUsuarioNombre");
-  let perfil = document.getElementById("inputperfilUsuario");
-  let usuarioActivo = document.getElementById("inputUsuarioNuevo");
+  function showControllerCrearUsuarios(formulario){
+    let email = document.getElementById("inputUsuarioEmail");
+    let nombreUsuario = document.getElementById("inputUsuarioNombre");
+    let perfil = document.getElementById("inputperfilUsuario");
+    let usuarioActivo = document.getElementById("inputUsuarioNuevo");
 
-  activarModal("formulario","crearUsuarioModal");
-  ocultarElementos("true", ".elementUsuarioModal");
-  limpiarForm("gestionarUsuario");
-  modalActual = formulario
+    activarModal("formulario","crearUsuarioModal");
+    ocultarElementos("true", ".elementUsuarioModal");
+    limpiarForm("gestionarUsuario");
+    modalActual = formulario
 
-  switch (formulario){
-    case "nuevoUsuario":
-      ocultarElementos("false", ".nuevoUsuario");
-      $( "#inputperfilUsuario" )[0].selectedIndex = 0;
-      usuarioActivo.disabled = true;
-      email.disabled = false;
-      nombreUsuario.disabled = false;
-      perfil.disabled = false;
-      break;
-    case "reiniciarUsuario":
-      ocultarElementos("false", ".reiniciarUsuario");
-      cargarSelect("reiniciar","inputUsuarioNuevo");
-      usuarioActivo.disabled = false;
-      email.disabled = true;
-      nombreUsuario.disabled = true;
-      perfil.disabled = true;
-      break;
-    case "eliminarUsuario":
-      ocultarElementos("false", ".eliminarUsuario");
-      cargarSelect("reiniciar","inputUsuarioNuevo");
-      usuarioActivo.disabled = false;
-      email.disabled = true;
-      nombreUsuario.disabled = true;
-      perfil.disabled = true;
-      break;
+    switch (formulario){
+      case "nuevoUsuario":
+        ocultarElementos("false", ".nuevoUsuario");
+        $( "#inputperfilUsuario" )[0].selectedIndex = 0;
+        usuarioActivo.disabled = true;
+        email.disabled = false;
+        nombreUsuario.disabled = false;
+        perfil.disabled = false;
+        break;
+      case "reiniciarUsuario":
+        ocultarElementos("false", ".reiniciarUsuario");
+        cargarSelect("reiniciar","inputUsuarioNuevo");
+        usuarioActivo.disabled = false;
+        email.disabled = true;
+        nombreUsuario.disabled = true;
+        perfil.disabled = true;
+        break;
+      case "eliminarUsuario":
+        ocultarElementos("false", ".eliminarUsuario");
+        cargarSelect("reiniciar","inputUsuarioNuevo");
+        usuarioActivo.disabled = false;
+        email.disabled = true;
+        nombreUsuario.disabled = true;
+        perfil.disabled = true;
+        break;
+    }
   }
-}
+
+    function destroyControllerUsuarios(){
+        activarModal("false","crearUsuarioModal");
+        activarModal("spiner", "Eliminando usuario");
+        let emailDelet= document.getElementById("inputUsuarioNuevo").value;
+        eliminarUser(emailDelet); 
+    }
 
 </script>  

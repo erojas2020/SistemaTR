@@ -1,0 +1,57 @@
+<script>
+    document.getElementById("uploadInput").addEventListener("change", handleFiles, false);
+    var button = document.getElementById('btn-submit');
+    button.addEventListener('click', uploadFile);
+
+    function handleFiles(f) {
+
+        var previewDiv = document.getElementById('preview').innerHTML = '';
+        const files = document.getElementById('uploadInput').files;
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+
+            if (!file.type.startsWith('image/')){ continue }
+
+            const img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            preview.appendChild(img); // Assuming that "preview" is the div output where the content will be displayed.
+
+            const reader = new FileReader();
+            reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+            reader.readAsDataURL(file);
+        }
+        }
+
+        function uploadFile(){
+        const selectedFile = document.getElementById('uploadInput').files[0];
+        //console.log(selectedFile);
+
+        const imgs = document.querySelectorAll(".obj");
+
+        for(let i = 0; i < imgs.length; i++){
+            new FileUpload(imgs[i], imgs[i].file);
+            console.log(imgs[i], imgs[i].file);
+        }
+        }
+
+        function FileUpload(img, file){
+            var reader = new FileReader();
+            reader.onload = function(event){
+            // console.log(event.target.result);
+
+            const obj ={
+            filename: file.name,
+            mimeType: file.type,
+            bytes: [...new Int8Array(event.target.result)]
+            };
+
+            //console.log(obj.bytes);
+            google.script.run.withSuccessHandler((e)=> console.log(e)).uploadFiles(obj);
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
+        
+</script>

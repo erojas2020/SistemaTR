@@ -1,7 +1,233 @@
 <script>
+  let enviarVia =""
+  let VistaActualForm2 = "";
+  let DatosFormN2 = {
+    nombre: "",
+    area: "",
+    telefono: "",
+    email: "",
+    tipoDoc: "",
+    doc: "",
+    pais: "",
+    ciudad: "",
+    direccion: "",
+    testigo: "",
+    familiar: "",
+    conocido: ""
+  }
+  function indexControllerFormN2(DatosForm){
+    event.preventDefault();
+    switch (VistaActualForm2){
+      case "formN1":
+        if ((DatosForm.listNombreNivel2.disabled == false) && (DatosForm.listNombreNivel2.value == "")){
+          alertaError ("true", "Seleccione un nombre", "formulario");
+          enfocarCampo("listNombreNivel2");
+        }else if ((DatosForm.nombreNuevoN2.disabled == false) && (DatosForm.nombreNuevoN2.value == "")){
+          alertaError ("true", "Indique un nombre", "formulario");
+          enfocarCampo("nombreNivel2");  
+        }else if ((DatosForm.areaNivel2.disabled == false) && (DatosForm.areaNivel2.value == "")){
+          alertaError ("true", "Indique un código de área", "formulario");
+          enfocarCampo("areaNivel2");  
+        }else if ((DatosForm.telefonoN2.disabled == false) && (DatosForm.telefonoN2.value == "")){
+          alertaError ("true", "Indique un número de teléfono", "formulario");
+          enfocarCampo("telefonoNivel2");  
+        }else if ((DatosForm.emailNivel2.disabled == false) && (DatosForm.emailNivel2.value == "")){
+          alertaError ("true", "Indique un email", "formulario");
+          enfocarCampo("emailNivel2");  
+        }else if ((DatosForm.emailNivel2.disabled == false) && (!ValidarEmail(DatosForm.emailNivel2.value))){
+          alertaError ("true", "Indique un email válido, no use mayúsculas", "formulario");
+          enfocarCampo("emailNivel2");  
+        }else if ((DatosForm.tipoDoc.disabled == false) && (DatosForm.tipoDoc.value == "")){
+          alertaError ("true", "Indique el tipo de documento", "formulario");
+          enfocarCampo("tipoDoc");  
+        }else if ((DatosForm.documentoNivel2.disabled == false) && (DatosForm.documentoNivel2.value == "")){
+          alertaError ("true", "Indique el numero de documento", "formulario");
+          enfocarCampo("documentoNivel2");  
+        }else if ((DatosForm.paisClienteN2.disabled == false) && (DatosForm.paisClienteN2.value == "")){
+          alertaError ("true", "Indique el país de residencia", "formulario");
+          enfocarCampo("paisClienteN2");  
+        }else if ((DatosForm.ciudadFormN2.disabled == false) && (DatosForm.ciudadFormN2.value == "")){
+          alertaError ("true", "Indique la ciudad de residencia", "formulario");
+          enfocarCampo("ciudadFormN2");  
+        }else if ((DatosForm.direccionNivel2.disabled == false) && (DatosForm.direccionNivel2.value == "")){
+          alertaError ("true", "Indique la dirección de residencia", "formulario");
+          enfocarCampo("direccionNivel2");  
+        }else if ((DatosForm.nombreNuevoN2.disabled == false) && (DatosForm.radioTj.value =="")){
+          alertaError ("true", "Selecciona si es Testigo de Jehová", "formulario");
+        }else if ((DatosForm.nombreNuevoN2.disabled == false) && (DatosForm.radioFamiliar.value =="")){
+          alertaError ("true", "Selecciona si es familiar", "formulario");
+        }else if ((DatosForm.nombreNuevoN2.disabled == false) && (DatosForm.radioConfiable.value =="")){
+          alertaError ("true", "Selecciona si lo conoce en persona", "formulario");
+        }else if ((DatosForm.CheckTerminosN2.disabled == false) && (DatosForm.CheckTerminosN2.checked == false)){
+          alertaError ("true", "Debe aceptar los términos y condiciones", "formulario");
+        }else if ((DatosForm.direccionNivel2.disabled == true) && (DatosForm.radioEnvio.value =="")){
+          alertaError ("true", "Seleccione porque vía enviar el formulario", "formulario");
+        }else{
+          alertaError ("false", "", "formulario");
+          switch (enviarFormSi.checked){
+            case true:
+              activarModal("spiner","Guardando datos y creando mensaje para su cliente");
 
-  function cerrarFormN2(){
-    mostrarContenido("tabN2", "false")
+              if (DatosForm.radioEnvio.value == "Whatsapp"){
+                enviarVia = "Whatsapp";
+              }else{
+                enviarVia = "Telegram";
+              }
+              let datosParcialFormN2 = {
+                nombre: "",
+                area:  DatosForm.areaNivel2.value,
+                telefono: DatosForm.telefonoN2.value,
+                email: DatosForm.emailNivel2.value,
+                pais: "",
+                testigo: DatosForm.radioTj.value,
+                familiar: DatosForm.radioFamiliar.value,
+                conocido: DatosForm.radioConfiable.value
+              }
+              if (DatosForm.listNombreNivel2.disabled == false){
+                datosParcialFormN2.nombre = getSelected("listNombreNivel2", "text");
+              }else{
+                datosParcialFormN2.nombre = DatosForm.nombreNuevoN2.value;
+              }
+
+              if (DatosForm.paisClienteN2.hidden == false){
+                datosParcialFormN2.pais = DatosForm.paisClienteN2.value;
+              }else{
+                datosParcialFormN2.pais = DatosForm.paisClienteDeN1.value;  
+              }
+              registrarN2(datosParcialFormN2);
+              break;
+            case false:
+              if (DatosForm.listNombreNivel2.disabled == false){
+                DatosFormN2.nombre = getSelected("listNombreNivel2", "text");
+              }else{
+                DatosFormN2.nombre = DatosForm.nombreNuevoN2.value;
+              }
+              DatosFormN2.area =  DatosForm.areaNivel2.value;
+              DatosFormN2.telefono = DatosForm.telefonoN2.value;
+              DatosFormN2.email = DatosForm.emailNivel2.value;
+              DatosFormN2.tipoDoc = DatosForm.tipoDoc.value;
+              DatosFormN2.doc = DatosForm.documentoNivel2.value;
+              if (DatosForm.paisClienteN2.hidden == false){
+                DatosFormN2.pais = DatosForm.paisClienteN2.value;
+              }else{
+                DatosFormN2.pais = DatosForm.paisClienteDeN1.value;  
+              }
+              DatosFormN2.ciudad = DatosForm.ciudadFormN2.value;
+              DatosFormN2.direccion = DatosForm.direccionNivel2.value;
+              DatosFormN2.testigo = DatosForm.radioTj.value;
+              DatosFormN2.familiar = DatosForm.radioFamiliar.value;
+              DatosFormN2.conocido = DatosForm.radioConfiable.value;
+              showControllerFormN2("AdjFormN2:1");
+              break;  
+          }
+        }
+        break;
+      case "AdjFormN2:1":
+        //obtiene el nombre del archivo seleccionado
+        let filename = $("#file_input").val();
+        //si es null muestra un mensaje de error
+        if(filename == null){
+          alertaError ("true", "Adjunte la foto de su documento de identidad", "formulario");
+        }else{
+          showControllerFormN2("AdjFormN2:2");  
+        }
+        break;
+    }
+  }
+
+  function showControllerFormN2(mostrar,nuevo, enviar){
+    VistaActualForm2 = mostrar;
+    switch (mostrar){
+      case "formN1":
+        if (document.getElementById("formularioNivel2:img").hidden == true){
+          if (enviar == true){
+            ocultarElementos("false", ".enviarForm");
+            
+            disactivarElementos("false", "enviarForm");
+            ocultarElementos("true", ".registrarCN2");
+            disactivarElementos("true", "registrarCN2");
+            agregarClase(true, "EmailFN2", "col-md-6");
+            agregarClase(false, "EmailFN2", "col-md-5");
+          }else if (enviar == false){
+            ocultarElementos("true", ".enviarForm");
+            disactivarElementos("true", "enviarForm");
+            ocultarElementos("false", ".registrarCN2");
+            disactivarElementos("false", "registrarCN2");
+            agregarClase(true, "EmailFN2", "col-md-5");
+            agregarClase(false, "EmailFN2", "col-md-6");
+          }
+
+          if (nuevo == true){
+            disactivarElementos("true", "bloqueable");
+            ocultarElementos("true", ".NuevoN2");
+            disactivarElementos("true", "NuevoN2");
+            ocultarElemento("false","icoTlf");
+            ocultarElementos("false", ".ExisteN1");
+            disactivarElementos("false", "ExisteN1");
+            agregarClase(false, "NroTlfN2", "col-md-4");
+            agregarClase(true, "NroTlfN2", "col-md-6");
+            let email = document.getElementById("imputInicioEmail").value
+            cargarClientesN1Form2(email);
+          }else if (nuevo == false){
+            disactivarElementos("false", "bloqueable");
+            ocultarElementos("false", ".NuevoN2");
+            disactivarElementos("false", "NuevoN2");
+            ocultarElemento("true","icoTlf");
+            ocultarElementos("true", ".ExisteN1");
+            disactivarElementos("true", "ExisteN1");
+            agregarClase(true, "NroTlfN2", "col-md-4");
+            agregarClase(false, "NroTlfN2", "col-md-6");
+          }
+            
+          formularioNivel2.usuarioNivel2.value = document.getElementById("imputInicioEmail").value;
+          formularioNivel2.nombreUserNivel2.value = document.getElementById("user").outerHTML;
+
+          limpiarForm("formularioNivel2");
+          cargarPaiseFormN2();
+        }  
+        mostrarContenido("formN2"); 
+
+        if (document.getElementById("listNombreNivel2").hidden == false){
+          enfocarCampo('listNombreNivel2');
+        }else {
+          enfocarCampo('nombreNivel2');
+        }
+        break;
+      case "AdjFormN2:1":
+        ocultarElemento("true","formularioNivel2")
+        ocultarElemento("false","formularioNivel2:img");
+        break;
+      case "AdjFormN2:2":
+        ocultarElemento("true","formularioNivel2:img");
+        ocultarElemento("false","formularioNivel2:doc");
+        break;  
+    }
+  }
+
+  $("#listNombreNivel2").change(function storeControllerFormN2(){
+      activarModal("spiner", "Cargando datos");
+      let email= getSelected("listNombreNivel2", "value");
+      getDataSelectedN1(email);
+  });
+  
+  function updateControllerFormN2(campoAdj){
+    let InputArchivoModal = document.getElementById("uploadInput");
+    let LabeldocmFormN2 = document.getElementById("docAdj");
+    let LabelfotoFormN2 = document.getElementById("fotoAdj");
+    
+    switch (campoAdj){
+      case "AdjFormN2:1":
+        LabeldocmFormN2.textContent = InputArchivoModal.value;
+        break;
+      case "AdjFormN2:2":
+        LabelfotoFormN2.textContent = InputArchivoModal.value;
+        break;   
+    }
+    
+  }
+  
+  function destroyControllerClaveNueva(){
+    
   }
 
 </script>  

@@ -1,0 +1,135 @@
+<script>
+    async function cargarCalculadora() {
+        var resultado = await google.script.run
+            .withSuccessHandler(cargarPaiseCalculadoraTrue)
+            .withFailureHandler(cargarPaiseCalculadoraError)
+            .getPaises()
+    }
+
+    function cargarPaiseCalculadoraTrue(listaPaises) {
+        arraySelectPadre = listaPaises;
+
+        cargarSelect("cargar", "selectPaisOrigenCalculadora", listaPaises, 0, 1);
+
+        ocultarElementos("false", ".calculadora");
+        limpiarForm("formCalculadora");
+        disactivarElement("true", "selectPaisDestinoCalculadora");
+
+        activarModal("false");
+    }
+
+    function cargarPaiseCalculadoraError(error) {
+        activarModal("respuestaNegativa", error)
+    }
+
+    async function verificarEstatusCalculadora() {
+        var resultado = await google.script.run
+            .withSuccessHandler(consultarEstatusCalculadoraTrue)
+            .withFailureHandler(consultarEstatusCalculadoraError)
+            .getStatusCalculadora()
+    }
+
+
+    function consultarEstatusCalculadoraTrue(respuesta) {
+
+        switch (respuesta) {
+            case false:
+                activarModal("respuestaNegativa", "La calculadora en este momento se encuentra desactivada, intente mas tarde");
+                ocultarElemento("false", "imgCalcDesact");
+                ocultarElemento("true", "calculadoraRemesa");
+                ocultarElementos("true", ".spinerCalc");
+                disactivarElement("false", "CalculadoraBoton");
+                break;
+
+            case true:
+                ocultarElemento("true", "imgCalcDesact");
+                document.getElementById("operadorT1").innerHTML = "X"
+                document.getElementById("operadorT2").innerHTML = "X"
+
+                switch (calculandoEnvio) {
+                    case true:
+                        let datosCalc = {
+                            idTasas: Number(getSelected("selectPaisOrigenCalculadora", "value") + getSelected("selectPaisDestinoCalculadora", "value")),
+                            orden: "",
+                            monto: "",
+                            colombia: false
+                        };
+
+                        if (montoEnviarCalc > 0) {
+                            datosCalc.orden = "origen"
+                            datosCalc.monto = Number(montoEnviarCalc);
+                        } else {
+                            datosCalc.orden = "destino"
+                            datosCalc.monto = Number(montoRecibirCalc);
+                        };
+                        
+                        if ((paisOrigenCalc == "Colombia") &&(paisDestinoCalc == "Venezuela")) {
+                            datosCalc.colombia = true;
+                        } else {
+                            datosCalc.colombia = false;
+                        };
+
+                        calcularEnvio(datosCalc);
+                        break;
+
+                    case false:
+                        document.getElementById("linkWahtsapp").removeAttribute('href');
+                        document.getElementById("linkTelegram").removeAttribute('href');
+                        ocultarElementos("true", ".spinerCalc");
+                        activarModal("spiner", "Cargando calculadora...");
+                        cargarCalculadora();
+                        break;
+                }
+                break;
+        }
+    }
+
+    function consultarEstatusCalculadoraError(error) {
+        activarModal("respuestaNegativa", error)
+    }
+
+    async function calcularEnvio(datos) {
+
+        var resultado = await google.script.run
+            .withSuccessHandler(calcularEnvioTrue)
+            .withFailureHandler(calcularEnvioError)
+            .calcularTasaPublico(datos)
+    }
+
+    function calcularEnvioTrue(respuesta) {
+        
+        //Array de datos para actualizar campos
+        let respuestaBakckend = {
+            tasa1: respuesta.tasa1,
+            montoTasa1: respuesta.calculo_tasa1,
+            tasa2: respuesta.tasa2,
+            montoTasa2: respuesta.calculo_tasa2,
+            origen: true,
+            monedaOrigen: respuesta.monedaOrigen,
+            monedaDestino: respuesta.monedaDestino
+        };
+        
+        if (document.getElementById("inputMontoEnviar").value > 0) {
+            respuestaBakckend.origen = true;
+        } else {
+            respuestaBakckend.origen = false;
+        }
+
+        updateElemntCalculadora("insertCalcTasa1", respuestaBakckend)
+
+        if (respuesta.calculo_tasa2 > 0) {
+            updateElemntCalculadora("insertCalcTasa2", respuestaBakckend)
+        }
+
+        updateElemntCalculadora("insertMsj");
+
+        ocultarElementos("true", ".spinerCalc");
+        disactivarElement("false", "CalculadoraBoton");
+    }
+
+    function calcularEnvioError(error) {
+        ocultarElementos("true", ".spinerCalc");
+        activarModal("respuestaNegativa", error);
+    }
+
+</script>

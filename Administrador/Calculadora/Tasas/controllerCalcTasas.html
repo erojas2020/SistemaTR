@@ -1,0 +1,178 @@
+<script>
+
+    //Funcion: Validacion y almacenamiento de datos necesarios para consultar al backend
+    function indexControllerCalcTasas(date) {
+        event.preventDefault();
+
+        //Cerrado del modal de tasas    
+        activarModal("false", "TasaModal");
+
+        updateControllerCalcTasa('editarTasa')
+    }
+
+    //Función: Gestionar vistas y elementos de la sección "Tasas"
+    function showControllerCalcTasas(formulario) {
+        /**Si es llamado desde el boton del "nav" configura la vista inicial
+         * Muestra la vista
+         * Activa spiner de espera
+         * Carga la tabla de datos
+        */
+        if (formulario == "inicio") {
+            activarModal("spiner", "Cargando tasas...");
+            cargarPaiseCalcTasa();
+            cargarTablaTasas();
+            if (vistaActual == "calcTasas") {
+                verificarStatusCalc();
+            }
+
+            /**Congifiguaración inicial de formualario modal
+             * Muestra modal
+             * Oculta todos los elementos
+             * Desactiva todos los elementos
+             * Reinicia formulario
+             */
+        } else {
+            activarModal("formulario", "TasaModal");
+            ocultarElementos("true", ".elementTasaModal");
+            disactivarElementos("true", "bloqElementTasaModal");
+            limpiarForm("formTasa");
+
+            //Configuración de la vista del modal segun el boton seleccionado de la seccion "precios":
+            switch (formulario) {
+
+                /**Boton: Nueva tasa*/
+                case "nuevaTasa":
+                    document.getElementById("LabelModalTasa").innerHTML = "Nueva tasa"
+                    ocultarElementos("false", ".nuevaTasa");
+                    disactivarElementos("false", "nuevaTasa");
+                    break;
+
+                /**Boton: Editar tasa*/
+                case "editarTasa":
+                    document.getElementById("LabelModalTasa").innerHTML = "Editar tasa"
+                    ocultarElementos("false", ".editarTasa");
+                    disactivarElementos("false", "editarTasa");
+                    break;
+
+                /**Boton: Eliminar tasa*/
+                case "eliminarTasa":
+                    document.getElementById("LabelModalTasa").innerHTML = "Eliminar tasa"
+                    ocultarElementos("false", ".eliminarTasa");
+                    disactivarElementos("false", "eliminarTasa");
+                    break;
+            }
+        }
+    }
+
+    /**Función: Gestionar datos traidos del Backend
+     * 
+    */
+    function updateControllerCalcTasa(date) {
+        switch (date) {
+            case "verificarStatusCalc":
+                if (document.getElementById("DesactivarCalc").checked == true) {
+                    vistaActual = "procesarTasas";
+                    activarModal("advertencia", "La calculadora esta activa, sera desactivada para continuar");
+                } else {
+                    updateControllerCalcTasa("procesarTasas");
+                }
+                break;
+            case "procesarTasas":
+                let user = document.getElementById("imputInicioEmail").value;
+                activarModal("spiner", "Procesando tasas...");
+                procesarTasas(user);
+                break;
+            case "statusCalculadora":
+                if (document.getElementById("DesactivarCalc").checked == true) {
+                    activarModal("spiner", "Activando calculadora...");
+                } else {
+                    activarModal("spiner", "Desactivando calculadora...");
+                }
+
+                let status = document.getElementById("DesactivarCalc").checked;
+                actualizarStatusCalc(status);
+                break;
+            case "editarTasa":
+                let paisOrgenValue = getSelected("selectPaisOrigenTasa", "value")
+                let paisDestinoValue = getSelected("selectPaisDestinoTasa", "value")
+
+                let datos = {
+                    idTasas: Number(getSelected("selectPaisOrigenTasa", "value") + getSelected("selectPaisDestinoTasa", "value")),
+                    tasa1: Number.parseFloat(document.getElementById("inputTasa1").value),
+                    tasa2: Number.parseFloat(document.getElementById("inputTasa2").value),
+                    user: document.getElementById("imputInicioEmail").value
+                }
+                activarModal("spiner", "Editando tasa...")
+                editarTasa(datos)
+                break;
+        }
+    }
+
+    /**Actualizar elementos de la vista "Tasas"*/
+    function updateElemntTasas(accion) {
+        let tasaBase = Number.parseFloat(document.getElementById("inputTasaBase").value)
+
+        let tasaPublico = Number.parseFloat(document.getElementById("inputTasa1").value)
+
+        switch (accion) {
+            case "cargarSelectHijo":
+                let listaPaisDestino = arrayChildForSelectChild("selectPaisOrigenTasa", arraySelectPadre, "1");
+
+                cargarSelect("cargar", "selectPaisDestinoTasa", listaPaisDestino, 1, 0);
+
+                cargarSelect("reiniciar", "selectPaisDestinoTasa");
+
+                disactivarElement("false", "selectPaisDestinoTasa");
+
+                resetInputs("inputModalTasas");
+                break;
+
+            case "traerTasa":
+                let idTasas = getSelected("selectPaisOrigenTasa", "value") + getSelected("selectPaisDestinoTasa", "value")
+                document.getElementById("textSpinerTasa").innerHTML = "Cargando tasas"
+                ocultarElemento("false", "spinerModalTasa");
+                disactivarElementos("true", "elementModalTasas")
+                traerTasa(idTasas);
+                break;
+
+            case "calcularTasa2":
+                let paisOrigenSeleccionado = getSelected("selectPaisOrigenTasa", "text");
+
+                let paisDestinoSeleccionado = getSelected("selectPaisDestinoTasa", "text");
+
+                let comisionVES = Number.parseFloat(tasaPublico * 0.4 / 100)
+                let tasa2 = 0
+                if ((paisOrigenSeleccionado == "Colombia") && (paisDestinoSeleccionado == "Venezuela")) {
+                   tasa2 = tasaPublico + comisionVES;
+
+                } else if (paisDestinoSeleccionado == "Venezuela") {
+                    tasa2 = tasaPublico - comisionVES;
+                }
+                
+                if (paisDestinoSeleccionado == "Venezuela"){
+                    tasa2 = calcularDecimales(tasa2);
+                    tasa2 = tasa2.monto
+                }
+
+                document.getElementById("inputTasa2").value = tasa2
+                
+            case "calcularPorcentaje":
+                let porcentaje = Number.parseFloat(((tasaBase / tasaPublico) - 1) * 100);
+                porcentaje = porcentaje.toFixed(2);
+
+                if ( porcentaje < 0){
+                    porcentaje = porcentaje * -1
+                }
+
+                document.getElementById("inputTasaPorcentaje").value = porcentaje;
+                break;
+        }
+    }
+
+    /** Funcion: Gestionar datos solicitados para eliminar
+     * 
+    */
+    function destroyControllerTasa(dato) {
+
+    }
+</script>

@@ -8,7 +8,7 @@
 
 <div class='row p-3 viewsApp viewNivel2' hidden>
   <div class='col-md-12'>
-    <a id='nuevoCliente2' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#modalNivel2' >Nuevo Cliente</a>
+    <button id='nuevoCliente2' class='btn btn-warning' data-bs-toggle='modal' onclick="showControllerTabN2()">Nuevo Cliente</button>
   </div>
 </div>
 
@@ -29,7 +29,7 @@
         <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form class="needs-validation" onsubmit="indexcontrollerTabN2(this)">
+      <form class="needs-validation" id="formN2Modal" onsubmit="indexcontrollerTabN2(this)">
         <div class="modal-body text-center">
 
           <!-- Preguntas para configurar formulario-->
@@ -44,7 +44,7 @@
             <div class= "text-center">
               <div class= "d-flex mb-2">
                 <div class='form-check ms-4'>
-                  <input type='radio' class='form-check-input' id='ClienteNuevoSi' name='radioNuevoCliente'value="si" required>
+                  <input type='radio' class='form-check-input borde' id='ClienteNuevoSi' name='radioNuevoCliente'value="si" required>
                   <label class='form-check-label' for='validationCustom01' >Si</label>
                 </div>
               
@@ -55,7 +55,7 @@
               </div>
               <div class= "d-flex">
                 <div class='form-check ms-4'>
-                  <input type='radio' class='form-check-input' id='EnviarFormSi' name='radioEnviarForm'value="si" required>
+                  <input type='radio' class='form-check-input borde' id='EnviarFormSi' name='radioEnviarForm'value="si" required>
                   <label class='form-check-label' for='validationCustom02' >Si</label>
                 </div>
 
@@ -69,7 +69,7 @@
         </div>  
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary px-4 mx-auto" onclick="" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-warning px-5 mx-auto" id="botonSalidaAlerta" data-bs-dismiss="modal">Aceptar</button>
+          <button type="submit" class="btn btn-warning px-5 mx-auto" id="botonSalidaAlerta">Aceptar</button>
         </div>
       </form>  
     </div>

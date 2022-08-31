@@ -2,6 +2,7 @@
     async function cargarTabN2(user){
         let resul = await google.script.run
         .withSuccessHandler(crearTabN2)
+        .withFailureHandler(crearTabN2Error)
         .getDataClienteN1(user);
     }
 
@@ -30,6 +31,10 @@
         });
         
         activarModal("false");
+    }
+
+    function crearTabN2Error(error){
+        activarModal("respuestaNegativa", error);
     }
     
 </script>

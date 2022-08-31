@@ -179,27 +179,6 @@ function getDataClienteN1Todo() {
   return resultado;
 }
 
-
-/*
- getClientLevel1ByEmail: Busca los clientes del nivel 1 por email
-
- Requisito:
- email
-
- Respuesta: si es TRUE desvuelve el siguiente array
- condigo,
- nombre,
- pais,
- celular,
- email,
- tj,
- familiar,
- confiable
- 
- Si es FALSE retorna vacio.
-
-*/
-
 /*
 getDataClienteN1 = "Devuelve un array con todos los clientes del usuario"
 
@@ -220,6 +199,26 @@ function getDataClienteN1(email) {
 
   return resultado;
 }
+
+/*
+ getClientLevel1ByEmail: Busca los clientes del nivel 1 por email
+
+ Requisito:
+ email
+
+ Respuesta: si es TRUE desvuelve el siguiente array
+ condigo,
+ nombre,
+ pais,
+ celular,
+ email,
+ tj,
+ familiar,
+ confiable
+ 
+ Si es FALSE retorna vacio.
+
+*/
 
 function getClientLevel1ByEmail(email) {
   let resultado = Bakendtr.getClientLevel1ByEmail(email);

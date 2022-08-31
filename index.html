@@ -4,7 +4,7 @@
     <base target="_top">
      <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no;user-scalable=0">
 
     <!-- Bootstrap CSS -->
      <?!= include('CCS/CSS'); ?>
@@ -26,12 +26,17 @@
       <?!= include('Inicio/Login/viewLogin'); ?>
       <?!= include('Inicio/Clave_nueva/viewClaveNueva'); ?>
       <?!= include('Inicio/Olvido_clave/viewOlvidoClave'); ?>
+      <?!= include('Inicio/Calculadora/Remesa/viewCalculadora'); ?>
+      <?!= include('Inicio/Calculadora/Cripto/viewCalcuCripto'); ?>
       <?!= include('Clientes/Nivel_1/viewTabN1'); ?>
-      <?!= include('Clientes/Nivel_2/viewTabN2'); ?>
-      <?!= include('Administrador/Crear_usuarios/viewCrearUsuarios'); ?> 
+      <?!= include('Clientes/Nivel_2/viewTabN2'); ?> 
       <?!= include('Clientes/Nivel_1/viewFormN1'); ?>
       <?!= include('Clientes/Nivel_2/viewFormN2'); ?>
+      <?!= include('Administrador/Calculadora/Porcentaje/viewCalcPorcentaje'); ?>
+      <?!= include('Administrador/Calculadora/Precios/viewCalcPrecios'); ?>
+      <?!= include('Administrador/Calculadora/Tasas/viewCalcTasas'); ?>
       <?!= include('Administrador/Clientes/Nivel_1/ViewNivel1'); ?>
+      <?!= include('Administrador/Crear_usuarios/viewCrearUsuarios'); ?>
       <?!= include('Configuracion/Cambio_clave/viewCambioClave'); ?> 
 
         <!------------------------------------------------------------------------------------>
@@ -67,8 +72,8 @@
               <p id="alertaMensajeAdvertencia"></p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary px-4 mx-auto" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-warning px-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta" onclick="salidaModal()">Salir</button>
+              <button type="button" class="btn btn-secondary col-5 mx-auto" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-warning col-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta" onclick="salidaModal()">Aceptar</button>
             </div>
           </div>
         </div>
@@ -88,13 +93,39 @@
               <p id="alertaMensajeEliminar"></p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary px-4 mx-auto" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-warning px-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta" onclick="salidaModalEliminar()">Eliminar</button>
+              <button type="button" class="btn btn-secondary col-5 mx-auto" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-warning col-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta" onclick="salidaModalEliminar()">Eliminar</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  <!------------------------------------------------------------------------------------>
+                          <!-- Modal: Adjuntar imagenes -->
+  <!---------------------------------------------------------------------------------- 
+  <div class='modal fade' id='modalAdjuntar' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+    <div class='modal-dialog modal-dialog-scrollable'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h5 class='modal-title' id='exampleModalLabel'>Subir archivo</h5>
+            <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button> 
+        </div>
+        <div class='modal-body'>
+          <div class="container">
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Toque el siguiente campo para subir su archivo</label>
+              <input class="form-control" type="file" id="uploadInput">
+            </div>
+            <div id="preview" class="mb-3"></div>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-evenly justify-content-md-end">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label='Close'>Cancelar</button>
+          <button type="button" class="btn btn-warning px-4" onclick="salidaModalAdjuntar()">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>--> 
     <?!= include('utilidades'); ?>
     <?!= include('Menu/controllerNav'); ?>
     <?!= include('Inicio/Login/controllerLogin'); ?>
@@ -102,17 +133,25 @@
     <?!= include('Inicio/Olvido_clave/controllerOlvidoClave'); ?>
     <?!= include('Inicio/Olvido_clave/funcionesOlvidoClave'); ?>
     <?!= include('Inicio/Olvido_clave/modelOlvido'); ?>
-    <?!= include('Inicio/Clave_nueva/controllerClaveNueva'); ?>
     <?!= include('Inicio/Clave_nueva/funcionClaveNueva'); ?>
     <?!= include('Inicio/Clave_nueva/modeloClaveNueva'); ?>
+    <?!= include('Inicio/Calculadora/Remesa/controllerCalculadora'); ?>
+    <?!= include('Inicio/Calculadora/Remesa/modeloCalculadora'); ?>
+    <?!= include('Inicio/Calculadora/Cripto/controllerCalculCripto'); ?>
+    <?!= include('Inicio/Calculadora/Cripto/modeloCalculCripto'); ?>
     <?!= include('Clientes/Nivel_1/ModeloTabN1'); ?>
     <?!= include('Clientes/Nivel_1/controllerFormN1'); ?>
-    <?!= include('Clientes/Nivel_1/funcionFormN1'); ?>
     <?!= include('Clientes/Nivel_1/modelFormN1'); ?>
     <?!= include('Clientes/Nivel_2/controllerTabN2'); ?>
     <?!= include('Clientes/Nivel_2/modeloTabN2'); ?>
     <?!= include('Clientes/Nivel_2/controllerFormN2'); ?>
-    <?!= include('Clientes/Nivel_2/modeloFormN2'); ?> 
+    <?!= include('Clientes/Nivel_2/modeloFormN2'); ?>
+    <?!= include('Administrador/Calculadora/Porcentaje/ControllerCalcPorcentaje'); ?>
+    <?!= include('Administrador/Calculadora/Porcentaje/modeloCalcPorcentaje'); ?> 
+    <?!= include('Administrador/Calculadora/Precios/controllerCalcPrecios'); ?>
+    <?!= include('Administrador/Calculadora/Precios/modeloCalcPrecios'); ?>
+    <?!= include('Administrador/Calculadora/Tasas/controllerCalcTasas'); ?>
+    <?!= include('Administrador/Calculadora/Tasas/modeloCalcTasas'); ?>  
     <?!= include('Administrador/Clientes/Nivel_1/ControllerNivel1'); ?>
     <?!= include('Administrador/Clientes/Nivel_1/ModeloNivel1'); ?> 
     <?!= include('Administrador/Crear_usuarios/ControllerCrearUsuarios'); ?>
@@ -121,5 +160,6 @@
     <?!= include('Configuracion/Cambio_clave/FuncionCambioClave'); ?>
     <?!= include('Configuracion/Cambio_clave/ModeloCambioClave'); ?>
     <?!= include('routes'); ?>
+    <?!= include('funcionAdjuntar'); ?>
   </body>
 </html>

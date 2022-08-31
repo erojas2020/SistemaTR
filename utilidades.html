@@ -1,138 +1,244 @@
 <script>
-/*---------------------------------------------------------------------------------------------------
-                                  Controller Utilidades
------------------------------------------------------------------------------------------------------*/  
-  function reiniciarTabla(){
-    /*var table = document.getElementById("data-table");
-    table.innerHTML = "";*/
+  /*---------------------------------------------------------------------------------------------------
+                                    Controller Utilidades
+  -----------------------------------------------------------------------------------------------------*/
+  /**
+ * Funcion para devolver un numero formateado con separadores de miles
+ * y decimales en formato español
+ * @param {int|float|string} n - numero valido en formato entero, float o string
+ * @param {int} d - numero de decimales
+ */
+ const formatNumberES = (n, d=0) => {
+    n=new Intl.NumberFormat("es-ES").format(parseFloat(n).toFixed(d))
+    if (d>0) {
+        // Obtenemos la cantidad de decimales que tiene el numero
+        const decimals=n.indexOf(",")>-1 ? n.length-1-n.indexOf(",") : 0;
+ 
+        // añadimos los ceros necesios al numero
+        n = (decimals==0) ? n+","+"0".repeat(d) : n+"0".repeat(d-decimals);
+    }
+    return n;
+}
+
+  function formatearNumero(numero) {
+    let formateado;
+    const noTruncarDecimales = { maximumFractionDigits: 20 };
+
+    formateado = numero.toLocaleString('es-ES', noTruncarDecimales);
+
+    return formateado;
+  }
+
+  /** CALCULA DECIMALES:  
+   * REQUEST
+   * Monto: float 
+   * 
+   * RETURN
+   * TRUE
+   * resultado {
+   * monto: float
+   * decimales: Number
+   * }
+   * 
+   * FALSE
+  */
+  function calcularDecimales(monto) {
+    let cantidad = Number.parseFloat(monto);
+    let decimales = 0;
+    let resultado = {};
+
+    if (cantidad) {
+      if (cantidad < 0.01) {
+        decimales = 5;
+
+      } else if (cantidad >= 0.01 && cantidad < 0.1) {
+        decimales = 4;
+
+      } else if (cantidad >= 0.1 && cantidad < 10) {
+        decimales = 3;
+
+      } else if (cantidad >= 10 && cantidad < 400) {
+        decimales = 2;
+
+      } else if (cantidad >= 400) {
+        decimales = 0;
+
+      }
+
+      cantidad = cantidad.toFixed(decimales);
+      cantidad = Number.parseFloat(cantidad);
+
+
+      resultado = {
+        monto: cantidad,
+        decimales: decimales
+      }
+      return resultado
+    }
+    return false
+
+  }
+
+  function reiniciarTabla() {
     let tabla = document.getElementById("data-table");
     let emcabezado = document.getElementsByTagName("thead");
     let cuerpo = document.getElementsByTagName("tbody");
     tabla.removeChild(emcabezado);
     tabla.removeChild(cuerpo);
-
   }
-  
-  
+
+
   //Mensaje de alerta desde form
-  function alertaError (visualizar, texto, tipo){
+  function alertaError(visualizar, texto, tipo) {
     var alerta = document.getElementById('alertError');
     let alertaModal = document.getElementById('alertErrorModal');
-    switch (tipo){
+    switch (tipo) {
       case "formulario":
-        if(visualizar == "true"){
-          alerta.hidden = false; 
+        if (visualizar == "true") {
+          alerta.hidden = false;
           alerta.innerHTML = texto;
 
-        }else if (visualizar == "false"){
-          alerta.hidden = true; 
+        } else if (visualizar == "false") {
+          alerta.hidden = true;
         }
         break;
       case "modal":
-        if(visualizar == "true"){
-          alertaModal.hidden = false; 
+        if (visualizar == "true") {
+          alertaModal.hidden = false;
           alertaModal.innerHTML = texto;
 
-        }else if (visualizar == "false"){
-          alertaModal.hidden = true; 
+        } else if (visualizar == "false") {
+          alertaModal.hidden = true;
         }
         break;
-    }  
+    }
   }
-    
+
+  //Alerta disponible en formularios de Modal
+  function alertaEnModal(idAlert, activar, mensaje) {
+    switch (activar) {
+      case true:
+        document.getElementById(idAlert).hidden = false;
+        document.getElementById(idAlert).innerHTML = mensaje;
+        break;
+
+      default:
+        document.getElementById(idAlert).hidden = true;
+        break;
+    }
+  }
+
 
   //Ocultar un elemento a la vez por su ID
-  function ocultarElemento(ocultar, elementId ){
+  function ocultarElemento(ocultar, elementId) {
     var element = document.getElementById(elementId);
-      if(ocultar== 'true'){
-        element.hidden = true;
-      }else if (ocultar== 'false'){
-        element.hidden = false;
-      }
+    if (ocultar == 'true') {
+      element.hidden = true;
+    } else if (ocultar == 'false') {
+      element.hidden = false;
+    }
   }
 
   //Ocultar varios elementos a la vez por su clase
-  function ocultarElementos(ocultar, elementClass){
-    
+  function ocultarElementos(ocultar, elementClass) {
+
     let elements = document.querySelectorAll(elementClass);
-    elements.forEach(function(element) {
-      if (ocultar == "false"){
+    elements.forEach(function (element) {
+      if (ocultar == "false") {
         element.hidden = false;
-      } else if (ocultar == "true"){
+      } else if (ocultar == "true") {
         element.hidden = true;
       }
     });
   }
 
   //Desactiva algun elemento por su ID
-  function disactivarElement(desactivar, elementId){
-    var button = document.getElementById(elementId);
-    
-    if(desactivar== 'true'){
-      button.disabled = true;
-    }else if (desactivar=='false'){
-      button.disabled = false;
+  function disactivarElement(desactivar, elementId) {
+    var element = document.getElementById(elementId);
+
+    if (desactivar == 'true') {
+      element.disabled = true;
+    } else if (desactivar == 'false') {
+      element.disabled = false;
     }
-     
+  }
+
+  function disactivarElementos(desactivar, elementClass) {
+    let elements = document.querySelectorAll("." + elementClass);
+    elements.forEach(function (element) {
+      if (desactivar == "false") {
+        element.disabled = false;
+      } else if (desactivar == "true") {
+        element.disabled = true;
+      }
+    });
   }
 
 
   //Enfoque a algun campo especifico
-  function enfocarCampo(elementId){
+  function enfocarCampo(elementId) {
     var elemento = document.getElementById(elementId);
-      elemento.focus();
+    elemento.focus();
   }
 
 
   //Hacer click a un boton por su ID
-  function clickBoton(elementId){
-      var elemento = document.getElementById(elementId)
-      elemento.click();
+  function clickBoton(elementId) {
+    var elemento = document.getElementById(elementId)
+    elemento.click();
   }
 
 
   //Reiniciar formulario
-  function limpiarForm(formulario){
+  function limpiarForm(formulario) {
     document.getElementById(formulario).reset();
 
     let passwordType = document.getElementById(formulario).querySelectorAll(".password");
-    passwordType.forEach(function(input) {
+    passwordType.forEach(function (input) {
       input.type = "password";
     });
 
     let borders = document.getElementById(formulario).querySelectorAll(".borde");
-    borders.forEach(function(input) {
+    borders.forEach(function (input) {
       input.classList.remove("border-danger");
     });
-    
+
   }
 
   //Limpia un campo especefico
-  function limpiarCampo(campoID){
+  function limpiarCampo(campoID) {
     var input = document.getElementById(campoID)
     input.value = ""
     input.classList.remove("border-danger");
   }
 
+  /**Reiniciar serie de inputs*/
+  function resetInputs(elementClass) {
+    let elements = document.querySelectorAll("." + elementClass);
+    elements.forEach(function (element) {
+      element.value = "";
+    });
+  }
+
 
   //Mostrar contraseña de un input
-  function mostrarContrasena(elementClass){
+  function mostrarContrasena(elementClass) {
     let elements = document.querySelectorAll(elementClass);
-    elements.forEach(function(element) {
-      if (element.type == "password" ){
+    elements.forEach(function (element) {
+      if (element.type == "password") {
         element.type = "text";
-      }else {
+      } else {
         element.type = "password";
       }
-        
+
     });
 
-  }  
+  }
 
   //Valida que el Email escrito en input sea valido
-  function ValidarEmail (email) {
-    var emailPattern =  /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
-    return emailPattern.test(email); 
+  function ValidarEmail(email) {
+    var emailPattern = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+    return emailPattern.test(email);
   }
 
   /**
@@ -143,36 +249,96 @@
    * Param: posicion en el array para el value de la opción
    * Param: posicion en el array para el text de la opción
    */
-  function cargarSelect(accion,selectId, array, positionValue, positionText){
-    
-    switch (accion){
+  function cargarSelect(accion, selectId, array, positionValue, positionText) {
+
+    switch (accion) {
       case "cargar":
         //Almacena select a cargar
         select = document.getElementById(selectId);
 
         //Elimina las opciones del select
         let i;
-        for(i = select.options.length - 1 ; i > 0 ; i--){
+        for (i = select.options.length - 1; i > 0; i--) {
           select.remove(i);
         }
 
         //Agrega opciones al select
-        array.forEach(element =>{
-        let option = document.createElement('option');
-        option.value = element[positionValue];
-        option.innerHTML = element[positionText];
-        select.appendChild(option)})
+        array.forEach(element => {
+          let option = document.createElement('option');
+          option.value = element[positionValue];
+          option.innerHTML = element[positionText];
+          select.appendChild(option)
+        })
         break;
-      case "reiniciar":    
+      case "reiniciar":
         //Toma la opción por Default
-        $( "#"+selectId )[0].selectedIndex = 0;
+        $("#" + selectId)[0].selectedIndex = 0;
         break;
     }
-    
+  }
+
+  var arraySelectPadre = {};
+  function arrayChildForSelectChild(selectIdPadre, arrayPadre, positionValue) {
+
+    let resultado = getSelected(selectIdPadre, "value");
+    let arrayHijo = [];
+
+    for (var i in arrayPadre) {
+
+      if (resultado != arrayPadre[i][positionValue]) {
+        arrayHijo.push([arrayPadre[i][0], arrayPadre[i][1]]);
+      }
+
+    }
+    return arrayHijo;
+  }
+
+  function getSelected(elementId, extraer) {
+    let select = document.getElementById(elementId);
+    let resultado = "";
+    switch (extraer) {
+      case "text":
+        resultado = select.options[select.selectedIndex].text;
+        break;
+      case "value":
+        resultado = select.options[select.selectedIndex].value;
+        break;
+    }
+    return resultado;
+  }
+
+  function agregarClase(agregar, elementId, clase) {
+    let element = document.getElementById(elementId);
+    switch (agregar) {
+      case true:
+        element.classList.add(clase);
+        break;
+      case false:
+        element.classList.remove(clase);
+        break;
+    }
+  }
+
+  function getWindowWidth() {
+    let windowWidth = window.innerWidth;
+    return windowWidth;
+  }
+
+  function marcarCheckList(checkElement, marca) {
+    let checkterminos = document.getElementById(checkElement);
+    switch (marca) {
+      case "true":
+        checkterminos.checked = true;
+        break;
+      case "false":
+        checkterminos.checked = false;
+        break;
+    }
+
   }
 
   // Scrip de bootstrap para validar campos
-  (function validarform () {
+  (function validarform() {
     'use strict'
 
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -192,38 +358,38 @@
       })
   })()
 
-/*---------------------------------------------------------------------------------------------------
-                                  Controller Tabla
------------------------------------------------------------------------------------------------------*/
+  /*---------------------------------------------------------------------------------------------------
+                                    Controller Tabla
+  -----------------------------------------------------------------------------------------------------*/
 
   /*Mostrar tablas*/
-  function activartable(activar){
-    if(activar == "true"){
-      ocultarElemento('false', "tabla" );
-    }else if(activar == "false"){
-      ocultarElemento('true', "tabla" );
+  function activartable(activar) {
+    if (activar == "true") {
+      ocultarElemento('false', "tabla");
+    } else if (activar == "false") {
+      ocultarElemento('true', "tabla");
     }
-    
+
   }
 
-/*---------------------------------------------------------------------------------------------------
-                                  Controller Modal
------------------------------------------------------------------------------------------------------*/
+  /*---------------------------------------------------------------------------------------------------
+                                    Controller Modal
+  -----------------------------------------------------------------------------------------------------*/
 
   /**Gestion de modal
    * indicar el tipo de modal a mostrar (spiner, respuestaPositiva, respuestaNegativa, advertencia)
    * mensaje a mostrar
    */
-  function activarModal(tipo, mensaje){
-    ocultarElementos("true", ".modalElements")
+  function activarModal(tipo, mensaje, nameBtn) {
+    ocultarElementos("true", ".modalElements");
 
-    var respuestaBakckend = document.getElementById("msjBackend")
+    var respuestaBakckend = document.getElementById("msjBackend");
     respuestaBakckend.innerHTML = mensaje
 
-    var advertencia = document.getElementById("alertaMensajeAdvertencia")
+    var advertencia = document.getElementById("alertaMensajeAdvertencia");
     advertencia.innerHTML = mensaje
 
-    var advertencia = document.getElementById("alertaMensajeEliminar")
+    var advertencia = document.getElementById("alertaMensajeEliminar");
     advertencia.innerHTML = mensaje
 
     //Configuración del modal segun el tipo
@@ -245,16 +411,19 @@
         break;
       case "eliminar":
         $("#modalAlertaEliminar").modal('show');
-        break;  
+        break;
       case "formulario":
-        $("#"+mensaje).modal('show');
-        break;  
+        $("#" + mensaje).modal('show');
+        break;
       default:
-        $("#respuestaBackend").modal('hide');  
+        $("#respuestaBackend").modal('hide');
         $("#modalAlertaSalida").modal('hide');
-        $("#"+mensaje).modal('hide');  
+        $("#" + mensaje).modal('hide');
     }
-    
+
+    if (nameBtn != "") {
+
+    }
   }
 
 </script>

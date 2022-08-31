@@ -1,7 +1,7 @@
 <script>
     async function cargarPaiseFormN2(){
-      var resultado = await google.script.run
-      .withSuccessHandler(cargarListaPaisesFormN1)
+      let resultado = await google.script.run
+      .withSuccessHandler(cargarListaPaisesFormN2)
       .withFailureHandler( )
       .getPaises()
 
@@ -11,5 +11,78 @@
     cargarSelect("cargar","paisClienteN2",listaPaises,0,1);
     cargarSelect("cargar","areaNivel2",listaPaises,4,4);
       
-  }
+    }
+
+    async function cargarClientesN1Form2(email){
+      var resultado = await google.script.run
+      .withSuccessHandler(cargarClientesN1Select)
+      .withFailureHandler( )
+      .getDataClienteN1(email);
+    }
+
+    function cargarClientesN1Select(lista){
+      cargarSelect("cargar","listNombreNivel2",lista,4,1);
+    }
+
+    async function getDataSelectedN1(email){
+      var resultado = await google.script.run
+      .withSuccessHandler(updateSelectedN1)
+      .withFailureHandler( )
+      .getClientLevel1ByEmail(email);
+    }
+
+    function updateSelectedN1(DateClienteN1){
+      document.getElementById("telefonoNivel2").value = DateClienteN1.phoneNumber
+      document.getElementById("emailNivel2").value = DateClienteN1.email
+      document.getElementById("paisClienteDeN1").value = DateClienteN1.conuntryOrigin
+      activarModal("false");
+
+      if (DateClienteN1.tj == "si"){
+        marcarCheckList("radioTjNivel2Si", "true");
+      }else{
+        marcarCheckList("radioTjNivel2No", "true");
+      }
+
+      if (DateClienteN1.family == "si"){
+        marcarCheckList("radioFamiliarNivel2Si", "true");
+      }else{
+        marcarCheckList("radioFamiliarNivel2No", "true");
+      }
+
+      if (DateClienteN1.known == "si"){
+        marcarCheckList("radioConfiableNivel2Si", "true");
+      }else{
+        marcarCheckList("radioConfiableNivel2No", "true");
+      }
+    }
+
+    async function registrarN2(datosFormN2){
+      switch (enviarFormSi.checked){
+        case true:
+          setTimeout(registroN2True,3000); 
+          break;
+        case false:
+          setTimeout(registroN2True,3000); 
+          break;  
+      }
+      
+    }
+
+    function registroN2True(respuesta){
+
+      switch (enviarFormSi.checked){
+        case true:
+          if (enviarVia == "Whatsapp"){
+          clickBoton("linkWahtsapp");
+          }else{
+            clickBoton("linkTelegram");
+          }
+          activarModal("respuestaPositiva","Su cliente ha sido registrado parcialmente, indíquele que ingrese al formulario con el email registrado a través del formulario adjunto en el mensaje, siguiendo las instrucciones");
+          break;
+        case false:  
+          activarModal("respuestaPositiva","Su cliente ha sido registrado exitosamente, ahora será verificado por el equipo de atención para su aprobación, consulte con ellos para informarse sobre su estatus.");
+          break;
+      }
+      
+    }
 </script>

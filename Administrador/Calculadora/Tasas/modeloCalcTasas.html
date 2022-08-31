@@ -1,0 +1,232 @@
+<script>
+    async function cargarPaiseCalcTasa() {
+        var resultado = await google.script.run
+            .withSuccessHandler(cargarPaiseCalcTasaTrue)
+            .withFailureHandler(cargarPaiseCalcTasaError)
+            .getPaisesTasasGanancias();
+    }
+
+    function cargarPaiseCalcTasaTrue(listaPaises) {
+        arraySelectPadre = listaPaises;
+
+        cargarSelect("cargar", "selectPaisOrigenTasa", listaPaises, 1, 0);
+
+    }
+
+    function cargarPaiseCalcTasaError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function cargarTablaTasas() {
+        var resultado = await google.script.run
+            .withSuccessHandler(cargarTablaTasasTrue)
+            .withFailureHandler(cargarTablaTasasError)
+            .getTasas();
+    }
+
+    function cargarTablaTasasTrue(dataArray) {
+
+        $(document).ready(function () {
+            $('#data-tableTasas').DataTable({
+
+                data: dataArray,
+                //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+
+                columns: [
+                    { "title": "ID" },
+                    { "title": "Pais Origen" },
+                    { "title": "Pais Destino" },
+                    { "title": "Tasa base" },
+                    { "title": "Tasa 1" },
+                    { "title": "Tasa 2" },
+                    { "title": "Ganancia" },
+                ], stateSave: true,
+                "bDestroy": true,
+                responsive: true
+            });
+
+        });
+        activarModal("false");
+        ocultarElementos("false", ".calcTasas");
+    }
+
+    function cargarTablaTasasError(error) {
+        activarModal("respuestaNegativa", error)
+    }
+
+    async function traerPreciosTasas(idPais) {
+        var resultado = await google.script.run
+            .withSuccessHandler(traerPreciosTasasTrue)
+            .withFailureHandler(traerPreciosTasasError)
+            .searchTasasGanancias(idPais);
+    }
+
+    function traerPreciosTasasTrue(respuesta) {
+        switch (respuesta.status) {
+            case true:
+                document.getElementById("inputTasaPorcentaje").value = respuesta.porcentaje;
+                break;
+        }
+    }
+
+    function traerPreciosTasasError(error) {
+        activarModal("respuestaNegativa", error)
+    }
+
+    async function procesarTasas(user) {
+        console.log(user);
+        var resultado = await google.script.run
+            .withSuccessHandler(procesarTasasTrue)
+            .withFailureHandler(procesarTasasError)
+            .procesarTasas(user);
+    }
+
+    function procesarTasasTrue(respuesta) {
+
+        switch (respuesta) {
+            case true:
+                activarModal("respuestaPositiva", "Tasas procesadas, verifique y edite si es necesario");
+                break;
+
+            default:
+                activarModal("respuestaNegativa", respuesta.mensaje);
+                break;
+        }
+
+        vistaActual = "calcTasas";
+
+        if (document.getElementById("DesactivarCalc").checked == true) {
+            activarModal("spiner", "Actualizando estatus de calculadora...");
+            verificarStatusCalc();
+        }
+    }
+
+    function procesarTasasError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function verificarStatusCalc() {
+        var resultado = await google.script.run
+            .withSuccessHandler(verificarStatusCalcTrue)
+            .withFailureHandler(verificarStatusCalcError)
+            .getStatusCalculadora()
+    }
+
+    function verificarStatusCalcTrue(status) {
+
+        document.getElementById("DesactivarCalc").checked = status
+
+        switch (status) {
+            case true:
+                document.getElementById("etiquetaSwitchCalc").innerHTML = "activada";
+                break;
+
+            default:
+                document.getElementById("etiquetaSwitchCalc").innerHTML = "desactivada";
+                break;
+        }
+
+        activarModal("false");
+    }
+
+    function verificarStatusCalcError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function actualizarStatusCalc(status) {
+        var resultado = await google.script.run
+            .withSuccessHandler(actualizarStatusCalcTrue)
+            .withFailureHandler(actualizarStatusCalcError)
+            .updateActivarCalculadora(status)
+    }
+
+    function actualizarStatusCalcTrue(respuesta) {
+        switch (respuesta) {
+            case true:
+
+                if (document.getElementById("DesactivarCalc").checked == true) {
+                    document.getElementById("etiquetaSwitchCalc").innerHTML = "activada";
+
+                    //vistaActual = "calcTasas";
+                    //activarModal("respuestaPositiva", "Calculadora activada")
+                } else {
+                    document.getElementById("etiquetaSwitchCalc").innerHTML = "desactivada";
+
+                    //vistaActual = "calcTasas";
+                    //activarModal("respuestaPositiva", "Calculadora desactivada")
+                }
+                activarModal("false");
+                break;
+
+            default:
+                activarModal("respuestaNegativa", "No fue posible cambiar el estatus de la calculadora, intentelo de nuevo")
+                break;
+        }
+    };
+
+    function actualizarStatusCalcError(error) {
+        activarModal("respuestaNegativa", error);
+    };
+
+    async function traerTasa(idTasas) {
+        var resultado = await google.script.run
+            .withSuccessHandler(traerTasaTrue)
+            .withFailureHandler(traerTasaError)
+            .searchTasas(idTasas)
+    }
+
+    function traerTasaTrue(respuesta) {
+
+        switch (respuesta.status) {
+            case true:
+                document.getElementById("inputTasaBase").value = respuesta.tasaBase
+
+                document.getElementById("inputTasa1").value = respuesta.tasa1
+
+                if (respuesta.tasa2 > 0) {
+                    document.getElementById("inputTasa2").value = respuesta.tasa2
+
+                } else {
+                    document.getElementById("inputTasa2").value = Number(0);
+                }
+                break;
+        }
+        ocultarElemento("true","spinerModalTasa");
+        disactivarElementos("false", "elementModalTasas");
+        if (respuesta.tasa2 == 0){
+            disactivarElement("true", "inputTasa2");
+        }
+        
+        updateElemntTasas('calcularPorcentaje')
+    }
+
+    function traerTasaError(error) {
+        
+    }
+
+    async function editarTasa(datos) {
+        console.log(datos)
+        var resultado = await google.script.run
+            .withSuccessHandler(editarTasaTrue)
+            .withFailureHandler(editarTasaError)
+            .updateTasas(datos)
+    }
+
+    function editarTasaTrue(respuesta){
+        console.log(respuesta)
+        switch (respuesta) {
+            case true:
+                activarModal("respuestaPositiva","La tasa ha sido editada exitosamente");
+                break;
+        
+            default:
+                activarModal("respuestaNegativa",respuesta.mensaje)
+                break;
+        }
+    }
+
+    function editarTasaError(error){
+        activarModal("respuestaNegativa",error);
+    }
+    
+</script>

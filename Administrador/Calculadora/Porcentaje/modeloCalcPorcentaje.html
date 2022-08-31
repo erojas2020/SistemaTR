@@ -1,0 +1,150 @@
+<script>
+    async function cargarPaiseCalcPorcentaje() {
+        var resultado = await google.script.run
+            .withSuccessHandler(PaiseFormCalcPorcentajeTrue)
+            .withFailureHandler()
+            .getPaises()
+    }
+
+    function PaiseFormCalcPorcentajeTrue(listaPaises) {
+        cargarSelect("cargar", "selectPaisPorcentaje", listaPaises, 0, 1);
+    }
+
+    async function cargarPaisesConPorcentaje() {
+        var resultado = await google.script.run
+            .withSuccessHandler(cargarPaisesConPorcentajeTrue)
+            .withFailureHandler()
+            .getPaisesTasasGanancias();
+    }
+
+    function cargarPaisesConPorcentajeTrue(listaPaises) {
+        cargarSelect("cargar", "selectPaisPorcentajeEditar", listaPaises, 1, 0);
+    }
+
+    async function cargarTablaPorcentaje() {
+        var resul = await google.script.run
+            .withSuccessHandler(cargarTablaPorcentajeTrue)
+            .withFailureHandler(cargarTablaPorcentajeError)
+            .getTasasGanancias();
+    }
+
+    function cargarTablaPorcentajeTrue(dataArray) {
+
+        //activartable("true");
+        $(document).ready(function () {
+            $('#data-tablePorcentaje').DataTable({
+
+                data: dataArray,
+                //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+
+                columns: [
+                    { "title": "ID" },
+                    { "title": "Pais" },
+                    { "title": "Porcentaje" },
+                ], stateSave: true,
+                "bDestroy": true,
+                responsive: true
+            });
+
+        });
+        activarModal("false");
+        ocultarElementos("false", ".calcPorcentaje");
+    }
+
+    function cargarTablaPorcentajeError(error) {
+        activarModal("respuestaNegativa", error)
+    }
+
+    async function guardarPorcentaje(datos) {
+        
+        var resultado = await google.script.run
+            .withSuccessHandler(guardarPorcentajeTrue)
+            .withFailureHandler(guardarPorcentajeError)
+            .insertTasasGanancias(datos)
+    }
+
+    function guardarPorcentajeTrue(respuesta) {
+
+        if (respuesta == true) {
+            activarModal("respuestaPositiva", "A sido registrado exitosamente")
+        } else if (respuesta.status == false) {
+            activarModal("respuestaNegativa", respuesta.mensaje);
+        }
+    }
+
+    function guardarPorcentajeError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function traerPorcentaje(datos) {
+        var resultado = await google.script.run
+            .withSuccessHandler(traerPorcentajeTrue)
+            .withFailureHandler(traerPorcentajeError)
+            .searchTasasGanancias(datos)
+    }
+
+    function traerPorcentajeTrue(respuesta) {
+        switch (respuesta.status) {
+            case true:
+                document.getElementById("inputPorcentaje").value = respuesta.porcentaje;
+                break;
+            case false:
+                document.getElementById("inputPorcentaje").value = ""
+                break;
+        }
+
+        if (document.getElementById("modificarPorcentajeBoton").hidden == false) {
+            disactivarElementos("false", "editPorcentaje");
+        } else {
+            disactivarElement("false", "eliminarPorcentajeBotonModal");
+        }
+    }
+
+    function traerPorcentajeError() {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function editarPorcentaje(datos) {
+        console.log(datos)
+        var resultado = await google.script.run
+            .withSuccessHandler(editarPorcentajeTrue)
+            .withFailureHandler(editarPorcentajeError)
+            .updateTasasGanancias(datos);
+    }
+
+    function editarPorcentajeTrue(respuesta) {
+        if (respuesta == true) {
+            activarModal("respuestaPositiva", "A sido editado exitosamente");
+        } else if (respuesta.status == false) {
+            activarModal("respuestaNegativa", respuesta.mensaje);
+        }
+    }
+
+    function editarPorcentajeError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function eliminarPorcentaje(idPais) {
+        console.log(idPais);
+        var resultado = await google.script.run
+            .withSuccessHandler(eliminarPorcentajeTrue)
+            .withFailureHandler(eliminarPorcentajeError)
+            .deleteTasasGanancias(idPais);
+    }
+
+    function eliminarPorcentajeTrue(respuesta) {
+        
+        switch (respuesta) {
+            case true:
+                activarModal("respuestaPositiva", "Eliminado exitosamente");
+                break;
+            case false:
+                activarModal("respuestaNegativa", respuesta.mensaje);
+                break;
+        }
+    }
+
+    function eliminarPorcentajeError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+</script>

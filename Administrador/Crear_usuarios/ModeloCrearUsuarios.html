@@ -1,115 +1,115 @@
 <script>
 
-async function crearUsuario(datos){
-  let resultado = await google.script.run
-      .withSuccessHandler( crearUsuarioTrue )
-      .withFailureHandler( crearUsuariofalse )
+  async function crearUsuario(datos) {
+    let resultado = await google.script.run
+      .withSuccessHandler(crearUsuarioTrue)
+      .withFailureHandler(crearUsuariofalse)
       .newUser(datos)
-}
-
-function crearUsuarioTrue(registro){
-  switch (registro) {
-    case true:
-      vistaActual = "crearUsuario";
-      cargarUsuarios();
-      activarModal("respuestaPositiva","El usuario a sido registrado con exito");
-      break;
-    case false:
-      vistaActual = "crearUsuarioError";
-      activarModal("respuestaNegativa","El email "+document.getElementById("inputUsuarioEmail").value+" ya existe");
-      break;  
   }
-  
-}
 
-function crearUsuariofalse(error){
-  activarModal("respuestaNegativa", error);
-}
+  function crearUsuarioTrue(registro) {
+    switch (registro) {
+      case true:
+        vistaActual = "crearUsuario";
+        cargarUsuarios();
+        activarModal("respuestaPositiva", "El usuario a sido registrado con exito");
+        break;
+      case false:
+        vistaActual = "crearUsuarioError";
+        activarModal("respuestaNegativa", "El email " + document.getElementById("inputUsuarioEmail").value + " ya existe");
+        break;
+    }
 
-async function cargarTablaUsuarios(){
-  var resul = await google.script.run
-  .withSuccessHandler(cargarTablaUsuariosTrue)
-  .withFailureHandler(mostrarError)
-  .getAllUsers();
-}
+  }
 
-  function cargarTablaUsuariosTrue(dataArray){
+  function crearUsuariofalse(error) {
+    activarModal("respuestaNegativa", error);
+  }
+
+  async function cargarTablaUsuarios() {
+    var resul = await google.script.run
+      .withSuccessHandler(cargarTablaUsuariosTrue)
+      .withFailureHandler(mostrarError)
+      .getAllUsers();
+  }
+
+  function cargarTablaUsuariosTrue(dataArray) {
     //Configuración de encabezado
     ocultarElementos("false", ".crearUsuario");
-    
+
     //activartable("true");
 
-    $(document).ready(function(){
-    $('#data-tableUsuario').DataTable({
-      
-          data: dataArray,
+    $(document).ready(function () {
+      $('#data-tableUsuario').DataTable({
+
+        data: dataArray,
         //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
-        
+
         columns: [
-            {"title":"Email"},
-            {"title":"Nombre"},
-            {"title":"Perfil"},
-        ] , stateSave: true,
-    "bDestroy": true,
-    responsive:true
+          { "title": "Email" },
+          { "title": "Nombre" },
+          { "title": "Perfil" },
+        ], stateSave: true,
+        "bDestroy": true,
+        responsive: true
       });
-    
+
     });
     activarModal("false");
   }
-    
-  function cargarTablaUsuariosFalse(error){
-    activarModal("respuestaNegativa", error) 
+
+  function cargarTablaUsuariosFalse(error) {
+    activarModal("respuestaNegativa", error)
   }
 
-  async function cargarUsuarios(){
-  var resul = await google.script.run
-  .withSuccessHandler(cargarUsuariosTrue)
-  .withFailureHandler(cargarUsuariosfalse)
-  .getEmailUsers();
+  async function cargarUsuarios() {
+    var resul = await google.script.run
+      .withSuccessHandler(cargarUsuariosTrue)
+      .withFailureHandler(cargarUsuariosfalse)
+      .getEmailUsers();
   }
 
-  function cargarUsuariosTrue(listaUsuarios){
-    cargarSelect("cargar","inputUsuarioNuevo", listaUsuarios,0,0);
+  function cargarUsuariosTrue(listaUsuarios) {
+    cargarSelect("cargar", "inputUsuarioNuevo", listaUsuarios, 0, 0);
 
   }
 
-  function cargarUsuariosfalse(){
-    
+  function cargarUsuariosfalse() {
+
   }
 
-  async function reiniciarUser(email){
-  var resul = await google.script.run
-  .withSuccessHandler(reiniciarUsuariosTrue)
-  .withFailureHandler(reiniciarUsuariosfalse)
-  .resetUser(email);
+  async function reiniciarUser(email) {
+    var resul = await google.script.run
+      .withSuccessHandler(reiniciarUsuariosTrue)
+      .withFailureHandler(reiniciarUsuariosfalse)
+      .resetUser(email);
   }
 
-  function reiniciarUsuariosTrue(resultado){
-    switch(resultado){
+  function reiniciarUsuariosTrue(resultado) {
+    switch (resultado) {
       case true:
         activarModal("respuestaPositiva", "El usuario a sido reiniciado exitosamente");
         break;
       case false:
         activarModal("respuestaNegativa", "El usuario no a podido ser reiniciado");
-      break;
-    }    
+        break;
+    }
   }
 
-  function reiniciarUsuariosfalse(error){
+  function reiniciarUsuariosfalse(error) {
     activarModal("respuestaNegativa", error);
   }
 
-  async function eliminarUser(email){
-  var resul = await google.script.run
-  .withSuccessHandler(eliminarUsuariosTrue)
-  .withFailureHandler(eliminarUsuariosfalse)
-  .deleteUser(email);
+  async function eliminarUser(email) {
+    var resul = await google.script.run
+      .withSuccessHandler(eliminarUsuariosTrue)
+      .withFailureHandler(eliminarUsuariosfalse)
+      .deleteUser(email);
   }
 
-  function eliminarUsuariosTrue(resultado){
+  function eliminarUsuariosTrue(resultado) {
     console.log(resultado);
-    switch (resultado){
+    switch (resultado) {
       case true:
         cargarUsuarios();
         activarModal("respuestaPositiva", "El usuario a sido eliminado exitosamente");
@@ -120,7 +120,7 @@ async function cargarTablaUsuarios(){
     }
   }
 
-  function eliminarUsuariosfalse(error){
+  function eliminarUsuariosfalse(error) {
     activarModal("respuestaNegativa", error);
   }
 

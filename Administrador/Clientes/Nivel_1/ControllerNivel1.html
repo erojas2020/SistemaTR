@@ -23,10 +23,11 @@
     }
 
     function destroyControllerAdminNivel1(){
-        activarModal("false","crearUsuarioModal");
-        activarModal("spiner", "Eliminando usuario");
-        let emailDelet= document.getElementById("inputUsuarioNuevo").value;
-        eliminarUser(emailDelet); 
+        let email = document.getElementById("eliminarClienteN1Select");
+        let nombre = email.options[email.selectedIndex].text;
+        activarModal("cerrar","eliminarClienteN1Modal");
+        activarModal("spiner","Eliminando cliente: "+nombre);
+        eliminarClienteN1(email.value); 
     }
 </script>
 

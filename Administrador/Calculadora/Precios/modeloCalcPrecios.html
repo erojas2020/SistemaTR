@@ -1,0 +1,171 @@
+<script>
+    async function cargarPaiseCalcPrecio() {
+        var resultado = await google.script.run
+            .withSuccessHandler(cargarPaiseCalcPrecioTrue)
+            .withFailureHandler(cargarPaiseCalcPrecioError)
+            .getPaises();
+    }
+
+    function cargarPaiseCalcPrecioTrue(listaPaises) {
+        cargarSelect("cargar", "selectPaisPrecios", listaPaises, 0, 1);
+        cargarSelect("cargar", "selectPaisPreciosEdit", listaPaises, 0, 1);
+    }
+
+    function cargarPaiseCalcPrecioError(error) {
+        activarModal("respuestaNegativa", error)
+    }
+
+    async function cargarTablaPrecios() {
+        var resultado = await google.script.run
+            .withSuccessHandler(cargarTablaPrecioTrue)
+            .withFailureHandler(cargarTablaPrecioError)
+            .getPrecioUSDT()
+    }
+
+    function cargarTablaPrecioTrue(dataArray) {
+
+        $(document).ready(function () {
+            $('#data-tablePrecios').DataTable({
+
+                data: dataArray,
+                //CHANGE THE TABLE HEADINGS BELOW TO MATCH WITH YOUR SELECTED DATA RANGE
+
+                columns: [
+                    { "title": "Pais" },
+                    { "title": "Fecha" },
+                    { "title": "Compra" },
+                    { "title": "Venta" },
+                ], stateSave: true,
+                "bDestroy": true,
+                responsive: true
+            });
+
+        });
+        activarModal("false");
+        ocultarElementos("false", ".calcPrecios");
+    }
+
+    function cargarTablaPrecioError(error) {
+        activarModal("mensajeNegativo", error)
+    }
+
+    async function guardarPrecio(datos) {
+        var resultado = await google.script.run
+            .withSuccessHandler(guardarPrecioTrue)
+            .withFailureHandler(guardarPrecioError)
+            .insertPreciosUSDT(datos);
+    }
+
+    function guardarPrecioTrue(respuesta) {
+        if (respuesta == true) {
+            activarModal("respuestaPositiva", "Ha sido registrado exitosamente")
+        } else if (respuesta.status == false) {
+            activarModal("respuestaNegativa", respuesta.mensaje);
+        }
+    }
+
+    function guardarPrecioError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function traerPrecios(idPais) {
+        var resultado = await google.script.run
+            .withSuccessHandler(traerPreciosTrue)
+            .withFailureHandler(traerPreciosError)
+            .searchPrecioUSDT(idPais);
+    }
+
+    function traerPreciosTrue(respuesta) {
+        if (respuesta.activo == true) {
+            //Carga los precios traidos del Backend
+            document.getElementById("inputPrecioCompra").value = respuesta.compra;
+            document.getElementById("inputPrecioVenta").value = respuesta.venta;
+
+            //Si esta editando, despues de cargar precios, desbloquea los campos y boton
+            if (document.getElementById("modificarPrecioBoton").hidden == false) {
+                disactivarElementos("false", "traerPrecio");
+            } else {
+                disactivarElement("false", "eliminarPreciosBotonModal");
+            }
+
+            //Si la tasa no esta dosponible, envia mensaje de alerta    
+        } else {
+
+            alertaEnModal("idAlert", true, "Precio no disponible");
+        }
+    }
+
+    function traerPreciosError(error) {
+        alertaEnModal("idAlert", true, error);
+    }
+
+    async function editarPrecio(datos) {
+        var resultado = await google.script.run
+            .withSuccessHandler(editarPrecioTrue)
+            .withFailureHandler(editarPrecioError)
+            .updatePrecioUSDT(datos);
+    }
+
+    function editarPrecioTrue(respuesta) {
+        switch (respuesta) {
+            case true:
+                activarModal("respuestaPositiva", "Precio editado exitosamente");
+                break;
+            default:
+                activarModal("respuestaNegativa", "No ha podido ser editado el precio");
+                break;
+        }
+    }
+
+    function editarPrecioError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function eliminarPrecio(idPais) {
+        console.log(idPais)
+        var resultado = await google.script.run
+            .withSuccessHandler(eliminarPrecioTrue)
+            .withFailureHandler(eliminarPrecioError)
+            .deletePrecioUSDT(idPais);
+    }
+
+    function eliminarPrecioTrue(respuesta) {
+        console.log(respuesta)
+        switch (respuesta) {
+            case true:
+                activarModal("respuestaPositiva", "El precio ha sido eliminado exitosamente");
+                break;
+            default:
+                activarModal("respuestaNegativa", "El precio no a podido ser eliminado");
+                break;
+        }
+    }
+
+    function eliminarPrecioError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function eliminarPrecioTodo(user) {
+        console.log(user)
+        var resultado = await google.script.run
+            .withSuccessHandler(eliminarPrecioTodoTrue)
+            .withFailureHandler(eliminarPrecioTodoError)
+            .borrarTodoPrecioUSDT(user);
+    }
+
+    function eliminarPrecioTodoTrue(respuesta) {
+        console.log(respuesta);
+        switch (respuesta) {
+            case true:
+                activarModal("respuestaPositiva", "Ha sido eliminado todos los precios de manera exitosa");
+                break;
+            default:
+                activarModal("respuestaNegativa", "No ha podido ser eliminado todos los precios");
+                break;
+        }
+    }
+
+    function eliminarPrecioTodoError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+</script>

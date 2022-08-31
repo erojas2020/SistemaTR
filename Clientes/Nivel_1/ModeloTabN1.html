@@ -2,8 +2,8 @@
 async function cargarTabN1(email){
   var resul = await google.script.run
   .withSuccessHandler(crearTabN1)
-  .withFailureHandler()
-  .getDataClienteN1(email)
+  .withFailureHandler(crearTabN1Error)
+  .getDataClienteN1(email);
 }
 
 function crearTabN1(dataArray){
@@ -27,9 +27,13 @@ function crearTabN1(dataArray){
         ] , stateSave: true,
     "bDestroy": true,
     responsive:true
-      });
+    });
     });
     
     activarModal("false");
+}
+
+function crearTabN1Error(error){
+  activarModal("respuestaNegativa", error);
 }
 </script>

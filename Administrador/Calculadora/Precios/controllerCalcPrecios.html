@@ -1,0 +1,184 @@
+<script>
+
+    //Variable publica para almacenar Id del pais.
+    let idPais = "";
+
+    //Funcion: Validacion y almacenamiento de datos necesarios para consultar al backend
+    function indexControllerCalcPrecios(date) {
+        event.preventDefault();
+
+        //Cerrado del modal de precios    
+        activarModal("false", "PreciosModal");
+
+        //Array de datos para el backend
+        let datos = { idPais: "", compra: "", venta: "", user: "" };
+
+        //Almacena datos al array
+        datos.compra = Number.parseFloat(document.getElementById("inputPrecioCompra").value);
+        datos.venta = Number.parseFloat(document.getElementById("inputPrecioVenta").value);
+        datos.user = document.getElementById("imputInicioEmail").value;
+
+        /**Si el boton de guardar esta visible, procede con el codigo para crear un precio
+         * Almacenar Id del pais para Backend
+         * Mostrar modal de espera
+         * llamar funcion para guardar del modelo 
+        */
+        if (document.getElementById("guardarPrecioBoton").hidden == false) {
+
+            datos.idPais = Number(document.getElementById("selectPaisPrecios").value);
+
+            activarModal("spiner", "Guardanto precio...");
+
+            guardarPrecio(datos);
+
+        /**Si el boton de editar esta visible, procede con el codigo para editar un precio
+         * Almacenar Id del pais para Backend
+         * Mostrar modal de espera
+         * llamar funcion para editar del modelo                
+        */
+        } else if (document.getElementById("modificarPrecioBoton").hidden == false) {
+
+            datos.idPais = Number(document.getElementById("selectPaisPreciosEdit").value);
+
+            activarModal("spiner", "Editando precio...");
+
+            editarPrecio(datos);
+
+        /*Si el boton de eliminar esta visible, llama funcion de eliminar datos
+        */
+        } else if (document.getElementById("eliminarPreciosBotonModal").hidden == false) {
+
+            destroyControllerPrecios("eliminarPrecio");
+        }
+    }
+
+
+    //Función: Gestionar vistas y elementos de la sección "Precios"
+    function showControllerCalcPrecios(formulario) {
+        //Si es llamado desde el boton del "nav" configura la vista inicial
+        if (formulario == "inicio") {
+            activarModal("spiner", "Cargando precios...");
+            updateControllerCalcPrecios("cargarPaises");
+            cargarTablaPrecios();
+
+            //Si es llamado desde algun boton de la seccion "precios" configura la vista segun el boton    
+        } else {
+            //Lama modal si no se solicita eliminar precios
+            if (formulario != "eliminarPrecioTodo") {
+                activarModal("formulario", "PreciosModal");
+            }
+            //Oculta todos los campos del modal
+            ocultarElementos("true", ".elementPreciosModal");
+            //Desactiva todos los campos del modal
+            disactivarElementos("true", "bloqElementPreciosModal");
+            limpiarForm("formPrecios");
+
+            //Configuración de la vista del modal segun el boton seleccionado de la seccion "precios":
+            switch (formulario) {
+
+                /*Boton: Nuevo
+                    *Edita encabezado
+                    *Muestra los campos pais (nuevo), precio de compra y venta
+                    *Activa los campos visibles
+                */
+                case "nuevoPrecio":
+                    document.getElementById("LabelModalPrecios").innerHTML = "Nuevo precio"
+                    ocultarElementos("false", ".nuevoPrecio");
+                    disactivarElementos("false", "nuevoPrecio");
+                    break;
+
+                /*Boton: Editar
+                    *Edita encabezado
+                    *Muestra los campos pais (editar), precio de compra y venta
+                    *Activa los campos visibles
+                */
+                case "editarPrecio":
+                    document.getElementById("LabelModalPrecios").innerHTML = "Editar precio"
+                    ocultarElementos("false", ".editarPrecio");
+                    disactivarElementos("false", "editarPrecio");
+                    break;
+
+                /*Boton: Eliminar
+                    *Edita encabezado
+                    *Muestra los campos pais (editar), precio de compra y venta
+                    *Deja campos bloqueados (solo consulta)
+                */
+                case "eliminarPrecio":
+                    document.getElementById("LabelModalPrecios").innerHTML = "Eliminar precio"
+                    ocultarElementos("false", ".eliminarPrecio");
+                    disactivarElementos("false", "eliminarPrecio");
+                    break;
+
+                /**Boton eliminar todo
+                 * Llama modal de advertencia 
+                 * Almacena instruccion de ruta de retorno del modal de advertencia
+                */
+                case "eliminarPrecioTodo":
+                    mensajeLinea1 = "¿Está seguro de borrar todos los precios? "
+                    mensajeLinea2 = "esta acción no tiene reverso"
+                    activarModal("eliminar", mensajeLinea1 +'\n'+ mensajeLinea2.bold());
+                    datoEliminar = "eliminarPrecioTodo";
+                    break;
+            }
+        }
+    }
+
+
+    //Función: Gestionar datos traidos del Backend
+    function updateControllerCalcPrecios(date) {
+        switch (date) {
+            /**Si es llamado para cargar paises en campos "select"
+             * Llamar funcion para cargar paises del modelo
+            */
+            case "cargarPaises":
+                cargarPaiseCalcPrecio();
+                break;
+
+            //Si es llamado para consultar precios    
+            case "traerPrecios":
+                //Reinicia campos de precios
+                document.getElementById("inputPrecioCompra").value = 0;
+                document.getElementById("inputPrecioVenta").value = 0;
+
+                //Si esta editando precios, desactiva campos de precios y boton de editar mientras consulta al Backend
+                if (document.getElementById("modificarPrecioBoton").hidden == false) {
+                    disactivarElementos("true", "traerPrecio");
+                } else {
+                    disactivarElement("true", "eliminarPreciosBotonModal");
+                }
+
+                //Almacena "value" de campo "pais"
+                idPais = Number(document.getElementById("selectPaisPreciosEdit").value);
+                traerPrecios(idPais)
+                break;
+        }
+    }
+
+    /** Funcion: Gestionar datos solicitados para eliminar
+     * Eliminar precio
+     * Eliminar todos los precios 
+    */
+    function destroyControllerPrecios(dato) {
+        switch (dato) {
+            /*Eliminar precio:
+                * Almacenar Id del pais para Backend
+                * Mostrar modal de espera
+                * llamar funcion para eliminar del modelo
+            */
+            case "eliminarPrecio":
+                idPais = Number(document.getElementById("selectPaisPreciosEdit").value);
+                activarModal("spiner", "Eliminando precio...");
+                eliminarPrecio(idPais);
+                break;
+
+            /*Eliminar todos los precios:
+                *Llama funcion de eliminar todos los precios del modelo
+            */    
+            case "eliminarPrecioTodo":
+                activarModal("spiner", "Eliminando precios...")
+                let user = document.getElementById("imputInicioEmail").value;
+                eliminarPrecioTodo(user);
+                break;
+        }
+    }
+</script>

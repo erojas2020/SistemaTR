@@ -1,0 +1,171 @@
+<div class='row p-3 viewsApp sesionApp calcTasas' hidden>
+    <div class='col-md-12 mb-2'>
+        <h3 class="mb-2">Configuracion de la calculadora</h3>
+        <h4>Tasas</h4>
+    </div>
+</div>
+
+<!-- Switch: Desactivar y activar calculadora -->
+<div class="viewsApp calcTasas form-check form-switch col-12 col-sm-5" hidden>
+    <input class="form-check-input" type="checkbox" id="DesactivarCalc"
+        onchange="updateControllerCalcTasa('statusCalculadora')">
+    <label class="form-check-label" for="flexSwitchCheckDefault"> <strong>Calculadora <span
+                id="etiquetaSwitchCalc"></span></strong></label>
+</div>
+
+<div class='p-3 viewsApp calcTasas' hidden>
+    <div class='d-inline p-2 col-12 col-sm-5 col-md-auto'>
+        <a id='eliminarTasaBoton' class='btn btn-warning mb-3 col-12 col-sm-5 col-md-3'
+            onclick="updateControllerCalcTasa('verificarStatusCalc')">Procesar tasa</a>
+    </div>
+    <div class='d-inline p-2'>
+        <a id='editarTasaBoton' class='btn btn-warning mb-3 col-12 col-sm-5 col-md-3'
+            onclick="showControllerCalcTasas('editarTasa')">Editar tasa</a>
+    </div>
+</div>
+
+<!------------------------------------------------------------->
+<!----Tabla---->
+<!------------------------------------------------------------->
+<div id="tablaTasas" class="row viewsApp sesionApp calcTasas" hidden>
+    <div class="table-responsive mx-auto">
+        <table id="data-tableTasas" class="table table-hover"></table>
+    </div>
+</div>
+
+<!------------------------------------------------------------->
+<!----Modal: Gestionar Precios---->
+<!------------------------------------------------------------->
+<div class="modal fade" id="TasaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="LabelModalTasa">Gestionar Precios</h5>
+            </div>
+
+            <!-- Alerta de Modal -->
+            <div id="errorTasaModal" class="row alert alert-danger mt-2 viewsApp" role="alert" hidden></div>
+
+            <!-- Formulario del modal -->
+            <form class="needs-validation" method="dialog" id="formTasa" onsubmit="indexControllerCalcTasas()">
+                <div class="modal-body text-center">
+
+                    <!-- Campo: Pais origen -->
+                    <div class='mb-2'>
+                        <div class='input-group'>
+                            <span class='input-group-text' id='basic-addon1'>
+                                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor'
+                                    class='bi bi-map' viewBox='0 0 16 16'>
+                                    <path fill-rule='evenodd'
+                                        d='M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z' />
+                                    ";
+                                </svg>
+                            </span>
+                            <select class='form-select icon-menu elementModalTasas' name="selectPaisOrigenTasa" id="selectPaisOrigenTasa"
+                                onchange="updateElemntTasas('cargarSelectHijo')" required>
+                                <option selected disabled value=''>Pais origen</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Campo: Pais destino -->
+                    <div class='mb-2'>
+                        <div class='input-group'>
+                            <span class='input-group-text' id='basic-addon1'>
+                                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor'
+                                    class='bi bi-map' viewBox='0 0 16 16'>
+                                    <path fill-rule='evenodd'
+                                        d='M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z' />
+                                    ";
+                                </svg>
+                            </span>
+                            <select class='form-select icon-menu bloqElementTasaModal elementModalTasas' name="selectPaisDestinoTasa"
+                                id="selectPaisDestinoTasa" onchange="updateElemntTasas('traerTasa')" required>
+                                <option selected disabled value=''>Pais destino</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Campo: Tasa base -->
+                    <div class='mb-2'>
+                        <div class='input-group'>
+                            <span class='input-group-text' id='basic-addon1'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-calculator" viewBox="0 0 16 16">
+                                    <path
+                                        d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
+                                    <path
+                                        d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-2zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-4z" />
+                                </svg>
+                            </span>
+                            <input type='number' step="0.0001" class='form-control inputModalTasas' id='inputTasaBase'
+                                placeholder='Tasa base' name="inputTasaBase" disabled required>
+                        </div>
+                    </div>
+
+                    <!-- Campo: Tasa 1 -->
+                    <div class='mb-2'>
+                        <div class='input-group'>
+                            <span class='input-group-text' id='basic-addon1'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-calculator" viewBox="0 0 16 16">
+                                    <path
+                                        d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
+                                    <path
+                                        d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-2zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-4z" />
+                                </svg>
+                            </span>
+                            <input type='number' step="0.00001" class='form-control elementModalTasas inputModalTasas' id='inputTasa1' placeholder='Tasa 1'
+                                name="inputTasa1" onchange="updateElemntTasas('calcularTasa2')" required>
+                        </div>
+                    </div>
+
+                    <!-- Campo: Tasa 2 -->
+                    <div class='mb-2 '>
+                        <div class='input-group'>
+                            <span class='input-group-text' id='basic-addon1'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-calculator" viewBox="0 0 16 16">
+                                    <path
+                                        d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z" />
+                                    <path
+                                        d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-2zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-4z" />
+                                </svg>
+                            </span>
+                            <input type='number' step="0.00001" class='form-control inputModalTasas elementModalTasas' id='inputTasa2' placeholder='Tasa 2'
+                                name="inputTasa2" required>
+                        </div>
+                    </div>
+
+                    <!-- Campo: Porcentaje -->
+                    <div class='mb-2 '>
+                        <div class='input-group'>
+                            <span class='input-group-text' id='basic-addon1'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-percent" viewBox="0 0 16 16">
+                                    <path
+                                        d="M13.442 2.558a.625.625 0 0 1 0 .884l-10 10a.625.625 0 1 1-.884-.884l10-10a.625.625 0 0 1 .884 0zM4.5 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm7 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm0 1a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                                </svg>
+                            </span>
+                            <input type='number' step="0.0001" class='form-control inputModalTasas' id='inputTasaPorcentaje'
+                                placeholder='Porcentaje' name="inputTasaPorcentaje" disabled required>
+                        </div>
+                    </div>
+
+                    <!-- Spiner -->
+                    <div id="spinerModalTasa" class="my-auto" hidden>
+                        <div class="spinner-border text-warning me-2" role="status"></div>
+                        <strong id="textSpinerTasa">Cargando...</strong>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mx-auto col-5 elementModalTasas"
+                        data-bs-dismiss="modal">Cancelar</button>
+
+                    <button type="submit" class="btn btn-warning mx-auto col-5 elementTasaModal editarTasa elementModalTasas"
+                        id="modificarTasaBoton">Editar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

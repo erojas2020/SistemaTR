@@ -4,27 +4,29 @@
     1. Oculta todas las vistas de la App
     1. Almacena la vista actual
     3. Muestra el elemento solicitado*/
-  var vistaActual = "";   
-  async function mostrarContenido(view, colapse){
+  var vistaActual = "";
+  async function mostrarContenido(view) {
     //Oculta todas las vistas de la App
     ocultarElementos("true", ".viewsApp");
     vistaActual = view; //Indica la vista actual
-    
+
     //Muestra el elemento solicitado
     //form clave nueva
-    switch (view){
+    switch (view) {
       case "login":
         limpiarForm("formularioInicio");
         ocultarElementos("true", ".sesionApp");
-        ocultarElemento('false', 'formularioInicio' );
-        enfocarCampo("imputInicioEmail"); 
+        ocultarElemento('false', 'formularioInicio');
+        enfocarCampo("imputInicioEmail");
         break;
       case "home":
         ocultarElementos("false", ".home");
-        break;    
+      case "calculadora":
+        showControllerCalculadora("inicio");  
+        break;
       case "claveNueva":
         limpiarForm("formClaveNueva");
-        ocultarElemento("false", "formClaveNueva" );  
+        ocultarElemento("false", "formClaveNueva");
         break
       //Clientes form Olvide Contraseña preguntas
       case "olvideClavePreguntas":
@@ -43,13 +45,13 @@
         limpiarForm("preguntasCambioClave");
         ocultarElemento("false", "preguntasCambioClave");
         enfocarCampo('ClaveNuevaRespuesta1');
-        activarModal("false"); 
+        activarModal("false");
         break
       case "cambioClaveContraseña":
         limpiarForm("formCambiarClave");
         ocultarElemento("false", "formCambiarClave");
-        enfocarCampo('ClaveNuevaAnterior'); 
-        break  
+        enfocarCampo('ClaveNuevaAnterior');
+        break
       case "tabN1":
         activarModal("spiner", "Cargando usuarios");
         cargarTabN1(document.getElementById("imputInicioEmail").value);
@@ -58,7 +60,7 @@
         activarModal("spiner", "Cargando usuarios");
         cargarTabN2(document.getElementById("imputInicioEmail").value)
         break
-      case "formN1":  
+      case "formN1":
         ocultarElemento("false", "formularioNivel1");
         limpiarForm("formularioNivel1");
         formularioNivel1.usuarioNivel1.value = document.getElementById("imputInicioEmail").value;
@@ -66,34 +68,47 @@
         enfocarCampo('nombreNivel1');
         cargarPaiseFormN1();
         break
-      case "formN2":  
+      case "formN2":
         ocultarElemento("false", "formularioNivel2");
-        limpiarForm("formularioNivel2");
-        formularioNivel2.usuarioNivel2.value = document.getElementById("imputInicioEmail").value;
-        formularioNivel2.nombreUserNivel2.value = document.getElementById("user").outerHTML;
-        enfocarCampo('listNombreNivel2');
-        cargarPaiseFormN2();
+        break
+      case "formN2:img":
+        ocultarElemento("false", "formularioNivel2");
         break
       case "crearUsuario":
         activarModal("spiner", "Cargando usuarios");
-        modalActual= view;
+        modalActual = view;
         indexControllerCrearUsuarios();
         cargarUsuarios();
-        break  
+        break
       //Clientes nivel 2
       case "adminClientesN1":
         activarModal("spiner", "Cargando clientes");
         cargarAdminTabN1();
         buscarClientesN1();
         break;
+      //Porcentaje de calculadora
+      case "calcPorcentaje":
+        showControllerCalcPorcentaje("inicio");
+        break;
+      //Precio de calculadora
+      case "calcPrecios":
+        showControllerCalcPrecios("inicio");
+        break;
+      //Tasa de calculadora
+      case "calcTasas":
+        showControllerCalcTasas("inicio");
+        break;
+      case "calcuCripto":
+        showCalcuCripto("inicio")
+        break;    
     }
- 
+
   }
 
   /** Segun la vista actual
    *   Gestiona la salida del modal
-   */ 
-  function salidaModal(){
+   */
+  function salidaModal() {
     switch (vistaActual) {
       case "claveNueva":
         mostrarContenido("login");
@@ -103,7 +118,7 @@
         mostrarContenido("login");
         activarModal("false");
         break;
-      case "olvideClavePreguntas":  
+      case "olvideClavePreguntas":
       case "olvideClaveContraseña":
         mostrarContenido("login");
         activarModal("false");
@@ -115,7 +130,6 @@
       case "cambioClavePreguntas":
       case "cambioClaveContraseña":
         mostrarContenido("home");
-        activarModal("false");
         break;
       case "formN1":
         mostrarContenido("tabN1");
@@ -124,29 +138,54 @@
         mostrarContenido("tabN2");
         break;
       case "crearUsuario":
-        activarModal("spiner","Cargando usuarios");
+        activarModal("spiner", "Cargando usuarios");
         cargarTablaUsuarios();
         break;
       case "adminClientesN1":
         activarModal("false");
         showControllerAdminNivel1("actualizarTabN1");
         break;
+      case "calcPorcentaje":
+        activarModal("false");
+        showControllerCalcPorcentaje("inicio");
+        break;
+      case "calcPrecios":
+        activarModal("false");
+        showControllerCalcPrecios("inicio");
+        break;
+      case "calcTasas":
+        activarModal("false");
+        showControllerCalcTasas("inicio");
+        break;
+      case "procesarTasas":
+        updateControllerCalcTasa("procesarTasas");
+        break;
     }
   }
 
   var datoEliminar = ""
-  function salidaModalEliminar(){
-    switch (datoEliminar){
+  function salidaModalEliminar() {
+    switch (datoEliminar) {
       case "clienteN1":
-        let email = document.getElementById("eliminarClienteN1Select");
-        let nombre = email.options[email.selectedIndex].text;
-        activarModal("cerrar","eliminarClienteN1Modal");
-        activarModal("spiner","Eliminando cliente: "+nombre);
-        eliminarClienteN1(email.value);
+        destroyControllerAdminNivel1()
         break;
       case "eliminarUsuario":
-        destroyControllerAdminNivel1();
-        break;  
+        destroyControllerUsuarios();
+        break;
+      case "eliminarPrecioTodo":
+        destroyControllerPrecios("eliminarPrecioTodo")
+        break;   
+    }
+  }
+
+  let campoAdjForm = ""
+  function salidaModalAdjuntar() {
+    switch (campoAdjForm) {
+      case "AdjFormN2:1":
+      case "AdjFormN2:2":
+        updateControllerFormN2(campoAdjForm);
+        activarModal("False", "modalAdjuntar");
+        break;
     }
   }
 </script>

@@ -1,0 +1,102 @@
+<script>
+    
+    function indexControllerCalcPorcentaje(date) {
+        event.preventDefault();
+
+        //Datos requeridos por el backend para gestionar el porcentaje
+        let datos = {
+            idPais: "",
+            porcentaje: "",
+            user: ""
+        };
+        
+        //Cerrado del modal y activacion de spiner de espera    
+        activarModal("false", "PorcentajeModal");
+
+        //Si el boton de crear esta visible, procede con el codigo para crear un porcentaje
+        if (document.getElementById("crearPorcentajeBoton").hidden == false) {
+
+            datos.idPais = Number(document.getElementById("selectPaisPorcentaje").value);
+            datos.porcentaje = Number.parseFloat(document.getElementById("inputPorcentaje").value);
+            datos.user = document.getElementById("imputInicioEmail").value;
+            activarModal("spiner", "Guardanto porcentaje...")
+            guardarPorcentaje(datos);
+
+        //Si el boton de editar esta visible, procede con el codigo para editar el procentaje  
+        } else if (document.getElementById("modificarPorcentajeBoton").hidden == false) {
+
+            datos.idPais = Number(document.getElementById("selectPaisPorcentajeEditar").value);
+            datos.porcentaje = Number.parseFloat(document.getElementById("inputPorcentaje").value);
+            datos.user = document.getElementById("imputInicioEmail").value;
+            activarModal("spiner", "Editando porcentaje...")
+            editarPorcentaje(datos)
+
+        //Si el boton de eliminar esta visible, procede con el codigo para eliminar el procentaje    
+        } else if (document.getElementById("eliminarPorcentajeBotonModal").hidden == false) {
+            let idPaisDelet = Number(document.getElementById("selectPaisPorcentajeEditar").value);
+            activarModal("spiner", "Eliminando porcentaje...");
+            eliminarPorcentaje(idPaisDelet);            
+        }
+
+    }
+
+    function showControllerCalcPorcentaje(formulario) {
+        if (formulario == "inicio") {
+            activarModal("spiner", "Cargando porcentaje...");
+            updateControllerCalcPorcentaje("cargarPaises");
+            updateControllerCalcPorcentaje("cargarPaisesConPorcentaje");
+            cargarTablaPorcentaje();
+        }
+        else {
+            activarModal("formulario", "PorcentajeModal");
+            ocultarElementos("true", ".elementPorcentajeModal");
+            disactivarElementos("true", "elementPorcentajeModal");
+            limpiarForm("formPorcentaje");
+
+            switch (formulario) {
+                case "nuevoPorcentaje":
+                    document.getElementById("LabelModalPorcentaje").innerHTML = "Nuevo porcentaje"
+                    ocultarElementos("false", ".nuevaTasa");
+                    disactivarElementos("false", "nuevaTasa");
+                    $("#selectPaisPorcentaje")[0].selectedIndex = 0;
+                    break;
+                case "editarPorcentaje":
+                    document.getElementById("LabelModalPorcentaje").innerHTML = "Editar porcentaje"
+                    ocultarElementos("false", ".editarTasa");
+                    disactivarElementos("false", "editarTasa");
+                    updateControllerCalcPorcentaje("cargarPaisesConPorcentaje");
+                    break;
+                case "eliminarPorcentaje":
+                    document.getElementById("LabelModalPorcentaje").innerHTML = "Eliminar porcentaje"
+                    ocultarElementos("false", ".eliminarTasa");
+                    disactivarElementos("false", "eliminarTasa");
+                    disactivarElement("true","inputPorcentaje");
+                    break;
+                case "eliminarPrecioTodo":
+
+                    break;    
+            }
+        }
+    }
+
+    function updateControllerCalcPorcentaje(date) {
+        switch (date) {
+            case "cargarPaises":
+                cargarPaiseCalcPorcentaje();
+                break;
+            case "cargarPaisesConPorcentaje":
+                cargarPaisesConPorcentaje()
+                break;
+            case "traerPorcentaje":
+                if (document.getElementById("modificarPorcentajeBoton").hidden == false) {
+                    disactivarElementos("true", "editPorcentaje");
+                }else{
+                    disactivarElement("true", "eliminarPorcentajeBotonModal");
+                }
+                let idPais = Number(document.getElementById("selectPaisPorcentajeEditar").value);
+                traerPorcentaje(idPais);
+                break;
+        }
+    }
+
+</script>

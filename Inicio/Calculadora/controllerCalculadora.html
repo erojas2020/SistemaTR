@@ -1,0 +1,264 @@
+<script>
+    let calculandoEnvio = true
+    let paisOrigenCalc = ""
+    let paisDestinoCalc = ""
+    let montoEnviarCalc = ""
+    let montoRecibirCalc = ""
+
+    function indexControllerCalculadora() {
+        event.preventDefault();
+
+        paisOrigenCalc = getSelected("selectPaisOrigenCalculadora", "text");
+        montoEnviarCalc = document.getElementById("inputMontoEnviar").value
+        paisDestinoCalc = getSelected("selectPaisDestinoCalculadora", "text")
+        montoRecibirCalc = document.getElementById("inputMontoRecibir").value
+
+        if ((montoEnviarCalc == "") && (montoRecibirCalc == "")) {
+            alertaError("true", "Debe indicar un monto a enviar o a recibir", "formulario");
+
+            enfocarCampo("inputMontoEnviar");
+
+            document.getElementById("linkWahtsapp").removeAttribute('href');
+            document.getElementById("linkTelegram").removeAttribute('href');
+        } else {
+
+            alertaError("false", "", "formulario");
+
+            disactivarElement("true", "CalculadoraBoton");
+            ocultarElementos("false", ".spinerCalc");
+            calculandoEnvio = true;
+
+            verificarEstatusCalculadora();
+        }
+    }
+
+    /**Gestion de vista
+     * Inicio:
+     * Muestra spiner de carga
+     * carga elementos de calculodora
+     * 
+     * 
+    */
+    function showControllerCalculadora(view) {
+        switch (view) {
+            case "inicio":
+                calculandoEnvio = false;
+                activarModal("spiner", "Verificando estatus de la calculadora...");
+                verificarEstatusCalculadora();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**Actualizar elementos de la vista "Calculadora"
+     * onchange en select "Pais origen" modifica select "Pais destino":
+     * Variable con array de lista de paises disponibles
+     * Almacena nueva lista sin pais seleccionado en pais origen
+     * Carga nueva lista en select "pais destino"
+    */
+    function updateElemntCalculadora(accion, respuestaBakckend) {
+
+        let resultadoConDecimales = 0.00;
+        let invertirPais = { paisOrigen: "", paisDestino: "" };
+
+        switch (accion) {
+            case "invertirPaises":
+                invertirPais.paisOrigen = getSelected("selectPaisOrigenCalculadora", "value");
+
+                invertirPais.paisDestino = getSelected("selectPaisDestinoCalculadora", "value")
+
+                if ((invertirPais.paisOrigen != "") && (invertirPais.paisDestino != "")) {
+                    alertaError("false", "", "formulario");
+
+                    document.getElementById("selectPaisOrigenCalculadora").value = invertirPais.paisDestino;
+
+                } else {
+                    alertaError("true", "Debe haber un país seleccionado en los campos país origen y país destino", "formulario");
+                    break;
+                }
+
+            case "activarSelect":
+                limpiarCampo("inputMontoEnviar");
+
+                let listaPaisDestino = arrayChildForSelectChild("selectPaisOrigenCalculadora", arraySelectPadre, "0");
+
+                cargarSelect("cargar", "selectPaisDestinoCalculadora", listaPaisDestino, 0, 1)
+
+                cargarSelect("reiniciar", "selectPaisDestinoCalculadora")
+
+                disactivarElement("false", "selectPaisDestinoCalculadora")
+
+            case "reiniciarInputRecibir":
+                limpiarCampo("inputMontoRecibir");
+
+                document.getElementById("operadorT1").innerHTML = "X"
+                document.getElementById("operadorT2").innerHTML = "X"
+
+                document.getElementById("calcMontoEnviar").innerHTML = "0.00";
+                document.getElementById("calcTasa").innerHTML = "0.00";
+                document.getElementById("calcMontoRecibir").innerHTML = "0.00";
+                ocultarElementos("true", ".calculoVES");
+                ocultarElemento("false", "etiquetaTasa");
+
+                document.getElementById("linkWahtsapp").removeAttribute('href');
+                document.getElementById("linkTelegram").removeAttribute('href');
+
+                if (invertirPais.paisOrigen != "") {
+
+                    document.getElementById("selectPaisDestinoCalculadora").value = invertirPais.paisOrigen;
+
+                    enfocarCampo("inputMontoEnviar");
+                }
+                break;
+            case "resetMontoRecibir":
+                
+                if (document.getElementById("inputMontoEnviar").value > 0) {
+                    limpiarCampo("inputMontoRecibir");
+                };
+                break;
+
+            case "resetMontoEnviar":
+                
+                if (document.getElementById("inputMontoRecibir").value > 0) {
+                    limpiarCampo("inputMontoEnviar");
+                };
+                break;
+
+            case "insertCalcTasa1":
+
+                invertirPais.paisOrigen = getSelected("selectPaisOrigenCalculadora", "text");
+
+                invertirPais.paisDestino = getSelected("selectPaisDestinoCalculadora", "text")
+
+                document.getElementById("monedaOrigen").innerHTML = respuestaBakckend.monedaOrigen
+
+                document.getElementById("monedaDestino").innerHTML = respuestaBakckend.monedaDestino
+
+                montoFormat = formatNumberES(respuestaBakckend.montoTasa1,2)
+                
+                //Si el pais origen es Colombia es dividiendo
+                if ((invertirPais.paisOrigen == "Colombia") && (invertirPais.paisDestino == "Venezuela")) {
+                    document.getElementById("operadorT1").innerHTML = "/"
+                }
+
+                if (respuestaBakckend.origen == true) {
+
+                    document.getElementById("inputMontoRecibir").value = respuestaBakckend.montoTasa1;
+
+                    document.getElementById("calcMontoEnviar").innerHTML = formatNumberES(document.getElementById("inputMontoEnviar").value, 2) + " " + respuestaBakckend.monedaOrigen;
+
+                    document.getElementById("calcMontoRecibir").innerHTML = montoFormat + " " + respuestaBakckend.monedaDestino;
+
+                } else {
+
+                    document.getElementById("inputMontoEnviar").value = respuestaBakckend.montoTasa1;
+
+                    document.getElementById("calcMontoRecibir").innerHTML = formatNumberES(document.getElementById("inputMontoRecibir").value, 2) + " " + respuestaBakckend.monedaDestino;
+
+                    document.getElementById("calcMontoEnviar").innerHTML = montoFormat + " " + respuestaBakckend.monedaOrigen;
+                }
+                
+                let tasaFormat = calcularDecimales(respuestaBakckend.tasa1)
+                
+                tasaFormat = formatearNumero(tasaFormat.monto, tasaFormat.decimales)
+                
+                document.getElementById("calcTasa").innerHTML = tasaFormat;
+                break;
+
+            case "insertCalcTasa2":
+
+                invertirPais.paisOrigen = getSelected("selectPaisOrigenCalculadora", "text");
+
+                invertirPais.paisDestino = getSelected("selectPaisDestinoCalculadora", "text")
+
+                ocultarElementos("false", ".calculoVES");
+                ocultarElemento("true", "etiquetaTasa");
+                
+                montoFormat = formatNumberES(respuestaBakckend.montoTasa2, 2)
+
+                //Si el pais origen es Colombia es dividiendo
+                if ((invertirPais.paisOrigen == "Colombia") && (invertirPais.paisDestino == "Venezuela")) {
+                    document.getElementById("operadorT2").innerHTML = "/"
+                }
+
+                if (respuestaBakckend.origen == true) {
+
+                    document.getElementById("calculoTOBEnviar").innerHTML = formatNumberES(document.getElementById("inputMontoEnviar").value, 2) + " " + respuestaBakckend.monedaOrigen
+
+                    document.getElementById("calculoTOBRecibir").innerHTML = montoFormat + " " + respuestaBakckend.monedaDestino
+                } else {
+
+                    document.getElementById("calculoTOBRecibir").innerHTML = formatNumberES(document.getElementById("inputMontoRecibir").value, 2) + " " + respuestaBakckend.monedaDestino
+
+                    document.getElementById("calculoTOBEnviar").innerHTML = montoFormat + " " + respuestaBakckend.monedaOrigen
+                }
+
+                let tasaFormat2 =  calcularDecimales(respuestaBakckend.tasa2)
+
+                tasaFormat2 = formatearNumero(tasaFormat2.monto)
+
+                document.getElementById("calculoTOBTasa").innerHTML =  tasaFormat2
+                break;
+
+            case "insertMsj":
+                let btnWhatsapp = document.getElementById("linkWahtsapp");
+                let btnTelegram = document.getElementById("linkTelegram");
+
+                invertirPais.paisOrigen = getSelected("selectPaisOrigenCalculadora", "text");
+
+                invertirPais.paisDestino = getSelected("selectPaisDestinoCalculadora", "text")
+
+                let confgMsjTOP = {
+                    paisOrigen: getSelected("selectPaisOrigenCalculadora", "text"),
+                    paisDestino: getSelected("selectPaisDestinoCalculadora", "text"),
+                    msjTasa: "",
+                    montoEnviarT1: document.getElementById("calcMontoEnviar").innerHTML,
+                    tasaT1: document.getElementById("calcTasa").innerHTML,
+                    montoRecibirT1: document.getElementById("calcMontoRecibir").innerHTML,
+                    monedaOrigen: document.getElementById("monedaOrigen").innerHTML,
+                    monedaDestino: document.getElementById("monedaDestino").innerHTML,
+                    operador: ""
+                }
+
+                /**Configuracion de tasa
+                 * Si es desde Colombia: es invertido
+                */
+                if ((invertirPais.paisOrigen == "Colombia") && (invertirPais.paisDestino == "Venezuela")) {
+                    confgMsjTOP.msjTasa = confgMsjTOP.tasaT1 + confgMsjTOP.monedaDestino + " = " + "1" + confgMsjTOP.monedaOrigen
+
+                    confgMsjTOP.operador = " / "
+                } else {
+                    confgMsjTOP.msjTasa = "1" + confgMsjTOP.monedaOrigen + " = " + confgMsjTOP.tasaT1 + confgMsjTOP.monedaDestino
+
+                    confgMsjTOP.operador = " X "
+                }
+
+                /**Mensaje: Config. de mensaje
+                */
+                if (document.getElementById("calculoTOB").hidden == false) {
+
+                    let confgMsjTVES = {
+                        montoEnviarT2: document.getElementById("calculoTOBEnviar").innerHTML,
+                        tasaT2: document.getElementById("calculoTOBTasa").innerHTML,
+                        montoRecibirT2: document.getElementById("calculoTOBRecibir").innerHTML,
+                    }
+
+                    btnWhatsapp.href = "https://api.whatsapp.com/send?text=*Transferencias Rojas*%0A%0A*Envío:* " + confgMsjTOP.paisOrigen + " - " + confgMsjTOP.paisDestino + "%0A%0A*Tasa:* " + confgMsjTOP.msjTasa + "%0A%0A*Calculo Banesco*%0A" + confgMsjTOP.montoEnviarT1 + confgMsjTOP.operador + confgMsjTOP.tasaT1 + " = " + confgMsjTOP.montoRecibirT1 + "%0A%0A*Calculo Otros bancos*%0A" + confgMsjTVES.montoEnviarT2 + confgMsjTOP.operador + confgMsjTVES.tasaT2 + " = " + confgMsjTVES.montoRecibirT2;
+
+                    btnTelegram.href = "https://t.me/share/url?url=**Transferencias%20Rojas**;&text=%0A**Envío:** " + confgMsjTOP.paisOrigen + " - " + confgMsjTOP.paisDestino + "%0A%0A**Tasa:** " + confgMsjTOP.msjTasa + "%0A%0A**Calculo Banesco**%0A" + confgMsjTOP.montoEnviarT1 + confgMsjTOP.operador + confgMsjTOP.tasaT1 + " = " + confgMsjTOP.montoRecibirT1 + "%0A%0A**Calculo Otros bancos**%0A" + confgMsjTVES.montoEnviarT2 + confgMsjTOP.operador + confgMsjTVES.tasaT2 + " = " + confgMsjTVES.montoRecibirT2;
+
+                } else {
+
+                    btnWhatsapp.href = "https://api.whatsapp.com/send?text=*Transferencias Rojas*%0A%0A*Envío:* " + confgMsjTOP.paisOrigen + " - " + confgMsjTOP.paisDestino + "%0A%0A*Tasa:* " + confgMsjTOP.msjTasa + "%0A%0A*Calculo*%0A" + confgMsjTOP.montoEnviarT1 + confgMsjTOP.operador + confgMsjTOP.tasaT1 + " = " + confgMsjTOP.montoRecibirT1
+
+                    btnTelegram.href = "https://t.me/share/url?url=**Transferencias%20Rojas**;&text=%0A**Envío:** " + confgMsjTOP.paisOrigen + " - " + confgMsjTOP.paisDestino + "%0A%0A**Tasa:** " + confgMsjTOP.msjTasa + "%0A%0A**Calculo**%0A" + confgMsjTOP.montoEnviarT1 + confgMsjTOP.operador + confgMsjTOP.tasaT1 + " = " + confgMsjTOP.montoRecibirT1
+                }
+                break;
+        }
+
+
+    }
+
+</script>

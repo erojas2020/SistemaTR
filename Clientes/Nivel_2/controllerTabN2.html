@@ -1,32 +1,31 @@
 <script>
-
-  /*Valida que se responda la pregunta si es nivel 1
-    Si no a sido respondida se envia alerta
-    Al ser resopndida cierra el modal
-    muestra el campo nombre que corresponde segun la elección*/
+  let enviarFormSi = document.getElementById("EnviarFormSi");
+  /*Muestra el campo nombre que corresponde segun la elección*/
   function indexcontrollerTabN2(datosForm){
       event.preventDefault();
       let clienveNuevoSi = document.getElementById("ClienteNuevoSi");
-      let enviarFormSi = document.getElementById("EnviarFormSi");
-      mostrarContenido('formN2');
-      ocultarElementos("true", ".elementFormN2");
 
-      //Si es un cliente nuevo, muestra el campo que corresponde
+      //Si es un cliente nuevo, envia parametros que corresponden
+      let nuevo = false;
+      let enviar = false;
       if (clienveNuevoSi.checked== true){
-        ocultarElemento("true", "nombreNuevo");
-        ocultarElemento("false","promoverNivel1");
-
+        nuevo = true;
       }else if (clienveNuevoSi.checked == false){
-        ocultarElemento("false", "nombreNuevo");
-        ocultarElemento("true","promoverNivel1");  
+        nuevo = false;  
       }
-      
+      //Si desea enviar el form al cliente configura los campos.
       if (enviarFormSi.checked == true){
-        ocultarElementos("false", ".enviarForm");  
-
+        enviar = true;
       }else if (enviarFormSi.checked == false){
-        ocultarElementos("false", ".registrarCliente");
-
+        enviar = false;
       }
+
+      showControllerFormN2("formN1",nuevo, enviar);
+      activarModal("false", "modalNivel2");
+  }
+
+  function showControllerTabN2(){
+    activarModal("formulario","modalNivel2");
+    limpiarForm("formN2Modal")
   }
 </script>
