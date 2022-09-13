@@ -1,15 +1,13 @@
 <script>
-    
+
     function indexControllerCalcPorcentaje(date) {
         event.preventDefault();
 
         //Datos requeridos por el backend para gestionar el porcentaje
         let datos = {
-            idPais: "",
-            porcentaje: "",
-            user: ""
+            
         };
-        
+
         //Cerrado del modal y activacion de spiner de espera    
         activarModal("false", "PorcentajeModal");
 
@@ -22,7 +20,7 @@
             activarModal("spiner", "Guardanto porcentaje...")
             guardarPorcentaje(datos);
 
-        //Si el boton de editar esta visible, procede con el codigo para editar el procentaje  
+            //Si el boton de editar esta visible, procede con el codigo para editar el procentaje  
         } else if (document.getElementById("modificarPorcentajeBoton").hidden == false) {
 
             datos.idPais = Number(document.getElementById("selectPaisPorcentajeEditar").value);
@@ -31,11 +29,21 @@
             activarModal("spiner", "Editando porcentaje...")
             editarPorcentaje(datos)
 
-        //Si el boton de eliminar esta visible, procede con el codigo para eliminar el procentaje    
+            //Si el boton de eliminar esta visible, procede con el codigo para eliminar el procentaje    
         } else if (document.getElementById("eliminarPorcentajeBotonModal").hidden == false) {
             let idPaisDelet = Number(document.getElementById("selectPaisPorcentajeEditar").value);
             activarModal("spiner", "Eliminando porcentaje...");
-            eliminarPorcentaje(idPaisDelet);            
+            eliminarPorcentaje(idPaisDelet);
+
+            //Si el boton de editar porcetaje cripto esta visible, procede con el codigo para editar el procentaje    
+        } else if (document.getElementById("editarPorcentajeCriptoBotonModal").hidden == false) {
+
+            if (document.getElementById("inputPorcentaje").value != "") {
+                datos.porcentaje = Number.parseFloat(document.getElementById("inputPorcentaje").value);
+                datos.user = document.getElementById("imputInicioEmail").value;
+            }
+            activarModal("spiner", "Editando porcentaje de criptomoneda...");
+            editarPorcentajeCripto(datos)
         }
 
     }
@@ -70,11 +78,15 @@
                     document.getElementById("LabelModalPorcentaje").innerHTML = "Eliminar porcentaje"
                     ocultarElementos("false", ".eliminarTasa");
                     disactivarElementos("false", "eliminarTasa");
-                    disactivarElement("true","inputPorcentaje");
+                    disactivarElement("true", "inputPorcentaje");
                     break;
-                case "eliminarPrecioTodo":
-
-                    break;    
+                case "editarPorcentajeCripto":
+                    document.getElementById("LabelModalPorcentaje").innerHTML = "Editar porcentaje criptomoneda";
+                    ocultarElementos("false", ".editarProcentajeCripto");
+                    disactivarElementos("false", "editarProcentajeCripto")
+                    updateControllerCalcPorcentaje("traerPorcentajeCripto")
+                    disactivarElement("true", "inputPorcentaje");
+                    break;
             }
         }
     }
@@ -90,11 +102,14 @@
             case "traerPorcentaje":
                 if (document.getElementById("modificarPorcentajeBoton").hidden == false) {
                     disactivarElementos("true", "editPorcentaje");
-                }else{
+                } else {
                     disactivarElement("true", "eliminarPorcentajeBotonModal");
                 }
                 let idPais = Number(document.getElementById("selectPaisPorcentajeEditar").value);
                 traerPorcentaje(idPais);
+                break;
+            case "traerPorcentajeCripto":
+                traerPorcentajeCripto();
                 break;
         }
     }

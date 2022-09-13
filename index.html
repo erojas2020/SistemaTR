@@ -1,107 +1,126 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no;user-scalable=0">
 
-    <!-- Bootstrap CSS -->
-     <?!= include('CCS/CSS'); ?>
-     
-   
-  </head>
-  <body class="bg-light bg-gradient">
+<head>
+  <base target="_top">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no;user-scalable=0">
 
-    <?!= include('Menu/viewNav'); ?>
+  <!-- Bootstrap CSS -->
+  <?!= include('CCS/CSS'); ?>
 
-    <div class="container">
 
-      <!------------------------------------------------------------------------------------>
-                                <!----ALERT ERROR---->
-      <!------------------------------------------------------------------------------------>
+</head>
 
-      <div id="alertError" class="row alert alert-danger mt-2 viewsApp" role="alert" hidden></div> 
+<body class="bg-light bg-gradient" onload="consultarVersionApp()">
 
-      <?!= include('Inicio/Login/viewLogin'); ?>
-      <?!= include('Inicio/Clave_nueva/viewClaveNueva'); ?>
-      <?!= include('Inicio/Olvido_clave/viewOlvidoClave'); ?>
-      <?!= include('Inicio/Calculadora/Remesa/viewCalculadora'); ?>
-      <?!= include('Inicio/Calculadora/Cripto/viewCalcuCripto'); ?>
-      <?!= include('Clientes/Nivel_1/viewTabN1'); ?>
-      <?!= include('Clientes/Nivel_2/viewTabN2'); ?> 
-      <?!= include('Clientes/Nivel_1/viewFormN1'); ?>
-      <?!= include('Clientes/Nivel_2/viewFormN2'); ?>
-      <?!= include('Administrador/Calculadora/Porcentaje/viewCalcPorcentaje'); ?>
-      <?!= include('Administrador/Calculadora/Precios/viewCalcPrecios'); ?>
-      <?!= include('Administrador/Calculadora/Tasas/viewCalcTasas'); ?>
-      <?!= include('Administrador/Clientes/Nivel_1/ViewNivel1'); ?>
-      <?!= include('Administrador/Crear_usuarios/viewCrearUsuarios'); ?>
-      <?!= include('Configuracion/Cambio_clave/viewCambioClave'); ?> 
+  <?!= include('Menu/viewNav'); ?>
 
-        <!------------------------------------------------------------------------------------>
-                                  <!----Modal: respuesta del Backend---->
-        <!------------------------------------------------------------------------------------>  
-        <div class="modal fade" id="respuestaBackend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-body text-center d-block modalElements">
-                <span class="spinner-border spinner-border-sm viewCarga modalElements" style="width: 3rem; height: 3rem;" id='modalSpinerCargaClave' role="status" aria-hidden="true"></span>
-                <img id="modalImgListoClave" class="respuestaPositiva modalElements" src="https://drive.google.com/uc?export=download&id=1WN1xNrT4p4GTk6hMI7Rtitn1RgwidP4u" alt="" width="90" height="90" class="mb-2" hidden>
-                <img id="modalImgAdvertenciaClave" class="respuestaNegativa modalElements" src="https://drive.google.com/uc?export=download&id=1eKCqgbSpMcq6Bbi_fejBoo6O8YD4vYu-" alt="" width="100" height="100" class="mb-2" hidden>
-                <p id="msjBackend" class="modalElements respuestaPositiva respuestaNegativa viewCarga" hidden>Mensaje a mostrar</p>
-              </div>
-              <div class="modal-footer modalElements respuestaPositiva respuestaNegativa" id="modalfooterClave" hidden>
-                <button id="modalBotonCorrectoClave" type="button" class="btn btn-warning px-5 mx-auto respuestaPositiva modalElements" onclick="salidaModal()" hidden>Entendido</button>
-                <button id="modalBotonErradoClave" type="button" class="btn btn-warning px-5 mx-auto respuestaNegativa modalElements" data-bs-dismiss="modal" hidden>Entendido</button>
-              </div>
-            </div>
+  <div class="container">
+
+    <!------------------------------------------------------------------------------------>
+    <!----ALERT ERROR---->
+    <!------------------------------------------------------------------------------------>
+
+    <div id="alertError" class="row alert alert-danger mt-2 viewsApp" role="alert" hidden></div>
+
+    <?!= include('Inicio/Login/viewLogin'); ?>
+    <?!= include('Inicio/Clave_nueva/viewClaveNueva'); ?>
+    <?!= include('Inicio/Olvido_clave/viewOlvidoClave'); ?>
+    <?!= include('Inicio/Calculadora/Remesa/viewCalculadora'); ?>
+    <?!= include('Inicio/Calculadora/Cripto/viewCalcuCripto'); ?>
+    <?!= include('Clientes/Nivel_1/viewTabN1'); ?>
+    <?!= include('Clientes/Nivel_2/viewTabN2'); ?>
+    <?!= include('Clientes/Nivel_1/viewFormN1'); ?>
+    <?!= include('Clientes/Nivel_2/viewFormN2'); ?>
+    <?!= include('Administrador/Calculadora/Porcentaje/viewCalcPorcentaje'); ?>
+    <?!= include('Administrador/Calculadora/Precios/viewCalcPrecios'); ?>
+    <?!= include('Administrador/Calculadora/Tasas/viewCalcTasas'); ?>
+    <?!= include('Administrador/Clientes/Nivel_1/ViewNivel1'); ?>
+    <?!= include('Administrador/Crear_usuarios/viewCrearUsuarios'); ?>
+    <?!= include('Configuracion/Cambio_clave/viewCambioClave'); ?>
+
+    <!------------------------------------------------------------------------------------>
+    <!----Modal: respuesta del Backend---->
+    <!------------------------------------------------------------------------------------>
+    <div class="modal fade" id="respuestaBackend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body text-center d-block modalElements">
+            <span class="spinner-border spinner-border-sm viewCarga modalElements" style="width: 3rem; height: 3rem;"
+              id='modalSpinerCargaClave' role="status" aria-hidden="true"></span>
+            <img id="modalImgListoClave" class="respuestaPositiva modalElements"
+              src="https://drive.google.com/uc?export=download&id=1WN1xNrT4p4GTk6hMI7Rtitn1RgwidP4u" alt="" width="90"
+              height="90" class="mb-2" hidden>
+            <img id="modalImgAdvertenciaClave" class="respuestaNegativa modalElements"
+              src="https://drive.google.com/uc?export=download&id=1eKCqgbSpMcq6Bbi_fejBoo6O8YD4vYu-" alt="" width="100"
+              height="100" class="mb-2" hidden>
+            <p id="msjBackend" class="modalElements respuestaPositiva respuestaNegativa viewCarga" hidden>Mensaje a
+              mostrar</p>
           </div>
-        </div>
-      <!------------------------------------------------------------------------------------>
-                                <!----Modal: Alerta de salida---->
-      <!------------------------------------------------------------------------------------>
-      <div class="modal fade" id="modalAlertaSalida" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-              <p id="alertaMensajeAdvertencia"></p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary col-5 mx-auto" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-warning col-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta" onclick="salidaModal()">Aceptar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!------------------------------------------------------------------------------------>
-                                <!----Modal: Alerta de eliminar---->
-      <!------------------------------------------------------------------------------------>
-      <div class="modal fade" id="modalAlertaEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-              <img id="modalImgAdvertenciaClave" src="https://drive.google.com/uc?export=download&id=1eKCqgbSpMcq6Bbi_fejBoo6O8YD4vYu-" alt="" width="100" height="100" class="mb-2">
-              <p id="alertaMensajeEliminar"></p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary col-5 mx-auto" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-warning col-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta" onclick="salidaModalEliminar()">Eliminar</button>
-            </div>
+          <div class="modal-footer modalElements respuestaPositiva respuestaNegativa" id="modalfooterClave" hidden>
+            <button id="modalBotonCorrectoClave" type="button"
+              class="btn btn-warning px-5 mx-auto respuestaPositiva modalElements" onclick="salidaModal()"
+              hidden>Entendido</button>
+            <button id="modalBotonErradoClave" type="button"
+              class="btn btn-warning px-5 mx-auto respuestaNegativa modalElements" data-bs-dismiss="modal"
+              hidden>Entendido</button>
           </div>
         </div>
       </div>
     </div>
+    <!------------------------------------------------------------------------------------>
+    <!----Modal: Alerta de salida---->
+    <!------------------------------------------------------------------------------------>
+    <div class="modal fade" id="modalAlertaSalida" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p id="alertaMensajeAdvertencia"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary col-5 mx-auto" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-warning col-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta"
+              onclick="salidaModal()">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!------------------------------------------------------------------------------------>
+    <!----Modal: Alerta de eliminar---->
+    <!------------------------------------------------------------------------------------>
+    <div class="modal fade" id="modalAlertaEliminar" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Consulta</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <img id="modalImgAdvertenciaClave"
+              src="https://drive.google.com/uc?export=download&id=1eKCqgbSpMcq6Bbi_fejBoo6O8YD4vYu-" alt="" width="100"
+              height="100" class="mb-2">
+            <p id="alertaMensajeEliminar"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary col-5 mx-auto" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-warning col-5 mx-auto" data-bs-dismiss="modal" id="botonSalidaAlerta"
+              onclick="salidaModalEliminar()">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!------------------------------------------------------------------------------------>
-                          <!-- Modal: Adjuntar imagenes -->
+  <!-- Modal: Adjuntar imagenes -->
   <!---------------------------------------------------------------------------------- 
   <div class='modal fade' id='modalAdjuntar' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
     <div class='modal-dialog modal-dialog-scrollable'>
@@ -125,41 +144,49 @@
         </div>
       </div>
     </div>
-  </div>--> 
-    <?!= include('utilidades'); ?>
-    <?!= include('Menu/controllerNav'); ?>
-    <?!= include('Inicio/Login/controllerLogin'); ?>
-    <?!= include('Inicio/Login/ModeloLogin'); ?>
-    <?!= include('Inicio/Olvido_clave/controllerOlvidoClave'); ?>
-    <?!= include('Inicio/Olvido_clave/funcionesOlvidoClave'); ?>
-    <?!= include('Inicio/Olvido_clave/modelOlvido'); ?>
-    <?!= include('Inicio/Clave_nueva/funcionClaveNueva'); ?>
-    <?!= include('Inicio/Clave_nueva/modeloClaveNueva'); ?>
-    <?!= include('Inicio/Calculadora/Remesa/controllerCalculadora'); ?>
-    <?!= include('Inicio/Calculadora/Remesa/modeloCalculadora'); ?>
-    <?!= include('Inicio/Calculadora/Cripto/controllerCalculCripto'); ?>
-    <?!= include('Inicio/Calculadora/Cripto/modeloCalculCripto'); ?>
-    <?!= include('Clientes/Nivel_1/ModeloTabN1'); ?>
-    <?!= include('Clientes/Nivel_1/controllerFormN1'); ?>
-    <?!= include('Clientes/Nivel_1/modelFormN1'); ?>
-    <?!= include('Clientes/Nivel_2/controllerTabN2'); ?>
-    <?!= include('Clientes/Nivel_2/modeloTabN2'); ?>
-    <?!= include('Clientes/Nivel_2/controllerFormN2'); ?>
-    <?!= include('Clientes/Nivel_2/modeloFormN2'); ?>
-    <?!= include('Administrador/Calculadora/Porcentaje/ControllerCalcPorcentaje'); ?>
-    <?!= include('Administrador/Calculadora/Porcentaje/modeloCalcPorcentaje'); ?> 
-    <?!= include('Administrador/Calculadora/Precios/controllerCalcPrecios'); ?>
-    <?!= include('Administrador/Calculadora/Precios/modeloCalcPrecios'); ?>
-    <?!= include('Administrador/Calculadora/Tasas/controllerCalcTasas'); ?>
-    <?!= include('Administrador/Calculadora/Tasas/modeloCalcTasas'); ?>  
-    <?!= include('Administrador/Clientes/Nivel_1/ControllerNivel1'); ?>
-    <?!= include('Administrador/Clientes/Nivel_1/ModeloNivel1'); ?> 
-    <?!= include('Administrador/Crear_usuarios/ControllerCrearUsuarios'); ?>
-    <?!= include('Administrador/Crear_usuarios/ModeloCrearUsuarios'); ?>
-    <?!= include('Configuracion/Cambio_clave/ControllerCambioClave'); ?>
-    <?!= include('Configuracion/Cambio_clave/FuncionCambioClave'); ?>
-    <?!= include('Configuracion/Cambio_clave/ModeloCambioClave'); ?>
-    <?!= include('routes'); ?>
-    <?!= include('funcionAdjuntar'); ?>
-  </body>
+  </div>-->
+  <?!= include('utilidades'); ?>
+  <?!= include('Menu/controllerNav'); ?>
+  <?!= include('Inicio/Login/controllerLogin'); ?>
+  <?!= include('Inicio/Login/ModeloLogin'); ?>
+  <?!= include('Inicio/Olvido_clave/controllerOlvidoClave'); ?>
+  <?!= include('Inicio/Olvido_clave/funcionesOlvidoClave'); ?>
+  <?!= include('Inicio/Olvido_clave/modelOlvido'); ?>
+  <?!= include('Inicio/Clave_nueva/funcionClaveNueva'); ?>
+  <?!= include('Inicio/Clave_nueva/modeloClaveNueva'); ?>
+  <?!= include('Inicio/Calculadora/Remesa/controllerCalculadora'); ?>
+  <?!= include('Inicio/Calculadora/Remesa/modeloCalculadora'); ?>
+  <?!= include('Inicio/Calculadora/Cripto/controllerCalculCripto'); ?>
+  <?!= include('Inicio/Calculadora/Cripto/modeloCalculCripto'); ?>
+  <?!= include('Clientes/Nivel_1/ModeloTabN1'); ?>
+  <?!= include('Clientes/Nivel_1/controllerFormN1'); ?>
+  <?!= include('Clientes/Nivel_1/modelFormN1'); ?>
+  <?!= include('Clientes/Nivel_2/controllerTabN2'); ?>
+  <?!= include('Clientes/Nivel_2/modeloTabN2'); ?>
+  <?!= include('Clientes/Nivel_2/controllerFormN2'); ?>
+  <?!= include('Clientes/Nivel_2/modeloFormN2'); ?>
+  <?!= include('Administrador/Calculadora/Porcentaje/ControllerCalcPorcentaje'); ?>
+  <?!= include('Administrador/Calculadora/Porcentaje/modeloCalcPorcentaje'); ?>
+  <?!= include('Administrador/Calculadora/Precios/controllerCalcPrecios'); ?>
+  <?!= include('Administrador/Calculadora/Precios/modeloCalcPrecios'); ?>
+  <?!= include('Administrador/Calculadora/Tasas/controllerCalcTasas'); ?>
+  <?!= include('Administrador/Calculadora/Tasas/modeloCalcTasas'); ?>
+  <?!= include('Administrador/Clientes/Nivel_1/ControllerNivel1'); ?>
+  <?!= include('Administrador/Clientes/Nivel_1/ModeloNivel1'); ?>
+  <?!= include('Administrador/Crear_usuarios/ControllerCrearUsuarios'); ?>
+  <?!= include('Administrador/Crear_usuarios/ModeloCrearUsuarios'); ?>
+  <?!= include('Configuracion/Cambio_clave/ControllerCambioClave'); ?>
+  <?!= include('Configuracion/Cambio_clave/FuncionCambioClave'); ?>
+  <?!= include('Configuracion/Cambio_clave/ModeloCambioClave'); ?>
+  <?!= include('routes'); ?>
+  <?!= include('funcionAdjuntar'); ?>
+</body>
+<footer>
+  <div class="navbar-expand-lg bg-light bg-gradient shadow-lg p-2">
+    <strong class="d-flex justify-content-center fw-bold">
+      <span id="pruebaBackend">Versión:</span>
+    </strong>
+  </div>
+</footer>
+
 </html>

@@ -1,4 +1,4 @@
-<div class='viewsApp sesionApp calculadoraCripto' id="calculadoraCripto" hidden>
+<div class='viewsApp sesionApp calculadoraOperadoras' id="calculadoraCripto" hidden>
     <div class="mx-auto">
 
         <!-- Form: Calculadora -->
@@ -6,19 +6,21 @@
 
             <!-- Encabezado -->
             <div class='row mb-2 text-center'>
-                <h3 class="mb-2">Calculadora de criptomonedas</h3>
+                <h3 class="mb-2">Calculadora de Recargas</h3>
             </div>
 
             <!-- Compra o venta -->
             <div class="d-flex gap-2 justify-content-around mb-2 col-12 col-sm-5 mx-auto">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="comprarCriptoRadio" onchange="updateElemntCalculadoraCripto('comprar')" checked>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="comprarCriptoRadio"
+                        onchange="updateElemntCalculadoraCripto('comprar')" checked>
                     <label class="form-check-label" for="flexRadioDefault1">
                         Compra
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="venderCriptoRadio" onchange="updateElemntCalculadoraCripto('vender')">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="venderCriptoRadio"
+                        onchange="updateElemntCalculadoraCripto('vender')">
                     <label class="form-check-label" for="flexRadioDefault2">
                         Venta
                     </label>
@@ -40,8 +42,7 @@
                             </svg>
                         </span>
                         <select class='form-select icon-menu elementCalculadora' name="selectPaisOrigenCalculadora"
-                            id="selectMonedaOrigenCalculadora"
-                            required>
+                            id="selectMonedaOrigenCalculadora" required>
                             <option selected disabled value=''>Moneda origen</option>
                         </select>
                     </div>

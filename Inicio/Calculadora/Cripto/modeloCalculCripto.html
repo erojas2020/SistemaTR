@@ -1,11 +1,76 @@
 <script>
-    async function verificarEstatusCalcuCripto(){
-        //activarModal("false");
-        ocultarElementos("true", ".spinerCalc");
-        ocultarElemento("false", "calculadoraCripto");
+    async function verificarEstatusCalcuCripto() {
+        var resultado = await google.script.run
+            .withSuccessHandler(verificarEstatusCalcuCriptoTrue)
+            .withFailureHandler(verificarEstatusCalcuCriptoError)
+            .getStatusCalculadora()
     }
 
-    async function cargarCalcuCripto(){
+    function verificarEstatusCalcuCriptoTrue(respuesta) {
+        switch (respuesta) {
+            case true:
+                activarModal("spiner", "Cargando calculadora...");
+                cargarPaisesSelect();
+                break;
 
+            case false:
+                showCalcuCripto("desactivar")
+                break;
+        }
     }
+
+    function verificarEstatusCalcuCriptoError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function cargarPaisesSelect() {
+        var resultado = await google.script.run
+            .withSuccessHandler(cargarPaisesSelectTrue)
+            .withFailureHandler(cargarPaisesSelectError)
+            .getPaises()
+    }
+
+    function cargarPaisesSelectTrue(listaPaises) {
+        monedasFiat = listaPaises;
+
+        cargarCriptosSelect();
+    }
+
+    function cargarPaisesSelectError(error) {
+        activarModal("respuestaNegativa", error)
+    }
+
+    async function cargarCriptosSelect() {
+        var resultado = await google.script.run
+            .withSuccessHandler(cargarCriptosSelectTrue)
+            .withFailureHandler(cargarCriptosSelectError)
+            .getCripto()
+    }
+
+    function cargarCriptosSelectTrue(listaCripto) {
+        monedasCripto = listaCripto;
+
+        showCalcuCripto("activar")
+    }
+
+    function cargarCriptosSelectError(error) {
+        activarModal("respuestaNegativa",error)
+    }
+
+    async function calcularCambioCripto(datos) {
+        var resultado = await google.script.run
+            .withSuccessHandler(calcularCambioCriptoTrue)
+            .withFailureHandler(calcularCambioCriptoError)
+            .constructorCalcularCripto(datos)
+    }
+
+    function calcularCambioCriptoTrue(resultado){
+        ocultarElementos("true", ".spinerCalcCripto");
+        updateElemntCalculadoraCripto("mostrarResultado", resultado)
+    }
+
+    function calcularCambioCriptoError(error){
+        activarModal("respuestaNegativa",error)
+    }
+
 </script>

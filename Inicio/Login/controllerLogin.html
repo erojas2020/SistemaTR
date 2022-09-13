@@ -12,7 +12,7 @@
 
   function indexcontrollerInicio(datosUser){
     event.preventDefault();
-
+    consultarVersionApp()
     if (datosUser.email.value== ""){
     alertaError("true", "Indique su email","formulario");
     }else if (!ValidarEmail(datosUser.email.value)){

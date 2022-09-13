@@ -11,7 +11,6 @@ var sheetPaises = ss.getSheetByName('paises');
  
 
 function doGet(e){
-  
   var template = HtmlService.createTemplateFromFile('index');
   var html = template.evaluate()
     .setTitle('Transferencias Rojas') // Set Title 

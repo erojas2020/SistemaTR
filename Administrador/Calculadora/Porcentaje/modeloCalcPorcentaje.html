@@ -125,7 +125,7 @@
     }
 
     async function eliminarPorcentaje(idPais) {
-        console.log(idPais);
+        
         var resultado = await google.script.run
             .withSuccessHandler(eliminarPorcentajeTrue)
             .withFailureHandler(eliminarPorcentajeError)
@@ -145,6 +145,57 @@
     }
 
     function eliminarPorcentajeError(error) {
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function traerPorcentajeCripto() {
+        console.log(idPais);
+        var resultado = await google.script.run
+            .withSuccessHandler(traerPorcentajeCriptoTrue)
+            .withFailureHandler(traerPorcentajeCriptoError)
+            .getPorcentajeGananciaUSDT();
+    }
+
+    function traerPorcentajeCriptoTrue(respuesta){
+        
+        switch (respuesta.status) {
+            case true:
+                disactivarElement("false","inputPorcentaje");
+                document.getElementById("inputPorcentaje").value = respuesta.porcentajeGanancia
+                break;
+        
+            default:
+                
+                break;
+        }
+    }
+
+    function traerPorcentajeCriptoError(error){
+        activarModal("respuestaNegativa", error);
+    }
+
+    async function editarPorcentajeCripto(datos) {
+        
+        var resultado = await google.script.run
+            .withSuccessHandler(editarPorcentajeCriptoTrue)
+            .withFailureHandler(editarPorcentajeCriptoError)
+            .updatePorcentajeGananciaUSDT(datos);
+    }
+
+    function editarPorcentajeCriptoTrue(respuesta){
+        
+        switch (respuesta) {
+            case true:
+                activarModal("respuestaPositiva", "Editado exitosamente");
+                break;
+        
+            default:
+                activarModal("respuestaNegativa", respuesta.mensaje)
+                break;
+        }
+    }
+
+    function editarPorcentajeCriptoError(){
         activarModal("respuestaNegativa", error);
     }
 </script>

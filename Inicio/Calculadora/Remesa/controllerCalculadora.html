@@ -14,7 +14,7 @@
         montoRecibirCalc = document.getElementById("inputMontoRecibir").value
 
         if ((montoEnviarCalc == "") && (montoRecibirCalc == "")) {
-            alertaError("true", "Debe indicar un monto a enviar o a recibir", "formulario");
+            alertaError("true", "Debe indicar un monto a vender o a recibir", "formulario");
 
             enfocarCampo("inputMontoEnviar");
 
@@ -158,11 +158,9 @@
                     document.getElementById("calcMontoEnviar").innerHTML = montoFormat + " " + respuestaBakckend.monedaOrigen;
                 }
                 
-                let tasaFormat = calcularDecimales(respuestaBakckend.tasa1)
-                
-                tasaFormat = formatearNumero(tasaFormat.monto, tasaFormat.decimales)
-                
-                document.getElementById("calcTasa").innerHTML = tasaFormat;
+                respuestaBakckend.tasa1 = formatearNumero(respuestaBakckend.tasa1)
+
+                document.getElementById("calcTasa").innerHTML = respuestaBakckend.tasa1;
                 break;
 
             case "insertCalcTasa2":
@@ -245,7 +243,7 @@
 
                     btnWhatsapp.href = "https://api.whatsapp.com/send?text=*Transferencias Rojas*%0A%0A*Envío:* " + confgMsjTOP.paisOrigen + " - " + confgMsjTOP.paisDestino + "%0A%0A*Tasa:* " + confgMsjTOP.msjTasa + "%0A%0A*Calculo Banesco*%0A" + confgMsjTOP.montoEnviarT1 + confgMsjTOP.operador + confgMsjTOP.tasaT1 + " = " + confgMsjTOP.montoRecibirT1 + "%0A%0A*Calculo Otros bancos*%0A" + confgMsjTVES.montoEnviarT2 + confgMsjTOP.operador + confgMsjTVES.tasaT2 + " = " + confgMsjTVES.montoRecibirT2;
 
-                    btnTelegram.href = "https://t.me/share/url?url=**Transferencias%20Rojas**;&text=%0A**Envío:** " + confgMsjTOP.paisOrigen + " - " + confgMsjTOP.paisDestino + "%0A%0A**Tasa:** " + confgMsjTOP.msjTasa + "%0A%0A**Calculo Banesco**%0A" + confgMsjTOP.montoEnviarT1 + confgMsjTOP.operador + confgMsjTOP.tasaT1 + " = " + confgMsjTOP.montoRecibirT1 + "%0A%0A**Calculo Otros bancos**%0A" + confgMsjTVES.montoEnviarT2 + confgMsjTOP.operador + confgMsjTVES.tasaT2 + " = " + confgMsjTVES.montoRecibirT2;
+                    btnTelegram.href = "https://t.me/share/url?url=**Transferencias%20Rojas**&text=%0A**Envío:** " + confgMsjTOP.paisOrigen + " - " + confgMsjTOP.paisDestino + "%0A%0A**Tasa:** " + confgMsjTOP.msjTasa + "%0A%0A**Calculo Banesco**%0A" + confgMsjTOP.montoEnviarT1 + confgMsjTOP.operador + confgMsjTOP.tasaT1 + " = " + confgMsjTOP.montoRecibirT1 + "%0A%0A**Calculo Otros bancos**%0A" + confgMsjTVES.montoEnviarT2 + confgMsjTOP.operador + confgMsjTVES.tasaT2 + " = " + confgMsjTVES.montoRecibirT2;
 
                 } else {
 

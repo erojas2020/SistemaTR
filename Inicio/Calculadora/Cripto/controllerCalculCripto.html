@@ -1,12 +1,192 @@
 <script>
-    function showCalcuCripto(view){
+    let monedasFiat = {};
+    let monedasCrito = {};
+    let DatosCalcCripto = {};
+
+    function indexControllerCalcuCripto() {
+        event.preventDefault()
+
+        if ((document.getElementById("inputMonedaEnviar").value == "") && (document.getElementById("inputMonedaRecibir").value == "")) {
+            alertaError("true", "Debe indicar un monto a enviar o a recibir", "formulario");
+
+            enfocarCampo("inputMonedaEnviar");
+
+
+        } else {
+            alertaError("false", "", "formulario");
+
+            if (document.getElementById("comprarCriptoRadio").checked == true) {
+                DatosCalcCripto.tipoOperacion = "compra"
+
+                DatosCalcCripto.idPais = Number(getSelected("selectMonedaOrigenCalculadora", "value"));
+
+                DatosCalcCripto.idCripto = Number(getSelected("selectMonedaDestinoCalculadora", "value"));
+
+                if (document.getElementById("inputMonedaEnviar").value > 0) {
+                    DatosCalcCripto.monto = Number.parseFloat(document.getElementById("inputMonedaEnviar").value)
+
+                    DatosCalcCripto.orden = "fiat"
+                } else {
+                    DatosCalcCripto.monto = Number.parseFloat(document.getElementById("inputMonedaRecibir").value)
+
+                    DatosCalcCripto.orden = "cripto"
+                }
+
+            } else {
+
+                DatosCalcCripto.tipoOperacion = "venta"
+
+                DatosCalcCripto.idPais = Number(getSelected("selectMonedaDestinoCalculadora", "value"));
+
+                DatosCalcCripto.idCripto = Number(getSelected("selectMonedaOrigenCalculadora", "value"));
+
+                if (document.getElementById("inputMonedaEnviar").value > 0) {
+                    DatosCalcCripto.monto = Number.parseFloat(document.getElementById("inputMonedaEnviar").value)
+
+                    DatosCalcCripto.orden = "cripto"
+                } else {
+                    DatosCalcCripto.monto = Number.parseFloat(document.getElementById("inputMonedaRecibir").value)
+
+                    DatosCalcCripto.orden = "fiat"
+                }
+            }
+
+            ocultarElementos("false", ".spinerCalcCripto");
+            calcularCambioCripto(DatosCalcCripto);
+        }
+    }
+
+    function showCalcuCripto(view) {
         switch (view) {
             case "inicio":
-                //activarModal("spiner", "Verificando estatus de la calculadora...");
+                activarModal("spiner", "Verificando estatus de la calculadora...");
+
                 verificarEstatusCalcuCripto();
                 break;
-        
-            default:
+
+            case "activar":
+                limpiarForm("formCalculadoraCripto");
+
+                document.getElementById("comprarCriptoRadio").checked = true;
+                ocultarElementos("true", ".spinerCalcuCripto");
+                ocultarElemento("false", "calculadoraCripto");
+                activarModal("false")
+
+                updateElemntCalculadoraCripto("comprar")
+                break;
+
+            case "desactivar":
+                activarModal("respuestaNegativa", "La calculadora en este momento se encuentra desactivada, intente mas tarde");
+
+                ocultarElemento("false", "imgCalcCriptoDesact");
+                ocultarElemento("true", "calculadoraCripto");
+                ocultarElementos("true", ".spinerCalcuCripto");
+                disactivarElement("false", "calculCriptoBoton");
+                break;
+        }
+    }
+
+    let calcuCriptoMsj = {}
+    function updateElemntCalculadoraCripto(accion, resultado) {
+        switch (accion) {
+            case "comprar":
+                cargarSelect("reiniciar", "selectMonedaOrigenCalculadora")
+
+                cargarSelect("reiniciar", "selectMonedaDestinoCalculadora")
+
+                cargarSelect("cargar", "selectMonedaOrigenCalculadora", monedasFiat, 0, 1);
+
+                cargarSelect("cargar", "selectMonedaDestinoCalculadora", monedasCripto, 1, 0);
+
+                document.getElementById("inputMonedaRecibir").value = "";
+
+            case "resetMonedaEnviar":
+
+                document.getElementById("inputMonedaEnviar").value = "";
+                updateElemntCalculadoraCripto("resetEtiquetaPrecio")
+                break;
+
+            case "vender":
+
+                cargarSelect("reiniciar", "selectMonedaDestinoCalculadora")
+
+                cargarSelect("reiniciar", "selectMonedaOrigenCalculadora")
+
+                cargarSelect("cargar", "selectMonedaDestinoCalculadora", monedasFiat, 0, 1);
+
+                cargarSelect("cargar", "selectMonedaOrigenCalculadora", monedasCripto, 1, 0);
+
+                document.getElementById("inputMonedaEnviar").value = "";
+
+            case "resetMonedaRecibir":
+
+                document.getElementById("inputMonedaRecibir").value = "";
+                updateElemntCalculadoraCripto("resetEtiquetaPrecio")
+                break;
+            case "mostrarResultado":
+                
+                if (document.getElementById("inputMonedaEnviar").value == "") {
+                    document.getElementById("inputMonedaEnviar").value = resultado.calculo
+
+                } else {
+                    document.getElementById("inputMonedaRecibir").value = resultado.calculo
+                }
+
+                let monedaCripto
+                if (document.getElementById("comprarCriptoRadio").checked == true) {
+                    calcuCriptoMsj.operacion = "Compra"
+
+                    calcuCriptoMsj.monedaOrigen = resultado.moneda
+
+                    calcuCriptoMsj.operador = "/"
+
+                    calcuCriptoMsj.monedaDestino = getSelected("selectMonedaDestinoCalculadora", "text")
+
+                    calcuCriptoMsj.cripto = calcuCriptoMsj.monedaDestino
+
+                } else {
+                    calcuCriptoMsj.operacion = "Venta"
+
+                    calcuCriptoMsj.monedaOrigen = getSelected("selectMonedaOrigenCalculadora", "text")
+
+                    calcuCriptoMsj.operador = "X"
+
+                    calcuCriptoMsj.monedaDestino = resultado.moneda
+
+                    calcuCriptoMsj.cripto = calcuCriptoMsj.monedaOrigen
+                };
+
+                //Etiqueta calculo
+                document.getElementById("calcMontoEnviarCripto").innerHTML = formatNumberES(document.getElementById("inputMonedaEnviar").value, 2) + " " + calcuCriptoMsj.monedaOrigen;
+                
+                document.getElementById("operadorCripto").innerHTML = calcuCriptoMsj.operador
+
+                document.getElementById("calcTasaCripto").innerHTML = formatearNumero(resultado.tasa);
+
+                document.getElementById("calcMontoRecibirCripto").innerHTML = formatNumberES(document.getElementById("inputMonedaRecibir").value, 2)+ " " + calcuCriptoMsj.monedaDestino;
+
+            case "configMsj":
+                let btnWhatsappCripto = document.getElementById("linkWahtsappCripto");
+
+                let btnTelegramCripto = document.getElementById("linkTelegramCripto");
+                
+                let msjEncabezadoCripto = calcuCriptoMsj.operacion + " de "+ calcuCriptoMsj.cripto
+
+                let msjPrecioCripto = " 1 " + calcuCriptoMsj.cripto + " = " + formatearNumero(resultado.tasa) + " " + resultado.moneda
+                
+                let msjCalculoCripto = document.getElementById("calcMontoEnviarCripto").innerHTML + " " + document.getElementById("operadorCripto").innerHTML + " " + document.getElementById("calcTasaCripto").innerHTML + " = " + document.getElementById("calcMontoRecibirCripto").innerHTML
+                
+                btnWhatsappCripto.href = "https://api.whatsapp.com/send?text=*Transferencias Rojas*%0A%0A*" + msjEncabezadoCripto +"*%0A%0A" + "*Precio:*" + msjPrecioCripto + "%0A%0A" + "*Calculo:*%0A" + msjCalculoCripto;
+
+                btnTelegramCripto.href = "https://t.me/share/url?url=**Transferencias%20Rojas**&text=%0A**" + msjEncabezadoCripto +"**%0A%0A" + "**Precio:**" + msjPrecioCripto + "%0A%0A" + "**Calculo:**%0A" + msjCalculoCripto;
+                break;
+
+            case "resetEtiquetaPrecio":
+
+                document.getElementById("calcMontoEnviarCripto").innerHTML = "0.00";
+                document.getElementById("operadorCripto").innerHTML = "X"
+                document.getElementById("calcTasaCripto").innerHTML = "0.00";
+                document.getElementById("calcMontoRecibirCripto").innerHTML = "0.00";
                 break;
         }
     }
