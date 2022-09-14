@@ -54,7 +54,7 @@
     }
 
     function cargarCriptosSelectError(error) {
-        activarModal("respuestaNegativa",error)
+        activarModal("respuestaNegativa", error)
     }
 
     async function calcularCambioCripto(datos) {
@@ -64,13 +64,28 @@
             .constructorCalcularCripto(datos)
     }
 
-    function calcularCambioCriptoTrue(resultado){
-        ocultarElementos("true", ".spinerCalcCripto");
-        updateElemntCalculadoraCripto("mostrarResultado", resultado)
+    function calcularCambioCriptoTrue(resultado) {
+        console.log(resultado);
+
+        switch (resultado.status) {
+            case true:
+                ocultarElementos("true", ".spinerCalcuCripto");
+                updateElemntCalculadoraCripto("mostrarResultado", resultado)
+                break;
+
+            default:
+                switch (resultado.calculadora) {
+                    case false:
+                        showCalcuCripto("desactivar")
+                        break;
+                };
+                break;
+        }
     }
 
-    function calcularCambioCriptoError(error){
-        activarModal("respuestaNegativa",error)
+    function calcularCambioCriptoError(error) {
+        ocultarElementos("true", ".spinerCalcCripto");
+        activarModal("respuestaNegativa", error)
     }
 
 </script>

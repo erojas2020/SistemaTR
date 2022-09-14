@@ -1,0 +1,69 @@
+<div class='row p-3 viewsApp sesionApp calcOperadoras' hidden>
+    <div class='col-md-12 mb-2'>
+        <h3 class="mb-2">Configuracion de calculadora de recargas</h3>
+        <h4>Operadoras</h4>
+    </div>
+</div>
+
+<div class='viewsApp calcOperadoras' hidden>
+    <div class='d-inline pe-2'>
+        <a id='nuevoPorcentajeBoton' class='btn btn-warning mb-3 col-12 col-sm-5 col-md-auto'
+            onclick="showControllerCalcOperadora('nuevaOperadora')">Nuevo</a>
+    </div>
+    <div class='d-inline pe-2'>
+        <a id='editarPorcentajeBoton' class='btn btn-warning mb-3 col-12 col-sm-5 col-md-auto'
+            onclick="showControllerCalcOperadora('editarOperadora')">Editar</a>
+    </div>
+    <div class='d-inline pe-2'>
+        <a id='eliminarPorcentajeBoton' class='btn btn-warning mb-3 col-12 col-sm-5 col-md-auto'
+            onclick="showControllerCalcOperadora('eliminarOperadora')">Eliminar </a>
+    </div>
+</div>
+
+<!------------------------------------------------------------------------------------>
+<!----Tabla---->
+<!------------------------------------------------------------------------------------>
+<div id="tablaOperadoras" class="row viewsApp sesionApp calcOperadoras" hidden>
+    <div class="table-responsive mx-auto">
+        <table id="data-tablePorcentaje" class="table table-hover"></table>
+    </div>
+</div>
+
+<!------------------------------------------------------------------------------------>
+<!----Modal: Gestionar Porcentaje---->
+<!------------------------------------------------------------------------------------>
+<div class="modal fade" id="nuevaOperadoraModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="LabelModalOperadora">Gestionar Porcentaje</h5>
+            </div>
+            <form class="needs-validation" id="formOperadoras" onsubmit="indexControllerCalcOperadoras()">
+                <div class="modal-body text-center">
+
+                    <!-- Campo: Operadora nueva -->
+                    <div class='mb-2 '>
+                        <div class='input-group'>
+                            <span class='input-group-text' id='basic-addon1'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                </svg>
+                            </span>
+                            <input type='number' step="0.001" class='form-control elementOperadorasModal nuevaOperadora'
+                                id='inputPorcentaje' placeholder='Operadora' name="inputPorcentaje" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mx-auto col-4" onclick=""
+                        data-bs-dismiss="modal">Cancelar</button>
+
+                    <button type="submit" class="btn btn-warning mx-auto elementOperadorasModal nuevaOperadora col-4"
+                        id="editarPorcentajeCriptoBotonModal">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

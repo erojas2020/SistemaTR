@@ -1,0 +1,30 @@
+<script>
+
+    function indexControllerCalcOperadoras() {
+        event.preventDefault()
+    }
+
+    function showControllerCalcOperadora(view) {
+        if (view == "inicio") {
+
+            ocultarElementos("false", ".calcOperadoras");
+
+        }else{
+
+            activarModal("formulario", "nuevaOperadoraModal");
+            ocultarElementos("true", ".elementOperadorasModal");
+            disactivarElementos("true", "elementOperadorasModal");
+            limpiarForm("formOperadoras");
+
+            switch (view) {
+                case "nuevaOperadora":
+                    document.getElementById("LabelModalOperadora").innerHTML = "Nueva operadora"
+                    ocultarElementos("false", ".nuevaOperadora");
+                    disactivarElementos("false", "nuevaOperadora");
+                    break;
+            }
+
+        }
+    }
+
+</script>

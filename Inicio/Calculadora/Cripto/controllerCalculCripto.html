@@ -51,7 +51,7 @@
                 }
             }
 
-            ocultarElementos("false", ".spinerCalcCripto");
+            ocultarElementos("false", ".spinerCalcuCripto");
             calcularCambioCripto(DatosCalcCripto);
         }
     }
@@ -68,6 +68,7 @@
                 limpiarForm("formCalculadoraCripto");
 
                 document.getElementById("comprarCriptoRadio").checked = true;
+                ocultarElemento("true", "imgCalcCriptoDesact");
                 ocultarElementos("true", ".spinerCalcuCripto");
                 ocultarElemento("false", "calculadoraCripto");
                 activarModal("false")
